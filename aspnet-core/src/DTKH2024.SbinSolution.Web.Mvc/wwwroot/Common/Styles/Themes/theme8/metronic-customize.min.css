@@ -1,0 +1,86 @@
+.cc-window {
+  background-color: #282a3a;
+}
+.cc-btn {
+  background-color: #5867dd;
+  border-color: #5867dd;
+  color: #ffffff;
+}
+.cc-message {
+  color: #fefefe;
+}
+.searchMenuContainerSelect2 {
+  margin: 1em;
+}
+.searchMenuContainerSelect2 .select2-selection__rendered {
+  min-height: 35px;
+}
+.searchMenuContainerSelect2 .select2-container {
+  width: 100% !important;
+}
+html[data-bs-theme='dark'] .searchMenuContainerSelect2 .select2-selection {
+  background: #1e1e2d !important;
+  border-color: #8a8a91 !important;
+}
+/*** top menu search ***/
+@media (max-width: 991px) {
+  .searchMenuTop {
+    display: block !important;
+  }
+  .searchMenuBottom {
+    display: none !important;
+  }
+  .searchMenuContainerSelect2 {
+    width: calc(100% - 40px) !important;
+  }
+}
+@media (min-width: 992px) {
+  .searchMenuTop {
+    display: none !important;
+  }
+  .searchMenuBottom {
+    display: block !important;
+  }
+}
+.searchMenuTop {
+  margin-bottom: 1em !important;
+  margin-left: 25px !important;
+}
+.toolbar .container,
+.toolbar .container-fluid {
+  height: 100% !important;
+}
+#kt_toolbar {
+  background-color: transparent !important;
+}
+body[data-kt-app-layout=dark-sidebar] .select2-dropdown.select2-dropdown--below {
+  background-color: #1e1e2d !important;
+  border: 1px solid #323248 !important;
+  color: #999 !important;
+}
+body[data-kt-app-layout=dark-sidebar] .select2-dropdown.select2-dropdown--below input {
+  background-color: #1e1e2d !important;
+  border: 1px solid #323248 !important;
+  color: #999 !important;
+}
+body[data-kt-app-layout=dark-sidebar] .select2-dropdown.select2-dropdown--below input:focus-visible {
+  border: 1px solid #323248 !important;
+}
+body[data-kt-app-layout=dark-sidebar] .select2-selection {
+  background-color: #12121e !important;
+  border: 1px solid #2c2d44 !important;
+  color: #9899ac !important;
+}
+body[data-kt-app-layout=dark-sidebar] .select2-selection:focus {
+  border-color: #7380fc !important;
+  color: #fff !important;
+}
+body[data-kt-app-layout=dark-sidebar] .searchMenuSelect2 {
+  background-color: #12121e !important;
+  border: 1px solid #2c2d44 !important;
+  color: #9899ac !important;
+}
+body[data-kt-app-layout=dark-sidebar] .searchMenuSelect2:focus {
+  border-color: #7380fc !important;
+  color: #fff !important;
+}

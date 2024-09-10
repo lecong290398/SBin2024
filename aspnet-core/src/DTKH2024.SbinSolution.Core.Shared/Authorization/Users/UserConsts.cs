@@ -1,0 +1,7 @@
+﻿namespace DTKH2024.SbinSolution.Authorization.Users
+{
+    public class UserConsts
+    {
+        public const int MaxPhoneNumberLength = 24;
+    }
+}

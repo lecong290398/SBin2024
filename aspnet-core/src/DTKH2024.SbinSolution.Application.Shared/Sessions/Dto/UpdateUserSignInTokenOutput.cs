@@ -1,0 +1,11 @@
+﻿namespace DTKH2024.SbinSolution.Sessions.Dto
+{
+    public class UpdateUserSignInTokenOutput
+    {
+        public string SignInToken { get; set; }
+
+        public string EncodedUserId { get; set; }
+
+        public string EncodedTenantId { get; set; }
+    }
+}

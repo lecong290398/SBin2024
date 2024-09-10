@@ -1,0 +1,37 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.HistoryTypes
+@model CreateOrEditHistoryTypeModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditHistoryType")) : L("CreateNewHistoryType")))
+
+<div class="modal-body">
+    <div id="HistoryTypeInformationsTab">
+        <form name="HistoryTypeInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.HistoryType.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="HistoryType_Name">@L("Name")</label>
+                <input class="form-control" id="HistoryType_Name" value="@Model.HistoryType.Name" type="text" name="name" required maxlength="@DTKH2024.SbinSolution.HistoryTypes.HistoryTypeConsts.MaxNameLength" minlength="@DTKH2024.SbinSolution.HistoryTypes.HistoryTypeConsts.MinNameLength" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="HistoryType_Description">@L("Description")</label>
+                <input class="form-control" id="HistoryType_Description" value="@Model.HistoryType.Description" type="text" name="description" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="HistoryType_Color">@L("Color")</label>
+                <input class="form-control" id="HistoryType_Color" value="@Model.HistoryType.Color" type="text" name="color" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

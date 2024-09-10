@@ -1,4 +1,5 @@
-﻿using DTKH2024.SbinSolution.TransactionStatuses;
+﻿using DTKH2024.SbinSolution.HistoryTypes;
+using DTKH2024.SbinSolution.TransactionStatuses;
 using DTKH2024.SbinSolution.BenefitsRankLevels;
 using DTKH2024.SbinSolution.RankLevels;
 using DTKH2024.SbinSolution.Devices;
@@ -28,6 +29,8 @@ namespace DTKH2024.SbinSolution.EntityFrameworkCore
 {
     public class SbinSolutionDbContext : AbpZeroDbContext<Tenant, Role, User, SbinSolutionDbContext>, IOpenIddictDbContext
     {
+        public virtual DbSet<HistoryType> HistoryTypes { get; set; }
+
         public virtual DbSet<TransactionStatus> TransactionStatuses { get; set; }
 
         public virtual DbSet<BenefitsRankLevel> BenefitsRankLevels { get; set; }

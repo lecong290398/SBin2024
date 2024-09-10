@@ -6,6 +6,11 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_Administration_HistoryTypes = "Pages.Administration.HistoryTypes";
+        public const string Pages_Administration_HistoryTypes_Create = "Pages.Administration.HistoryTypes.Create";
+        public const string Pages_Administration_HistoryTypes_Edit = "Pages.Administration.HistoryTypes.Edit";
+        public const string Pages_Administration_HistoryTypes_Delete = "Pages.Administration.HistoryTypes.Delete";
+
         public const string Pages_Administration_TransactionStatuses = "Pages.Administration.TransactionStatuses";
         public const string Pages_Administration_TransactionStatuses_Create = "Pages.Administration.TransactionStatuses.Create";
         public const string Pages_Administration_TransactionStatuses_Edit = "Pages.Administration.TransactionStatuses.Edit";

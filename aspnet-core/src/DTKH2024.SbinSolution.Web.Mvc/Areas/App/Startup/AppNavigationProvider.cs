@@ -81,6 +81,14 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                                 permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_TransactionStatuses)
                             )
                         )
+                        .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.HistoryTypes,
+                        L("HistoryTypes"),
+                        url: "App/HistoryTypes",
+                        icon: "fa-solid fa-swatchbook",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_HistoryTypes)
+                        )
+                    )
 
                    )
                 .AddItem(new MenuItemDefinition(

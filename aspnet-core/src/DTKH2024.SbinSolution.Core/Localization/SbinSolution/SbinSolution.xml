@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="HistoryTypes">History types</text>
+    <text name="HistoryType">History type</text>
+    <text name="DTKH2024.SbinSolution.HistoryTypes.HistoryType">HistoryType</text>
+    <text name="HistoryTypesHeaderInfo">History types header info</text>
+    <text name="CreateNewHistoryType">Create new history type</text>
+    <text name="EditHistoryType">Edit history type</text>
+    <text name="DeleteHistoryType">Delete history type</text>
+
 	  
     <text name="TransactionStatuses">Transaction statuses</text>
     <text name="TransactionStatus">Transaction status</text>

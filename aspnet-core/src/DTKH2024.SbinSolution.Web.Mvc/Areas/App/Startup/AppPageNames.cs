@@ -4,6 +4,7 @@
     {
         public static class Common
         {
+            public const string HistoryTypes = "Administration.HistoryTypes.HistoryTypes";
             public const string TransactionStatuses = "Administration.TransactionStatuses.TransactionStatuses";
             public const string BenefitsRankLevels = "Administration.BenefitsRankLevels.BenefitsRankLevels";
             public const string RankLevels = "Administration.RankLevels.RankLevels";

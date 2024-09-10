@@ -3,6 +3,16 @@
 	<texts>
 
 		<text name="Description">Mô Tả</text>
+		
+		<!--HistoryTypes-->
+		<text name="HistoryTypes">Loại lịch sử mua hàng</text>
+		<text name="HistoryType">Loại lịch sử mua hàng</text>
+		<text name="DTKH2024.SbinSolution.HistoryTypes.HistoryType">Loại lịch sử mua hàng</text>
+		<text name="HistoryTypesHeaderInfo">Cấu hình loại lịch sử mua hàng</text>
+		<text name="CreateNewHistoryType">Thêm mới</text>
+		<text name="EditHistoryType">Chỉnh sử loại lịch sử mua hàng</text>
+		<text name="DeleteHistoryType">Xóa lịch sử mua hàng</text>
+		
 		<!--TransactionStatuses-->
 		<text name="TransactionStatuses">Loại giao dịch</text>
 		<text name="TransactionStatus">Loại giao dịch</text>

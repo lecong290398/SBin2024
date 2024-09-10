@@ -1,4 +1,6 @@
-﻿using DTKH2024.SbinSolution.BenefitsRankLevels.Dtos;
+﻿using DTKH2024.SbinSolution.TransactionStatuses.Dtos;
+using DTKH2024.SbinSolution.TransactionStatuses;
+using DTKH2024.SbinSolution.BenefitsRankLevels.Dtos;
 using DTKH2024.SbinSolution.BenefitsRankLevels;
 using DTKH2024.SbinSolution.RankLevels.Dtos;
 using DTKH2024.SbinSolution.RankLevels;
@@ -59,6 +61,8 @@ namespace DTKH2024.SbinSolution
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditTransactionStatusDto, TransactionStatus>().ReverseMap();
+            configuration.CreateMap<TransactionStatusDto, TransactionStatus>().ReverseMap();
             configuration.CreateMap<CreateOrEditBenefitsRankLevelDto, BenefitsRankLevel>().ReverseMap();
             configuration.CreateMap<BenefitsRankLevelDto, BenefitsRankLevel>().ReverseMap();
             configuration.CreateMap<CreateOrEditRankLevelDto, RankLevel>().ReverseMap();

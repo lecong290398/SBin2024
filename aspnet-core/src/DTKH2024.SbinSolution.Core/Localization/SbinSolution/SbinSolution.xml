@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+	  
+    <text name="TransactionStatuses">Transaction statuses</text>
+    <text name="TransactionStatus">Transaction status</text>
+    <text name="DTKH2024.SbinSolution.TransactionStatuses.TransactionStatus">TransactionStatus</text>
+    <text name="TransactionStatusesHeaderInfo">Transaction statuses header info</text>
+    <text name="CreateNewTransactionStatus">Create new transaction status</text>
+    <text name="EditTransactionStatus">Edit transaction status</text>
+    <text name="DeleteTransactionStatus">Delete transaction status</text>
+
     <text name="BenefitsRankLevels">Benefits rank levels</text>
     <text name="BenefitsRankLevel">Benefits rank level</text>
     <text name="DTKH2024.SbinSolution.BenefitsRankLevels.BenefitsRankLevel">BenefitsRankLevel</text>

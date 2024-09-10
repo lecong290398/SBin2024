@@ -6,6 +6,11 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_Administration_TransactionStatuses = "Pages.Administration.TransactionStatuses";
+        public const string Pages_Administration_TransactionStatuses_Create = "Pages.Administration.TransactionStatuses.Create";
+        public const string Pages_Administration_TransactionStatuses_Edit = "Pages.Administration.TransactionStatuses.Edit";
+        public const string Pages_Administration_TransactionStatuses_Delete = "Pages.Administration.TransactionStatuses.Delete";
+
         public const string Pages_Administration_BenefitsRankLevels = "Pages.Administration.BenefitsRankLevels";
         public const string Pages_Administration_BenefitsRankLevels_Create = "Pages.Administration.BenefitsRankLevels.Create";
         public const string Pages_Administration_BenefitsRankLevels_Edit = "Pages.Administration.BenefitsRankLevels.Edit";

@@ -3,7 +3,14 @@
 	<texts>
 
 		<text name="Description">Mô Tả</text>
-
+		<!--TransactionStatuses-->
+		<text name="TransactionStatuses">Loại giao dịch</text>
+		<text name="TransactionStatus">Loại giao dịch</text>
+		<text name="DTKH2024.SbinSolution.TransactionStatuses.TransactionStatus">Loại giao dịch</text>
+		<text name="TransactionStatusesHeaderInfo">Cấu hình loại giao dịch</text>
+		<text name="CreateNewTransactionStatus">Thêm mới</text>
+		<text name="EditTransactionStatus">Chỉnh sửa loại giao dịch</text>
+		<text name="DeleteTransactionStatus">Xóa loại giao dịch</text>
 		<!--BenefitsRankLevels-->
 		<text name="BenefitsRankLevels">Ưu đãi xếp hạng</text>
 		<text name="BenefitsRankLevel">Ưu đãi xếp hạng</text>

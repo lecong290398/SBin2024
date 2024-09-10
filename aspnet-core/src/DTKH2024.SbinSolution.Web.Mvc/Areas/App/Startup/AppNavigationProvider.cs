@@ -69,7 +69,20 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                         )
                  )
                  )
+               .AddItem(new MenuItemDefinition(
+                    AppPageNames.Common.SettingTransaction,
+                    L("SettingTransaction"),
+                    icon: "fa-solid fa-arrow-right-arrow-left")
+                           .AddItem(new MenuItemDefinition(
+                                AppPageNames.Common.TransactionStatuses,
+                                L("TransactionStatuses"),
+                                url: "App/TransactionStatuses",
+                                icon: "fa-solid fa-gears",
+                                permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_TransactionStatuses)
+                            )
+                        )
 
+                   )
                 .AddItem(new MenuItemDefinition(
                     AppPageNames.Common.SettingDevice,
                     L("SettingDevice"),

@@ -1,0 +1,37 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.TransactionStatuses
+@model CreateOrEditTransactionStatusModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditTransactionStatus")) : L("CreateNewTransactionStatus")))
+
+<div class="modal-body">
+    <div id="TransactionStatusInformationsTab">
+        <form name="TransactionStatusInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.TransactionStatus.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="TransactionStatus_Name">@L("Name")</label>
+                <input class="form-control" id="TransactionStatus_Name" value="@Model.TransactionStatus.Name" type="text" name="name" maxlength="@DTKH2024.SbinSolution.TransactionStatuses.TransactionStatusConsts.MaxNameLength" minlength="@DTKH2024.SbinSolution.TransactionStatuses.TransactionStatusConsts.MinNameLength" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="TransactionStatus_Description">@L("Description")</label>
+                <input class="form-control" id="TransactionStatus_Description" value="@Model.TransactionStatus.Description" type="text" name="description" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="TransactionStatus_Color">@L("Color")</label>
+                <input class="form-control" id="TransactionStatus_Color" value="@Model.TransactionStatus.Color" type="text" name="color" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

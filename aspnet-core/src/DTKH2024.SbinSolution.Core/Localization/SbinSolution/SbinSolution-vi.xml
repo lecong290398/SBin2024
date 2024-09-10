@@ -4,6 +4,18 @@
 
 		<text name="Description">Mô Tả</text>
 
+		<!--BenefitsRankLevels-->
+		<text name="BenefitsRankLevels">Ưu đãi xếp hạng</text>
+		<text name="BenefitsRankLevel">Ưu đãi xếp hạng</text>
+		<text name="DTKH.SBinSolution.BenefitsRankLevels.BenefitsRankLevel">BenefitsRankLevel</text>
+		<text name="BenefitsRankLevelsHeaderInfo">Cấu hình ưu đãi xếp hạng</text>
+		<text name="CreateNewBenefitsRankLevel">Thêm mới</text>
+		<text name="EditBenefitsRankLevel">Chỉnh sửa ưu đãi xếp hạng</text>
+		<text name="DeleteBenefitsRankLevel">Xóa ưu đãi xếp hạng</text>
+		<text name="RankLevelName">Cấp bậc xếp hạng</text>
+		<text name="PickRankLevel">Chọn cấp bậc xếp hạng</text>
+		<text name="SelectARankLevel">Chọn cấp bậc xếp hạng</text>
+		
 		<!--RankLevels-->
 		<text name="RankLevels">Cấp bậc xếp hạng</text>
 		<text name="RankLevel">Cấp bậc xếp hạng</text>

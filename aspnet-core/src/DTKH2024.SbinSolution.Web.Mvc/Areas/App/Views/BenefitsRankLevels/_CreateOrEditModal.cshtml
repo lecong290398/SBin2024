@@ -1,0 +1,37 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.BenefitsRankLevels
+@model CreateOrEditBenefitsRankLevelModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditBenefitsRankLevel")) : L("CreateNewBenefitsRankLevel")))
+
+<div class="modal-body">
+    <div id="BenefitsRankLevelInformationsTab">
+        <form name="BenefitsRankLevelInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.BenefitsRankLevel.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="rankLevelId">@L("RankLevel")</label>
+                @Html.DropDownList("rankLevelId", new SelectList(Model.BenefitsRankLevelRankLevelList,"Id","DisplayName", (Model.IsEditMode ? Model.BenefitsRankLevel.RankLevelId.ToString() : "")),@L("SelectARankLevel"), new { @class = "form-control" , @required="required" })
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="BenefitsRankLevel_Name">@L("Name")</label>
+                <input class="form-control" id="BenefitsRankLevel_Name" value="@Model.BenefitsRankLevel.Name" type="text" name="name" maxlength="@DTKH2024.SbinSolution.BenefitsRankLevels.BenefitsRankLevelConsts.MaxNameLength" minlength="@DTKH2024.SbinSolution.BenefitsRankLevels.BenefitsRankLevelConsts.MinNameLength" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="BenefitsRankLevel_Description">@L("Description")</label>
+                <input class="form-control" id="BenefitsRankLevel_Description" value="@Model.BenefitsRankLevel.Description" type="text" name="description" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

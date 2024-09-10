@@ -1,4 +1,6 @@
-﻿using DTKH2024.SbinSolution.RankLevels.Dtos;
+﻿using DTKH2024.SbinSolution.BenefitsRankLevels.Dtos;
+using DTKH2024.SbinSolution.BenefitsRankLevels;
+using DTKH2024.SbinSolution.RankLevels.Dtos;
 using DTKH2024.SbinSolution.RankLevels;
 using DTKH2024.SbinSolution.Devices.Dtos;
 using DTKH2024.SbinSolution.Devices;
@@ -57,6 +59,8 @@ namespace DTKH2024.SbinSolution
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditBenefitsRankLevelDto, BenefitsRankLevel>().ReverseMap();
+            configuration.CreateMap<BenefitsRankLevelDto, BenefitsRankLevel>().ReverseMap();
             configuration.CreateMap<CreateOrEditRankLevelDto, RankLevel>().ReverseMap();
             configuration.CreateMap<RankLevelDto, RankLevel>().ReverseMap();
             configuration.CreateMap<CreateOrEditDeviceDto, Device>().ReverseMap();

@@ -60,14 +60,14 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                                  permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_RankLevels)
                              )
                       )
-                     //    .AddItem(new MenuItemDefinition(
-                     //           AppPageNames.Common.BenefitsRankLevels,
-                     //           L("BenefitsRankLevels"),
-                     //           url: "App/BenefitsRankLevels",
-                     //           icon: "fa-solid fa-heart",
-                     //           permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_BenefitsRankLevels)
-                     //       )
-                     //)
+                     .AddItem(new MenuItemDefinition(
+                            AppPageNames.Common.BenefitsRankLevels,
+                            L("BenefitsRankLevels"),
+                            url: "App/BenefitsRankLevels",
+                            icon: "fa-solid fa-heart",
+                            permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_BenefitsRankLevels)
+                        )
+                 )
                  )
 
                 .AddItem(new MenuItemDefinition(

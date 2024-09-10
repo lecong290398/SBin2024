@@ -33,6 +33,11 @@ namespace DTKH2024.SbinSolution.Authorization
 
             var administration = pages.CreateChildPermission(AppPermissions.Pages_Administration, L("Administration"));
 
+            var benefitsRankLevels = administration.CreateChildPermission(AppPermissions.Pages_Administration_BenefitsRankLevels, L("BenefitsRankLevels"));
+            benefitsRankLevels.CreateChildPermission(AppPermissions.Pages_Administration_BenefitsRankLevels_Create, L("CreateNewBenefitsRankLevel"));
+            benefitsRankLevels.CreateChildPermission(AppPermissions.Pages_Administration_BenefitsRankLevels_Edit, L("EditBenefitsRankLevel"));
+            benefitsRankLevels.CreateChildPermission(AppPermissions.Pages_Administration_BenefitsRankLevels_Delete, L("DeleteBenefitsRankLevel"));
+
             var rankLevels = administration.CreateChildPermission(AppPermissions.Pages_Administration_RankLevels, L("RankLevels"));
             rankLevels.CreateChildPermission(AppPermissions.Pages_Administration_RankLevels_Create, L("CreateNewRankLevel"));
             rankLevels.CreateChildPermission(AppPermissions.Pages_Administration_RankLevels_Edit, L("EditRankLevel"));

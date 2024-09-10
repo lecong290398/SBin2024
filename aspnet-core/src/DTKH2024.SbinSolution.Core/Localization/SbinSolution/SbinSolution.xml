@@ -1,6 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>    <text name="RankLevels">Rank levels</text>
+  <texts>
+    <text name="BenefitsRankLevels">Benefits rank levels</text>
+    <text name="BenefitsRankLevel">Benefits rank level</text>
+    <text name="DTKH2024.SbinSolution.BenefitsRankLevels.BenefitsRankLevel">BenefitsRankLevel</text>
+    <text name="BenefitsRankLevelsHeaderInfo">Benefits rank levels header info</text>
+    <text name="CreateNewBenefitsRankLevel">Create new benefits rank level</text>
+    <text name="EditBenefitsRankLevel">Edit benefits rank level</text>
+    <text name="DeleteBenefitsRankLevel">Delete benefits rank level</text>
+    <text name="RankLevelName">Rank level name</text>
+    <text name="PickRankLevel">Pick rank level</text>
+    <text name="SelectARankLevel">Select a rank level</text>
+	  
+    <text name="RankLevels">Rank levels</text>
     <text name="RankLevel">Rank level</text>
     <text name="DTKH2024.SbinSolution.RankLevels.RankLevel">RankLevel</text>
     <text name="MinimumPositiveScore">Minimum positive score</text>

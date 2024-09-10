@@ -1,4 +1,6 @@
-﻿using DTKH2024.SbinSolution.StatusDevices.Dtos;
+﻿using DTKH2024.SbinSolution.Devices.Dtos;
+using DTKH2024.SbinSolution.Devices;
+using DTKH2024.SbinSolution.StatusDevices.Dtos;
 using DTKH2024.SbinSolution.StatusDevices;
 using DTKH2024.SbinSolution.Brands.Dtos;
 using DTKH2024.SbinSolution.Brands;
@@ -53,6 +55,8 @@ namespace DTKH2024.SbinSolution
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditDeviceDto, Device>().ReverseMap();
+            configuration.CreateMap<DeviceDto, Device>().ReverseMap();
             configuration.CreateMap<CreateOrEditStatusDeviceDto, StatusDevice>().ReverseMap();
             configuration.CreateMap<StatusDeviceDto, StatusDevice>().ReverseMap();
             configuration.CreateMap<CreateOrEditBrandDto, Brand>().ReverseMap();

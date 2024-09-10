@@ -4,6 +4,28 @@
 
 		<text name="Description">Mô Tả</text>
 
+		
+		<!--device-->
+		<text name="Devices">Thiết bị</text>
+		<text name="Device">Thiết bị</text>
+		<text name="DTKH2024.SbinSolution.Devices.Device">Thiết bị</text>
+		<text name="PlastisPoint">Điểm rác nhựa</text>
+		<text name="SensorPlastisAvailable">Sensor nhựa</text>
+		<text name="NotSensorPlastisAvailable">Sensor nhựa không hoạt dộng9</text>
+		<text name="PercentStatusPlastis">Sức chứa thùng nhựa</text>
+		<text name="MetalPoint">Điểm kim loại</text>
+		<text name="SensorMetalAvailable">Sensor kim loại</text>
+		<text name="NotSensorMetalAvailable">Sensor kim loại không hoạt động</text>
+		<text name="PercentStatusMetal">Sức chứa thùng KL</text>
+		<text name="ErrorPoint">Điểm Error</text>
+		<text name="DevicesHeaderInfo">Cấu hình thiết bị Sbin</text>
+		<text name="CreateNewDevice">Tạo mới thiết bị</text>
+		<text name="EditDevice">Chỉnh sửa thiết bị</text>
+		<text name="DeleteDevice">Xóa thiết bị</text>
+		<text name="StatusDeviceName">Trạng thái thiết bị</text>
+		<text name="PickStatusDevice">Chọn trạng thái thiết bị</text>
+		<text name="SelectAStatusDevice">Chọn trạng thái thiết bị</text>
+
 		<!--StatusDevice-->
 		<text name="StatusDevices">Trạng thái</text>
 		<text name="StatusDevicesHeaderInfo">Cấu hình trạng thái thiết bị</text>

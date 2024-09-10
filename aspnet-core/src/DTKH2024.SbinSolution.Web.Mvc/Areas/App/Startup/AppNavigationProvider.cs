@@ -60,7 +60,14 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_StatusDevices)
                             )
                         )
-                        
+                        .AddItem(new MenuItemDefinition(
+                                                AppPageNames.Common.Devices,
+                                                L("Devices"),
+                                                url: "App/Devices",
+                                                icon: "fa-solid fa-dumpster-fire",
+                                                permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Devices)
+                                            )
+                                        )
                    )
 
                 .AddItem(new MenuItemDefinition(

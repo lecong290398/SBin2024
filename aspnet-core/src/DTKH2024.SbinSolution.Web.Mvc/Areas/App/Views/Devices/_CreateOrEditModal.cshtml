@@ -1,0 +1,76 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Devices
+@model CreateOrEditDeviceModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditDevice")) : L("CreateNewDevice")))
+
+<div class="modal-body">
+    <div id="DeviceInformationsTab">
+        <form name="DeviceInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.Device.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="statusDeviceId">@L("StatusDevice")</label>
+                @Html.DropDownList("statusDeviceId", new SelectList(Model.DeviceStatusDeviceList,"Id","DisplayName", (Model.IsEditMode ? Model.Device.StatusDeviceId.ToString() : "")),@L("SelectAStatusDevice"), new { @class = "form-control" , @required="required" })
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Device_Name">@L("Name")</label>
+                <input class="form-control" id="Device_Name" value="@Model.Device.Name" type="text" name="name" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Device_PlastisPoint">@L("PlastisPoint")</label>
+                <input class="form-control m-input" id="Device_PlastisPoint" value="@Model.Device.PlastisPoint.ToString(CultureInfo.InvariantCulture)" type="number" name="plastisPoint" />
+            </div>
+
+            <label class="form-check form-check-custom">
+                <input id="Device_SensorPlastisAvailable" name="sensorPlastisAvailable" type="checkbox" class="form-check-input" value="true" @Html.Raw(Model.Device.SensorPlastisAvailable ?"checked=\"checked\"":"") />
+                <span class="form-check-label">
+                    @L("SensorPlastisAvailable")
+                </span>
+            </label>
+
+            <div class="my-3">
+                <label class="form-label" for="Device_PercentStatusPlastis">@L("PercentStatusPlastis")</label>
+                <input class="form-control m-input" id="Device_PercentStatusPlastis" value="@Model.Device.PercentStatusPlastis.ToString(CultureInfo.InvariantCulture)" type="number" name="percentStatusPlastis" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Device_MetalPoint">@L("MetalPoint")</label>
+                <input class="form-control m-input" id="Device_MetalPoint" value="@Model.Device.MetalPoint.ToString(CultureInfo.InvariantCulture)" type="number" name="metalPoint" />
+            </div>
+
+            <label class="form-check form-check-custom">
+                <input id="Device_SensorMetalAvailable" name="sensorMetalAvailable" type="checkbox" class="form-check-input" value="true" @Html.Raw(Model.Device.SensorMetalAvailable ?"checked=\"checked\"":"") />
+                <span class="form-check-label">
+                    @L("SensorMetalAvailable")
+                </span>
+            </label>
+
+            <div class="my-3">
+                <label class="form-label" for="Device_PercentStatusMetal">@L("PercentStatusMetal")</label>
+                <input class="form-control m-input" id="Device_PercentStatusMetal" value="@Model.Device.PercentStatusMetal.ToString(CultureInfo.InvariantCulture)" type="number" name="percentStatusMetal" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Device_ErrorPoint">@L("ErrorPoint")</label>
+                <input class="form-control m-input" id="Device_ErrorPoint" value="@Model.Device.ErrorPoint.ToString(CultureInfo.InvariantCulture)" type="number" name="errorPoint" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Device_Address">@L("Address")</label>
+                <input class="form-control" id="Device_Address" value="@Model.Device.Address" type="text" name="address" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

@@ -1,0 +1,59 @@
+﻿
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Devices
+@model DeviceViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="DeviceInformationsTab">
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Name") :</h6>
+                @Model.Device.Name
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("PlastisPoint") :</h6>
+                @Model.Device.PlastisPoint
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("SensorPlastisAvailable") :</h6>
+                @Model.Device.SensorPlastisAvailable
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("PercentStatusPlastis") :</h6>
+                @Model.Device.PercentStatusPlastis
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("MetalPoint") :</h6>
+                @Model.Device.MetalPoint
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("SensorMetalAvailable") :</h6>
+                @Model.Device.SensorMetalAvailable
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("PercentStatusMetal") :</h6>
+                @Model.Device.PercentStatusMetal
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("ErrorPoint") :</h6>
+                @Model.Device.ErrorPoint
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Address") :</h6>
+                @Model.Device.Address
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("StatusDevice")) @L("Name") :</h6>
+                @Model.StatusDeviceName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")

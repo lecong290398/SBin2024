@@ -33,6 +33,11 @@ namespace DTKH2024.SbinSolution.Authorization
 
             var administration = pages.CreateChildPermission(AppPermissions.Pages_Administration, L("Administration"));
 
+            var devices = administration.CreateChildPermission(AppPermissions.Pages_Administration_Devices, L("Devices"));
+            devices.CreateChildPermission(AppPermissions.Pages_Administration_Devices_Create, L("CreateNewDevice"));
+            devices.CreateChildPermission(AppPermissions.Pages_Administration_Devices_Edit, L("EditDevice"));
+            devices.CreateChildPermission(AppPermissions.Pages_Administration_Devices_Delete, L("DeleteDevice"));
+
             var statusDevices = administration.CreateChildPermission(AppPermissions.Pages_Administration_StatusDevices, L("StatusDevices"));
             statusDevices.CreateChildPermission(AppPermissions.Pages_Administration_StatusDevices_Create, L("CreateNewStatusDevice"));
             statusDevices.CreateChildPermission(AppPermissions.Pages_Administration_StatusDevices_Edit, L("EditStatusDevice"));

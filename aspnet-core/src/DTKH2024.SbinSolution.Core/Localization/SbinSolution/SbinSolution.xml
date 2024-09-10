@@ -1,6 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="Devices">Devices</text>
+    <text name="Device">Device</text>
+    <text name="DTKH2024.SbinSolution.Devices.Device">Device</text>
+    <text name="PlastisPoint">Plastis point</text>
+    <text name="SensorPlastisAvailable">Sensor plastis available</text>
+    <text name="NotSensorPlastisAvailable">Not sensor plastis available</text>
+    <text name="PercentStatusPlastis">Percent status plastis</text>
+    <text name="MetalPoint">Metal point</text>
+    <text name="SensorMetalAvailable">Sensor metal available</text>
+    <text name="NotSensorMetalAvailable">Not sensor metal available</text>
+    <text name="PercentStatusMetal">Percent status metal</text>
+    <text name="ErrorPoint">Error point</text>
+    <text name="DevicesHeaderInfo">Devices header info</text>
+    <text name="CreateNewDevice">Create new device</text>
+    <text name="EditDevice">Edit device</text>
+    <text name="DeleteDevice">Delete device</text>
+    <text name="StatusDeviceName">Status device name</text>
+    <text name="PickStatusDevice">Pick status device</text>
+    <text name="SelectAStatusDevice">Select a status device</text>
+
     <text name="StatusDevices">Status devices</text>
     <text name="StatusDevice">Status device</text>
     <text name="DTKH2024.SbinSolution.StatusDevices.StatusDevice">StatusDevice</text>

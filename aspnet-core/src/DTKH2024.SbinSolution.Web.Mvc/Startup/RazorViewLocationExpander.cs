@@ -30,8 +30,8 @@ namespace DTKH2024.SbinSolution.Web.Startup
             var locations = viewLocations.ToList();
 
             //{0} is like "Components/{componentname}/{viewname}"
-            locations.Add("~/Areas/AppAreaName/Views/Shared/{0}.cshtml");
-            locations.Add("~/Areas/AppAreaName/Views/Shared/Themes/" + currentThemeName.ToPascalCase() +
+            locations.Add("~/Areas/App/Views/Shared/{0}.cshtml");
+            locations.Add("~/Areas/App/Views/Shared/Themes/" + currentThemeName.ToPascalCase() +
                           "/{0}.cshtml");
 
             return locations;

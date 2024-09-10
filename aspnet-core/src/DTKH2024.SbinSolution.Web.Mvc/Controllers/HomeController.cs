@@ -26,7 +26,7 @@ namespace DTKH2024.SbinSolution.Web.Controllers
             }
 
             return AbpSession.UserId.HasValue ?
-                RedirectToAction("Index", "Home", new { area = "AppAreaName" }) :
+                RedirectToAction("Index", "Home", new { area = "App" }) :
                 RedirectToAction("Login", "Account");
         }
 

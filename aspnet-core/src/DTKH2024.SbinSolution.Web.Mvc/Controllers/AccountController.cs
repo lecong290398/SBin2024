@@ -1097,12 +1097,12 @@ namespace DTKH2024.SbinSolution.Web.Controllers
 
         public ActionResult RedirectToAppHome()
         {
-            return RedirectToAction("Index", "Home", new {area = "AppAreaName"});
+            return RedirectToAction("Index", "Home", new {area = "App"});
         }
 
         public string GetAppHomeUrl()
         {
-            return Url.Action("Index", "Home", new {area = "AppAreaName"});
+            return Url.Action("Index", "Home", new {area = "App"});
         }
 
         private string NormalizeReturnUrl(string returnUrl, Func<string> defaultValueBuilder = null)

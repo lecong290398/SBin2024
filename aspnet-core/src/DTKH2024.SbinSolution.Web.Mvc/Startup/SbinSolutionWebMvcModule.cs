@@ -12,7 +12,7 @@ using DTKH2024.SbinSolution.Configuration;
 using DTKH2024.SbinSolution.EntityFrameworkCore;
 using DTKH2024.SbinSolution.MultiTenancy;
 using DTKH2024.SbinSolution.MultiTenancy.Subscription;
-using DTKH2024.SbinSolution.Web.Areas.AppAreaName.Startup;
+using DTKH2024.SbinSolution.Web.Areas.App.Startup;
 
 namespace DTKH2024.SbinSolution.Web.Startup
 {
@@ -32,7 +32,7 @@ namespace DTKH2024.SbinSolution.Web.Startup
         {
             Configuration.Modules.AbpWebCommon().MultiTenancy.DomainFormat = _appConfiguration["App:WebSiteRootAddress"] ?? "https://localhost:44302/";
             Configuration.Modules.AspNetZero().LicenseCode = _appConfiguration["AbpZeroLicenseCode"];
-            Configuration.Navigation.Providers.Add<AppAreaNameNavigationProvider>();
+            Configuration.Navigation.Providers.Add<AppNavigationProvider>();
 
             IocManager.Register<DashboardViewConfiguration>();
         }

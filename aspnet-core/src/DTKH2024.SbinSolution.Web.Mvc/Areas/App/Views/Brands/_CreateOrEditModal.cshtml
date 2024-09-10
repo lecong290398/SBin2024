@@ -1,0 +1,53 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Brands
+@model CreateOrEditBrandModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditBrand")) : L("CreateNewBrand")))
+
+<div class="modal-body">
+    <div id="BrandInformationsTab">
+        <form name="BrandInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.Brand.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="Brand_Name">@L("Name")</label>
+                <input class="form-control" id="Brand_Name" value="@Model.Brand.Name" type="text" name="name" required maxlength="@DTKH2024.SbinSolution.Brands.BrandConsts.MaxNameLength" minlength="@DTKH2024.SbinSolution.Brands.BrandConsts.MinNameLength" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Brand_Description">@L("Description")</label>
+                <input class="form-control" id="Brand_Description" value="@Model.Brand.Description" type="text" name="description" required maxlength="@DTKH2024.SbinSolution.Brands.BrandConsts.MaxDescriptionLength" minlength="@DTKH2024.SbinSolution.Brands.BrandConsts.MinDescriptionLength" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" id="inputGroupFileAddon01">@L("Logo")</label>
+                <input type="file" class="form-control" name="Brand_Logo" id="Brand_Logo" aria-describedby="inputGroupFileAddon01" accept="@Model.LogoFileAcceptedTypes" />
+
+                <div id="div_current_file" style="background-color: #e5e5e5; padding: 5px @(Model.LogoFileName.IsNullOrEmpty()?" ;display:none":"")">
+                    <span class="font-weight-bold">@L("CurrentFile") :</span>
+                    <div class="alert alert-custom alert-white alert-bold m-1" role="alert">
+                        <div class="alert-text">
+                            <a href="@(" /File/DownloadBinaryFile?id=" + Model.Brand.Logo)" target="_blank">@Model.LogoFileName</a>
+                        </div>
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="Brand_Logo_Remove">
+                                <span aria-hidden="true">
+                                    <i class="la la-close fa-1x"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

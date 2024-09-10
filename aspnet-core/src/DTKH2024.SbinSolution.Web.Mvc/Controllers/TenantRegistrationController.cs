@@ -142,7 +142,7 @@ namespace DTKH2024.SbinSolution.Web.Controllers
 
                         SetTenantIdCookie(result.TenantId);
 
-                        return Redirect(Url.Action("Index", "Home", new {area = "AppAreaName"}));
+                        return Redirect(Url.Action("Index", "Home", new {area = "App"}));
                     }
 
                     Logger.Warn("New registered user could not be login. This should not be normally. login result: " +
@@ -193,7 +193,7 @@ namespace DTKH2024.SbinSolution.Web.Controllers
         {
             await _tenantRegistrationAppService.BuyNowSucceed(paymentId);
             await LoginAdminAsync();
-            return RedirectToAction("Index", "SubscriptionManagement", new {area = "AppAreaName"});
+            return RedirectToAction("Index", "SubscriptionManagement", new {area = "App"});
         }
 
         public async Task NewRegistrationSucceed(long paymentId)
@@ -204,13 +204,13 @@ namespace DTKH2024.SbinSolution.Web.Controllers
         public async Task<IActionResult> ExtendSucceed(long paymentId)
         {
             await _tenantRegistrationAppService.ExtendSucceed(paymentId);
-            return RedirectToAction("Index", "SubscriptionManagement", new {area = "AppAreaName"});
+            return RedirectToAction("Index", "SubscriptionManagement", new {area = "App"});
         }
 
         public async Task<IActionResult> UpgradeSucceed(long paymentId)
         {
             await _tenantRegistrationAppService.UpgradeSucceed(paymentId);
-            return RedirectToAction("Index", "SubscriptionManagement", new {area = "AppAreaName"});
+            return RedirectToAction("Index", "SubscriptionManagement", new {area = "App"});
         }
 
         private async Task LoginAdminAsync()

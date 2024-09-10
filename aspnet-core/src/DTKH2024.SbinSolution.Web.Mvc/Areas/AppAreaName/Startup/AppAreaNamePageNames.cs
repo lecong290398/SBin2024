@@ -4,6 +4,7 @@
     {
         public static class Common
         {
+            public const string StatusDevices = "Administration.StatusDevices.StatusDevices";
             public const string Brands = "Administration.Brands.Brands";
             public const string Administration = "Administration";
             public const string Roles = "Administration.Roles";
@@ -19,6 +20,12 @@
             public const string Notifications = "Administration.Notifications";
             public const string Notifications_Inbox = "Administration.Notifications.Inbox";
             public const string Notifications_MassNotifications = "Administration.Notifications.MassNotifications";
+
+            public const string SettingDevice = "Administration.SettingDevice";
+            public const string SettingTransaction = "Administration.SettingTransaction";
+            public const string SettingNotify = "Administration.SettingNotify";
+            public const string Categories = "Administration.Categories";
+            public const string Ranks = "Administration.Ranks";
         }
 
         public static class Host

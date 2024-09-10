@@ -1,4 +1,5 @@
-﻿using DTKH2024.SbinSolution.Brands;
+﻿using DTKH2024.SbinSolution.StatusDevices;
+using DTKH2024.SbinSolution.Brands;
 using System.Collections.Generic;
 using System.Text.Json;
 using Abp.Zero.EntityFrameworkCore;
@@ -23,6 +24,8 @@ namespace DTKH2024.SbinSolution.EntityFrameworkCore
 {
     public class SbinSolutionDbContext : AbpZeroDbContext<Tenant, Role, User, SbinSolutionDbContext>, IOpenIddictDbContext
     {
+        public virtual DbSet<StatusDevice> StatusDevices { get; set; }
+
         public virtual DbSet<Brand> Brands { get; set; }
 
         /* Define an IDbSet for each entity of the application */

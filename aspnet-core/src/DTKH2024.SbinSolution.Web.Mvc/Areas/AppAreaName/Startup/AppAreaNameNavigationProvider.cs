@@ -49,6 +49,21 @@ namespace DTKH2024.SbinSolution.Web.Areas.AppAreaName.Startup
                     )
 
                 .AddItem(new MenuItemDefinition(
+                    AppAreaNamePageNames.Common.SettingDevice,
+                    L("SettingDevice"),
+                    icon: "fa-solid fa-dumpster")
+                                .AddItem(new MenuItemDefinition(
+                                        AppAreaNamePageNames.Common.StatusDevices,
+                                        L("StatusDevices"),
+                                        url: "AppAreaName/StatusDevices",
+                                        icon: "fa-solid fa-gears",
+                                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_StatusDevices)
+                            )
+                        )
+                        
+                   )
+
+                .AddItem(new MenuItemDefinition(
                         AppAreaNamePageNames.Common.Brands,
                         L("Brands"),
                         url: "AppAreaName/Brands",

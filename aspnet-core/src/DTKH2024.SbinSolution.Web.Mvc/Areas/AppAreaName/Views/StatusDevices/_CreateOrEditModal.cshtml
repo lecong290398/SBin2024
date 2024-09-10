@@ -1,0 +1,32 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.AppAreaName.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.AppAreaName.Models.StatusDevices
+@model CreateOrEditStatusDeviceModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/AppAreaName/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditStatusDevice")) : L("CreateNewStatusDevice")))
+
+<div class="modal-body">
+    <div id="StatusDeviceInformationsTab">
+        <form name="StatusDeviceInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.StatusDevice.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="StatusDevice_Name">@L("Name")</label>
+                <input class="form-control" id="StatusDevice_Name" value="@Model.StatusDevice.Name" type="text" name="name" required maxlength="@DTKH2024.SbinSolution.StatusDevices.StatusDeviceConsts.MaxNameLength" minlength="@DTKH2024.SbinSolution.StatusDevices.StatusDeviceConsts.MinNameLength" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="StatusDevice_Color">@L("Color")</label>
+                <input class="form-control" id="StatusDevice_Color" value="@Model.StatusDevice.Color" type="text" name="color" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/AppAreaName/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

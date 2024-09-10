@@ -1,6 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="StatusDevices">Status devices</text>
+    <text name="StatusDevice">Status device</text>
+    <text name="DTKH2024.SbinSolution.StatusDevices.StatusDevice">StatusDevice</text>
+    <text name="Color">Color</text>
+    <text name="StatusDevicesHeaderInfo">Status devices header info</text>
+    <text name="CreateNewStatusDevice">Create new status device</text>
+    <text name="EditStatusDevice">Edit status device</text>
+    <text name="DeleteStatusDevice">Delete status device</text>
+
     <text name="Brands">Brands</text>
     <text name="Brand">Brand</text>
     <text name="DTKH2024.SbinSolution.Brands.Brand">Brand</text>
@@ -1281,5 +1290,18 @@
     <text name="UpgradeTo">Upgrade to {0} edition</text>
     <text name="YourAccountIsUpgraded">Your account is upgraded successfully</text>
     <text name="SubscriptionPaymentGatewayType_0">Not Selected</text>
+
+	  <!--Custom-->
+
+	  <text name="Maps">Map</text>
+	  <text name="SettingDevice">Device</text>
+	  <text name="SettingTransaction">Transaction</text>
+	  <text name="SettingNotify">Notification</text>
+	  <text name="Categories">Categories</text>
+	  <text name="Ranks">Ranks</text>
+
+	  <text name="StatusActvice">Actvice</text>
+	  <text name="StatusNotActvice">Not Actvice</text>
+
   </texts>
 </localizationDictionary>

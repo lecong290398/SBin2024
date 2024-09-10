@@ -4,7 +4,12 @@
 
 		<text name="Description">Mô Tả</text>
 
-
+		<!--StatusDevice-->
+		<text name="StatusDevices">Trạng thái</text>
+		<text name="StatusDevicesHeaderInfo">Cấu hình trạng thái thiết bị</text>
+		<text name="CreateNewStatusDevice">Thêm mới</text>
+		<text name="EditStatusDevice">Chỉnh sửa trạng thái</text>
+		<text name="DeleteStatusDevice">Xóa Trạng thái</text>
 		<!--Brands-->
 		<text name="Brands">Thương hiệu</text>
 		<text name="Brand">Thương hiệu</text>
@@ -795,5 +800,12 @@
 		<text name="Green">Màu lục</text>
 		<text name="Pink">Màu hồng</text>
 		<text name="Yellow">Màu vàng</text>
+		<!--Custom-->
+		<text name="Maps">Bản đồ</text>
+		<text name="SettingDevice">Thiết bị</text>
+		<text name="SettingTransaction">Giao Dịch</text>
+		<text name="Categories">Danh mục sản phẩm</text>
+		<text name="Ranks">Cấu hình Rank</text>
+		<text name="Username">Tài khoản</text>
 	</texts>
 </localizationDictionary>

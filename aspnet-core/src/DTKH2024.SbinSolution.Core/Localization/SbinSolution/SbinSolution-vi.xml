@@ -4,6 +4,15 @@
 
 		<text name="Description">Mô Tả</text>
 
+		<!--RankLevels-->
+		<text name="RankLevels">Cấp bậc xếp hạng</text>
+		<text name="RankLevel">Cấp bậc xếp hạng</text>
+		<text name="DTKH.SBinSolution.RankLevels.RankLevel">RankLevel</text>
+		<text name="MinimumPositiveScore">Điểm tối thiểu</text>
+		<text name="RankLevelsHeaderInfo">Cấu hình Cấp bậc xếp hạng</text>
+		<text name="CreateNewRankLevel">Thêm mới</text>
+		<text name="EditRankLevel">Chỉnh sửa cấp bậc xếp hạngl</text>
+		<text name="DeleteRankLevel">Xóa cấp bậc xếp hạng</text>
 		
 		<!--device-->
 		<text name="Devices">Thiết bị</text>

@@ -1,0 +1,63 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.RankLevels
+@model CreateOrEditRankLevelModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditRankLevel")) : L("CreateNewRankLevel")))
+
+<div class="modal-body">
+    <div id="RankLevelInformationsTab">
+        <form name="RankLevelInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.RankLevel.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="RankLevel_Name">@L("Name")</label>
+                <input class="form-control" id="RankLevel_Name" value="@Model.RankLevel.Name" type="text" name="name" maxlength="@DTKH2024.SbinSolution.RankLevels.RankLevelConsts.MaxNameLength" minlength="@DTKH2024.SbinSolution.RankLevels.RankLevelConsts.MinNameLength" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="RankLevel_Description">@L("Description")</label>
+                <input class="form-control" id="RankLevel_Description" value="@Model.RankLevel.Description" type="text" name="description" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="RankLevel_MinimumPositiveScore">@L("MinimumPositiveScore")</label>
+                <input class="form-control m-input" id="RankLevel_MinimumPositiveScore" value="@Model.RankLevel.MinimumPositiveScore.ToString(CultureInfo.InvariantCulture)" type="number" name="minimumPositiveScore" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="RankLevel_Color">@L("Color")</label>
+                <input class="form-control" id="RankLevel_Color" value="@Model.RankLevel.Color" type="text" name="color" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" id="inputGroupFileAddon01">@L("Logo")</label>
+                <input type="file" class="form-control" name="RankLevel_Logo" id="RankLevel_Logo" aria-describedby="inputGroupFileAddon01" accept="@Model.LogoFileAcceptedTypes" />
+
+                <div id="div_current_file" style="background-color: #e5e5e5; padding: 5px @(Model.LogoFileName.IsNullOrEmpty()?" ;display:none":"")">
+                    <span class="font-weight-bold">@L("CurrentFile") :</span>
+                    <div class="alert alert-custom alert-white alert-bold m-1" role="alert">
+                        <div class="alert-text">
+                            <a href="@(" /File/DownloadBinaryFile?id=" + Model.RankLevel.Logo)" target="_blank">@Model.LogoFileName</a>
+                        </div>
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="RankLevel_Logo_Remove">
+                                <span aria-hidden="true">
+                                    <i class="la la-close fa-1x"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

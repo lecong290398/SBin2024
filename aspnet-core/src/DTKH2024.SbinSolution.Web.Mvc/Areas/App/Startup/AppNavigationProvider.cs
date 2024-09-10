@@ -48,6 +48,28 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                         icon: "flaticon-interface-8"
                     )
 
+               .AddItem(new MenuItemDefinition(
+                     AppPageNames.Common.Ranks,
+                     L("Ranks"),
+                     icon: ("fa-solid fa-ranking-star"))
+                         .AddItem(new MenuItemDefinition(
+                                 AppPageNames.Common.RankLevels,
+                                 L("RankLevels"),
+                                 url: "App/RankLevels",
+                                 icon: "fa-solid fa-star",
+                                 permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_RankLevels)
+                             )
+                      )
+                     //    .AddItem(new MenuItemDefinition(
+                     //           AppPageNames.Common.BenefitsRankLevels,
+                     //           L("BenefitsRankLevels"),
+                     //           url: "App/BenefitsRankLevels",
+                     //           icon: "fa-solid fa-heart",
+                     //           permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_BenefitsRankLevels)
+                     //       )
+                     //)
+                 )
+
                 .AddItem(new MenuItemDefinition(
                     AppPageNames.Common.SettingDevice,
                     L("SettingDevice"),

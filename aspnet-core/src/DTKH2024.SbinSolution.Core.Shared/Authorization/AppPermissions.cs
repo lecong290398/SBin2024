@@ -6,6 +6,11 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_Administration_RankLevels = "Pages.Administration.RankLevels";
+        public const string Pages_Administration_RankLevels_Create = "Pages.Administration.RankLevels.Create";
+        public const string Pages_Administration_RankLevels_Edit = "Pages.Administration.RankLevels.Edit";
+        public const string Pages_Administration_RankLevels_Delete = "Pages.Administration.RankLevels.Delete";
+
         public const string Pages_Administration_Devices = "Pages.Administration.Devices";
         public const string Pages_Administration_Devices_Create = "Pages.Administration.Devices.Create";
         public const string Pages_Administration_Devices_Edit = "Pages.Administration.Devices.Edit";

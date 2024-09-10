@@ -1,4 +1,5 @@
-﻿using DTKH2024.SbinSolution.Devices;
+﻿using DTKH2024.SbinSolution.RankLevels;
+using DTKH2024.SbinSolution.Devices;
 using DTKH2024.SbinSolution.StatusDevices;
 using DTKH2024.SbinSolution.Brands;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace DTKH2024.SbinSolution.EntityFrameworkCore
 {
     public class SbinSolutionDbContext : AbpZeroDbContext<Tenant, Role, User, SbinSolutionDbContext>, IOpenIddictDbContext
     {
+        public virtual DbSet<RankLevel> RankLevels { get; set; }
+
         public virtual DbSet<Device> Devices { get; set; }
 
         public virtual DbSet<StatusDevice> StatusDevices { get; set; }

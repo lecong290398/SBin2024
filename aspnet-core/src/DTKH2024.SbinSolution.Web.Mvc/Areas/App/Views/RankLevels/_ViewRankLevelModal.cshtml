@@ -1,0 +1,41 @@
+﻿
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.RankLevels
+@model RankLevelViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="RankLevelInformationsTab">
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Name") :</h6>
+                @Model.RankLevel.Name
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Description") :</h6>
+                @Model.RankLevel.Description
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("MinimumPositiveScore") :</h6>
+                @Model.RankLevel.MinimumPositiveScore
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Color") :</h6>
+                @Model.RankLevel.Color
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Logo") :</h6>
+                @if (Model.RankLevel.Logo.HasValue)
+                {
+                <a href="@(" /File/DownloadBinaryFile?id=" + Model.RankLevel.Logo)" target="_blank">@Model.RankLevel.LogoFileName</a>
+                }
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")

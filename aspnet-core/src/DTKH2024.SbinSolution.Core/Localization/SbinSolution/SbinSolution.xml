@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
-  <texts>
+  <texts>    <text name="RankLevels">Rank levels</text>
+    <text name="RankLevel">Rank level</text>
+    <text name="DTKH2024.SbinSolution.RankLevels.RankLevel">RankLevel</text>
+    <text name="MinimumPositiveScore">Minimum positive score</text>
+    <text name="RankLevelsHeaderInfo">Rank levels header info</text>
+    <text name="CreateNewRankLevel">Create new rank level</text>
+    <text name="EditRankLevel">Edit rank level</text>
+    <text name="DeleteRankLevel">Delete rank level</text>
+
     <text name="Devices">Devices</text>
     <text name="Device">Device</text>
     <text name="DTKH2024.SbinSolution.Devices.Device">Device</text>

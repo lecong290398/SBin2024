@@ -1,0 +1,33 @@
+﻿
+@using DTKH2024.SbinSolution.Web.Areas.AppAreaName.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.AppAreaName.Models.Brands
+@model BrandViewModel
+
+@await Html.PartialAsync("~/Areas/AppAreaName/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="BrandInformationsTab">
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Name") :</h6>
+                @Model.Brand.Name
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Description") :</h6>
+                @Model.Brand.Description
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Logo") :</h6>
+                @if (Model.Brand.Logo.HasValue)
+                {
+                <a href="@(" /File/DownloadBinaryFile?id=" + Model.Brand.Logo)" target="_blank">@Model.Brand.LogoFileName</a>
+                }
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/AppAreaName/Views/Common/Modals/_ModalFooterWithClose.cshtml")

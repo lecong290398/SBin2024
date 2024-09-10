@@ -46,7 +46,17 @@ namespace DTKH2024.SbinSolution.Web.Areas.AppAreaName.Startup
                         AppAreaNamePageNames.Common.Administration,
                         L("Administration"),
                         icon: "flaticon-interface-8"
-                    ).AddItem(new MenuItemDefinition(
+                    )
+
+                .AddItem(new MenuItemDefinition(
+                        AppAreaNamePageNames.Common.Brands,
+                        L("Brands"),
+                        url: "AppAreaName/Brands",
+                        icon: "fa-solid fa-swatchbook",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Brands)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
                             AppAreaNamePageNames.Common.OrganizationUnits,
                             L("OrganizationUnits"),
                             url: "AppAreaName/OrganizationUnits",

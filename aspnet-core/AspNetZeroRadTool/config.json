@@ -3,7 +3,7 @@
   "ProjectName": "SbinSolution",
   "ProjectType": "Mvc",
   "ProjectVersion":"v13.1.0",
-  "ApplicationAreaName": "App",
+  "ApplicationAreaName": "AppAreaName",
   "LicenseCode": "LicenseCodePlaceHolderToReplace",
   "AngularSrcPath": "\\..\\..\\angular\\src\\",
   "AngularMergedSrcPath": "\\..\\src\\{{Namespace_Here}}.Web.Host\\src\\",

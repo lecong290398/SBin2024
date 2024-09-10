@@ -4,6 +4,7 @@ using DTKH2024.SbinSolution.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DTKH2024.SbinSolution.Migrations
 {
     [DbContext(typeof(SbinSolutionDbContext))]
-    partial class SbinSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240910123709_10092024_Add_Brands")]
+    partial class _10092024_Add_Brands
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

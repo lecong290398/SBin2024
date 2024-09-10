@@ -1,5 +1,5 @@
 {
-  "IsRegenerate": false,
+  "IsRegenerate": true,
   "MenuPosition": "admin",
   "RelativeNamespace": "Brands",
   "EntityName": "Brand",
@@ -70,15 +70,15 @@
     {
       "Name": "Logo",
       "Type": "file",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
         "MaximumValue": 0.0
       },
       "Required": false,
-      "Nullable": true,
+      "Nullable": false,
       "Regex": "",
       "IsMultiLingual": false,
       "UserInterface": {

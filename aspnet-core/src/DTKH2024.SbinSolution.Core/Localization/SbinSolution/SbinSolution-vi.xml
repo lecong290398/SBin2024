@@ -4,6 +4,20 @@
 
 		<text name="Description">Mô Tả</text>
 		<text name="{0}IsRequired">{0} bắt buộc.</text>
+
+		<!--WareHouseGifts-->
+		<text name="WareHouseGifts">Kho quà tặng</text>
+		<text name="WareHouseGift">Kho quà tặng</text>
+		<text name="DTKH2024.SbinSolution.WareHouseGifts.WareHouseGift">Kho quà tặng</text>
+		<text name="IsUsed">Đã sử dụng</text>
+		<text name="NotIsUsed">Chưa sử dụng</text>
+		<text name="WareHouseGiftsHeaderInfo">Kho quà tặng của khách hàng</text>
+		<text name="CreateNewWareHouseGift">Thêm mới</text>
+		<text name="EditWareHouseGift">Chỉnh sửa</text>
+		<text name="DeleteWareHouseGift">Xóa</text>
+		<text name="ProductPromotionPromotionCode">Mã chương trình bán hàng</text>
+		<text name="PickProductPromotion">Chọn chương trình bán hàng</text>
+		
 		<!--TransactionBins-->
 		<text name="DeviceName">Thiết bị</text>
 		<text name="TransactionBins">Giao dịch SBin</text>

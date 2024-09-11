@@ -29,6 +29,12 @@ namespace DTKH2024.SbinSolution.Authorization
             //COMMON PERMISSIONS (FOR BOTH OF TENANTS AND HOST)
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
+
+            var wareHouseGifts = pages.CreateChildPermission(AppPermissions.Pages_WareHouseGifts, L("WareHouseGifts"));
+            wareHouseGifts.CreateChildPermission(AppPermissions.Pages_WareHouseGifts_Create, L("CreateNewWareHouseGift"));
+            wareHouseGifts.CreateChildPermission(AppPermissions.Pages_WareHouseGifts_Edit, L("EditWareHouseGift"));
+            wareHouseGifts.CreateChildPermission(AppPermissions.Pages_WareHouseGifts_Delete, L("DeleteWareHouseGift"));
+
             pages.CreateChildPermission(AppPermissions.Pages_DemoUiComponents, L("DemoUiComponents"));
 
             var administration = pages.CreateChildPermission(AppPermissions.Pages_Administration, L("Administration"));

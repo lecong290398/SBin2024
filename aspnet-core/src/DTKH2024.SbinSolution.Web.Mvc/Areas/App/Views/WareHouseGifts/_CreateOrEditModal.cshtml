@@ -1,0 +1,70 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.WareHouseGifts
+@model CreateOrEditWareHouseGiftModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditWareHouseGift")) : L("CreateNewWareHouseGift")))
+
+<div class="modal-body">
+    <div id="WareHouseGiftInformationsTab">
+        <form name="WareHouseGiftInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.WareHouseGift.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="UserName">@L("User")</label>
+                <div class="input-group">
+                    <input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+                    <button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+                    <button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+            <input class="form-control" id="WareHouseGift_UserId" value="@Model.WareHouseGift.UserId" type="text" name="userId" required hidden />
+            }
+            else
+            {
+            <input class="form-control" id="WareHouseGift_UserId" value="" type="text" name="userId" required hidden />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="ProductPromotionPromotionCode">@L("ProductPromotion")</label>
+                <div class="input-group">
+                    <input class="form-control" id="ProductPromotionPromotionCode" name="productPromotionPromotionCode" value="@Model.ProductPromotionPromotionCode" type="text" disabled>
+                    <button class="btn btn-primary blue" id="OpenProductPromotionLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+                    <button class="btn btn-danger btn-icon" type="button" id="ClearProductPromotionPromotionCodeButton"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+            <input class="form-control" id="WareHouseGift_ProductPromotionId" value="@Model.WareHouseGift.ProductPromotionId" type="text" name="productPromotionId" hidden />
+            }
+            else
+            {
+            <input class="form-control" id="WareHouseGift_ProductPromotionId" value="" type="text" name="productPromotionId" hidden />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="WareHouseGift_Code">@L("Code")</label>
+                <input class="form-control" id="WareHouseGift_Code" value="@Model.WareHouseGift.Code" type="text" name="code" required />
+            </div>
+
+            <label class="form-check form-check-custom">
+                <input id="WareHouseGift_IsUsed" name="isUsed" type="checkbox" class="form-check-input" value="true" @Html.Raw(Model.WareHouseGift.IsUsed ?"checked=\"checked\"":"") />
+                <span class="form-check-label">
+                    @L("IsUsed")
+                </span>
+            </label>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

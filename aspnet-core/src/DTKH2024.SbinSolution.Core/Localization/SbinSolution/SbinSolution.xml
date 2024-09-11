@@ -1,6 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="WareHouseGifts">Ware house gifts</text>
+    <text name="WareHouseGift">Ware house gift</text>
+    <text name="DTKH2024.SbinSolution.WareHouseGifts.WareHouseGift">WareHouseGift</text>
+    <text name="IsUsed">Is used</text>
+    <text name="NotIsUsed">Not is used</text>
+    <text name="WareHouseGiftsHeaderInfo">Ware house gifts header info</text>
+    <text name="CreateNewWareHouseGift">Create new ware house gift</text>
+    <text name="EditWareHouseGift">Edit ware house gift</text>
+    <text name="DeleteWareHouseGift">Delete ware house gift</text>
+    <text name="ProductPromotionPromotionCode">Product promotion promotion code</text>
+    <text name="PickProductPromotion">Pick product promotion</text>
+
     <text name="DeviceName">Device name</text>
 
     <text name="TransactionBins">Transaction bins</text>

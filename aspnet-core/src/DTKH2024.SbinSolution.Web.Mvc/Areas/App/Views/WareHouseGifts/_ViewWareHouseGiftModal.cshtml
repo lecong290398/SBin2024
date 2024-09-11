@@ -1,0 +1,35 @@
+﻿
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.WareHouseGifts
+@model WareHouseGiftViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="WareHouseGiftInformationsTab">
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("Code") :</h6>
+                @Model.WareHouseGift.Code
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("IsUsed") :</h6>
+                @Model.WareHouseGift.IsUsed
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("User")) @L("Name") :</h6>
+                @Model.UserName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("ProductPromotion")) @L("PromotionCode") :</h6>
+                @Model.ProductPromotionPromotionCode
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")

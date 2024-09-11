@@ -6,6 +6,11 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_WareHouseGifts = "Pages.WareHouseGifts";
+        public const string Pages_WareHouseGifts_Create = "Pages.WareHouseGifts.Create";
+        public const string Pages_WareHouseGifts_Edit = "Pages.WareHouseGifts.Edit";
+        public const string Pages_WareHouseGifts_Delete = "Pages.WareHouseGifts.Delete";
+
         public const string Pages_Administration_TransactionBins = "Pages.Administration.TransactionBins";
         public const string Pages_Administration_TransactionBins_Create = "Pages.Administration.TransactionBins.Create";
         public const string Pages_Administration_TransactionBins_Edit = "Pages.Administration.TransactionBins.Edit";

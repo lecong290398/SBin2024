@@ -195,6 +195,23 @@
           "ProductName"
         ]
       }
+    },
+    {
+      "Namespace": "DTKH2024.SbinSolution.CategoryPromotions",
+      "ForeignEntityName": "CategoryPromotion",
+      "ForeignEntityNamePlural": "CategoryPromotions",
+      "IdType": "int",
+      "IsNullable": false,
+      "PropertyName": "CategoryPromotionId",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable",
+      "DisplayPropertyNameInfos": {
+        "MergeFormat": "{0}",
+        "DisplayPropertyNames": [
+          "Name"
+        ]
+      }
     }
   ],
   "NavigationPropertyOneToManyTables": [],

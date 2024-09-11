@@ -3,8 +3,9 @@
 	<texts>
 
 		<text name="Description">Mô Tả</text>
-		
-		
+		<text name="{0}IsRequired">{0} bắt buộc.</text>
+
+
 		<!--CategoryPromotions-->
 		<text name="CategoryPromotions">Thể loại chương trình</text>
 		<text name="CategoryPromotion">Thể loại chương trình</text>
@@ -34,7 +35,7 @@
 		<text name="StartDateRange">Phạm vi ngày bắt đầu</text>
 		<text name="EndDateRange">Phạm vi ngày kết thúc</text>
 		<text name="PickCategoryPromotion">Chọn chương trình</text>
-
+		<text name="CategoryPromotionName">Tên chương trình</text>
 		<!--Products-->
 		<text name="ProductTypeName">Loại sản phẩm</text>
 		<text name="PickProductType">Chọn loại sản phẩm</text>

@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="CategoryPromotionName">Category promotion name</text>
+
     <text name="PickCategoryPromotion">Pick category promotion</text>
 
     <text name="PromotionCode">Promotion code</text>

@@ -57,6 +57,7 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Controllers
             {
                 ProductPromotion = getProductPromotionForEditOutput.ProductPromotion,
                 ProductProductName = getProductPromotionForEditOutput.ProductProductName,
+                CategoryPromotionName = getProductPromotionForEditOutput.CategoryPromotionName,
 
             };
 
@@ -72,6 +73,9 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Controllers
                 ProductPromotion = getProductPromotionForViewDto.ProductPromotion
                 ,
                 ProductProductName = getProductPromotionForViewDto.ProductProductName
+
+                ,
+                CategoryPromotionName = getProductPromotionForViewDto.CategoryPromotionName
 
             };
 
@@ -89,6 +93,18 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Controllers
             };
 
             return PartialView("_ProductPromotionProductLookupTableModal", viewModel);
+        }
+        [AbpMvcAuthorize(AppPermissions.Pages_Administration_ProductPromotions_Create, AppPermissions.Pages_Administration_ProductPromotions_Edit)]
+        public PartialViewResult CategoryPromotionLookupTableModal(int? id, string displayName)
+        {
+            var viewModel = new ProductPromotionCategoryPromotionLookupTableViewModel()
+            {
+                Id = id,
+                DisplayName = displayName,
+                FilterText = ""
+            };
+
+            return PartialView("_ProductPromotionCategoryPromotionLookupTableModal", viewModel);
         }
 
     }

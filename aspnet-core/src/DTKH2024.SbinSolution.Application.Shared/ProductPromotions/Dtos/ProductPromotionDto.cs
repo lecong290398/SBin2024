@@ -21,5 +21,7 @@ namespace DTKH2024.SbinSolution.ProductPromotions.Dtos
 
         public int ProductId { get; set; }
 
+        public int CategoryPromotionId { get; set; }
+
     }
 }

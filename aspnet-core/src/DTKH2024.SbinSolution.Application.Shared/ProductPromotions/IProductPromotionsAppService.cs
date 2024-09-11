@@ -23,5 +23,7 @@ namespace DTKH2024.SbinSolution.ProductPromotions
 
         Task<PagedResultDto<ProductPromotionProductLookupTableDto>> GetAllProductForLookupTable(GetAllForLookupTableInput input);
 
+        Task<PagedResultDto<ProductPromotionCategoryPromotionLookupTableDto>> GetAllCategoryPromotionForLookupTable(GetAllForLookupTableInput input);
+
     }
 }

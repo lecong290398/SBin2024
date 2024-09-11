@@ -20,5 +20,7 @@ namespace DTKH2024.SbinSolution.ProductPromotions.Dtos
 
         public string ProductProductNameFilter { get; set; }
 
+        public string CategoryPromotionNameFilter { get; set; }
+
     }
 }

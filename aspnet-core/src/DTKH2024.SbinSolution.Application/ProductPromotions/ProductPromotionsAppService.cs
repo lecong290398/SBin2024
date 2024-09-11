@@ -1,4 +1,5 @@
 ﻿using DTKH2024.SbinSolution.Products;
+using DTKH2024.SbinSolution.CategoryPromotions;
 
 using System;
 using System.Linq;
@@ -26,12 +27,14 @@ namespace DTKH2024.SbinSolution.ProductPromotions
         private readonly IRepository<ProductPromotion> _productPromotionRepository;
         private readonly IProductPromotionsExcelExporter _productPromotionsExcelExporter;
         private readonly IRepository<Product, int> _lookup_productRepository;
+        private readonly IRepository<CategoryPromotion, int> _lookup_categoryPromotionRepository;
 
-        public ProductPromotionsAppService(IRepository<ProductPromotion> productPromotionRepository, IProductPromotionsExcelExporter productPromotionsExcelExporter, IRepository<Product, int> lookup_productRepository)
+        public ProductPromotionsAppService(IRepository<ProductPromotion> productPromotionRepository, IProductPromotionsExcelExporter productPromotionsExcelExporter, IRepository<Product, int> lookup_productRepository, IRepository<CategoryPromotion, int> lookup_categoryPromotionRepository)
         {
             _productPromotionRepository = productPromotionRepository;
             _productPromotionsExcelExporter = productPromotionsExcelExporter;
             _lookup_productRepository = lookup_productRepository;
+            _lookup_categoryPromotionRepository = lookup_categoryPromotionRepository;
 
         }
 
@@ -40,6 +43,7 @@ namespace DTKH2024.SbinSolution.ProductPromotions
 
             var filteredProductPromotions = _productPromotionRepository.GetAll()
                         .Include(e => e.ProductFk)
+                        .Include(e => e.CategoryPromotionFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.PromotionCode.Contains(input.Filter) || e.Description.Contains(input.Filter))
                         .WhereIf(input.MinPointFilter != null, e => e.Point >= input.MinPointFilter)
                         .WhereIf(input.MaxPointFilter != null, e => e.Point <= input.MaxPointFilter)
@@ -48,7 +52,8 @@ namespace DTKH2024.SbinSolution.ProductPromotions
                         .WhereIf(input.MinEndDateFilter != null, e => e.EndDate >= input.MinEndDateFilter)
                         .WhereIf(input.MaxEndDateFilter != null, e => e.EndDate <= input.MaxEndDateFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.PromotionCodeFilter), e => e.PromotionCode.Contains(input.PromotionCodeFilter))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.ProductProductNameFilter), e => e.ProductFk != null && e.ProductFk.ProductName == input.ProductProductNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.ProductProductNameFilter), e => e.ProductFk != null && e.ProductFk.ProductName == input.ProductProductNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.CategoryPromotionNameFilter), e => e.CategoryPromotionFk != null && e.CategoryPromotionFk.Name == input.CategoryPromotionNameFilter);
 
             var pagedAndFilteredProductPromotions = filteredProductPromotions
                 .OrderBy(input.Sorting ?? "id asc")
@@ -57,6 +62,9 @@ namespace DTKH2024.SbinSolution.ProductPromotions
             var productPromotions = from o in pagedAndFilteredProductPromotions
                                     join o1 in _lookup_productRepository.GetAll() on o.ProductId equals o1.Id into j1
                                     from s1 in j1.DefaultIfEmpty()
+
+                                    join o2 in _lookup_categoryPromotionRepository.GetAll() on o.CategoryPromotionId equals o2.Id into j2
+                                    from s2 in j2.DefaultIfEmpty()
 
                                     select new
                                     {
@@ -69,7 +77,8 @@ namespace DTKH2024.SbinSolution.ProductPromotions
                                         o.PromotionCode,
                                         o.Description,
                                         Id = o.Id,
-                                        ProductProductName = s1 == null || s1.ProductName == null ? "" : s1.ProductName.ToString()
+                                        ProductProductName = s1 == null || s1.ProductName == null ? "" : s1.ProductName.ToString(),
+                                        CategoryPromotionName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
                                     };
 
             var totalCount = await filteredProductPromotions.CountAsync();
@@ -93,7 +102,8 @@ namespace DTKH2024.SbinSolution.ProductPromotions
                         Description = o.Description,
                         Id = o.Id,
                     },
-                    ProductProductName = o.ProductProductName
+                    ProductProductName = o.ProductProductName,
+                    CategoryPromotionName = o.CategoryPromotionName
                 };
 
                 results.Add(res);
@@ -118,6 +128,12 @@ namespace DTKH2024.SbinSolution.ProductPromotions
                 output.ProductProductName = _lookupProduct?.ProductName?.ToString();
             }
 
+            if (output.ProductPromotion.CategoryPromotionId != null)
+            {
+                var _lookupCategoryPromotion = await _lookup_categoryPromotionRepository.FirstOrDefaultAsync((int)output.ProductPromotion.CategoryPromotionId);
+                output.CategoryPromotionName = _lookupCategoryPromotion?.Name?.ToString();
+            }
+
             return output;
         }
 
@@ -132,6 +148,12 @@ namespace DTKH2024.SbinSolution.ProductPromotions
             {
                 var _lookupProduct = await _lookup_productRepository.FirstOrDefaultAsync((int)output.ProductPromotion.ProductId);
                 output.ProductProductName = _lookupProduct?.ProductName?.ToString();
+            }
+
+            if (output.ProductPromotion.CategoryPromotionId != null)
+            {
+                var _lookupCategoryPromotion = await _lookup_categoryPromotionRepository.FirstOrDefaultAsync((int)output.ProductPromotion.CategoryPromotionId);
+                output.CategoryPromotionName = _lookupCategoryPromotion?.Name?.ToString();
             }
 
             return output;
@@ -177,6 +199,7 @@ namespace DTKH2024.SbinSolution.ProductPromotions
 
             var filteredProductPromotions = _productPromotionRepository.GetAll()
                         .Include(e => e.ProductFk)
+                        .Include(e => e.CategoryPromotionFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.PromotionCode.Contains(input.Filter) || e.Description.Contains(input.Filter))
                         .WhereIf(input.MinPointFilter != null, e => e.Point >= input.MinPointFilter)
                         .WhereIf(input.MaxPointFilter != null, e => e.Point <= input.MaxPointFilter)
@@ -185,11 +208,15 @@ namespace DTKH2024.SbinSolution.ProductPromotions
                         .WhereIf(input.MinEndDateFilter != null, e => e.EndDate >= input.MinEndDateFilter)
                         .WhereIf(input.MaxEndDateFilter != null, e => e.EndDate <= input.MaxEndDateFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.PromotionCodeFilter), e => e.PromotionCode.Contains(input.PromotionCodeFilter))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.ProductProductNameFilter), e => e.ProductFk != null && e.ProductFk.ProductName == input.ProductProductNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.ProductProductNameFilter), e => e.ProductFk != null && e.ProductFk.ProductName == input.ProductProductNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.CategoryPromotionNameFilter), e => e.CategoryPromotionFk != null && e.CategoryPromotionFk.Name == input.CategoryPromotionNameFilter);
 
             var query = (from o in filteredProductPromotions
                          join o1 in _lookup_productRepository.GetAll() on o.ProductId equals o1.Id into j1
                          from s1 in j1.DefaultIfEmpty()
+
+                         join o2 in _lookup_categoryPromotionRepository.GetAll() on o.CategoryPromotionId equals o2.Id into j2
+                         from s2 in j2.DefaultIfEmpty()
 
                          select new GetProductPromotionForViewDto()
                          {
@@ -204,7 +231,8 @@ namespace DTKH2024.SbinSolution.ProductPromotions
                                  Description = o.Description,
                                  Id = o.Id
                              },
-                             ProductProductName = s1 == null || s1.ProductName == null ? "" : s1.ProductName.ToString()
+                             ProductProductName = s1 == null || s1.ProductName == null ? "" : s1.ProductName.ToString(),
+                             CategoryPromotionName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
                          });
 
             var productPromotionListDtos = await query.ToListAsync();
@@ -237,6 +265,36 @@ namespace DTKH2024.SbinSolution.ProductPromotions
             }
 
             return new PagedResultDto<ProductPromotionProductLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
+        }
+
+        [AbpAuthorize(AppPermissions.Pages_Administration_ProductPromotions)]
+        public async Task<PagedResultDto<ProductPromotionCategoryPromotionLookupTableDto>> GetAllCategoryPromotionForLookupTable(GetAllForLookupTableInput input)
+        {
+            var query = _lookup_categoryPromotionRepository.GetAll().WhereIf(
+                   !string.IsNullOrWhiteSpace(input.Filter),
+                  e => e.Name != null && e.Name.Contains(input.Filter)
+               );
+
+            var totalCount = await query.CountAsync();
+
+            var categoryPromotionList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<ProductPromotionCategoryPromotionLookupTableDto>();
+            foreach (var categoryPromotion in categoryPromotionList)
+            {
+                lookupTableDtoList.Add(new ProductPromotionCategoryPromotionLookupTableDto
+                {
+                    Id = categoryPromotion.Id,
+                    DisplayName = categoryPromotion.Name?.ToString()
+                });
+            }
+
+            return new PagedResultDto<ProductPromotionCategoryPromotionLookupTableDto>(
                 totalCount,
                 lookupTableDtoList
             );

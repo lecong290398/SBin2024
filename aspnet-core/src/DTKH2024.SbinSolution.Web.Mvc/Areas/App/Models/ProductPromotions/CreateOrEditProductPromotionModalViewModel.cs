@@ -10,6 +10,8 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Models.ProductPromotions
 
         public string ProductProductName { get; set; }
 
+        public string CategoryPromotionName { get; set; }
+
         public bool IsEditMode => ProductPromotion.Id.HasValue;
     }
 }

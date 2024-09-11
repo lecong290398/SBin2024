@@ -34,6 +34,24 @@
             }
 
             <div class="my-3">
+                <label class="form-label" for="CategoryPromotionName">@L("CategoryPromotion")</label>
+                <div class="input-group">
+                    <input class="form-control" id="CategoryPromotionName" name="categoryPromotionName" value="@Model.CategoryPromotionName" type="text" disabled>
+                    <button class="btn btn-primary blue" id="OpenCategoryPromotionLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+                    <button class="btn btn-danger btn-icon" type="button" id="ClearCategoryPromotionNameButton"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+            <input class="form-control" id="ProductPromotion_CategoryPromotionId" value="@Model.ProductPromotion.CategoryPromotionId" type="text" name="categoryPromotionId" required hidden />
+            }
+            else
+            {
+            <input class="form-control" id="ProductPromotion_CategoryPromotionId" value="" type="text" name="categoryPromotionId" required hidden />
+            }
+
+            <div class="my-3">
                 <label class="form-label" for="ProductPromotion_Point">@L("Point")</label>
                 <input class="form-control m-input" id="ProductPromotion_Point" value="@Model.ProductPromotion.Point.ToString(CultureInfo.InvariantCulture)" type="number" name="point" />
             </div>

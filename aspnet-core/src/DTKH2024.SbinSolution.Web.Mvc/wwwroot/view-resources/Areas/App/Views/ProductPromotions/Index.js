@@ -94,6 +94,7 @@
             maxEndDateFilter: getMaxDateFilter($('#MaxEndDateFilterId')),
             promotionCodeFilter: $('#PromotionCodeFilterId').val(),
             productProductNameFilter: $('#ProductProductNameFilterId').val(),
+            categoryPromotionNameFilter: $('#CategoryPromotionNameFilterId').val(),
           };
         },
       },
@@ -196,6 +197,11 @@
           data: 'productProductName',
           name: 'productFk.productName',
         },
+        {
+          targets: 10,
+          data: 'categoryPromotionName',
+          name: 'categoryPromotionFk.name',
+        },
       ],
     });
 
@@ -246,6 +252,7 @@
           maxEndDateFilter: getMaxDateFilter($('#MaxEndDateFilterId')),
           promotionCodeFilter: $('#PromotionCodeFilterId').val(),
           productProductNameFilter: $('#ProductProductNameFilterId').val(),
+          categoryPromotionNameFilter: $('#CategoryPromotionNameFilterId').val(),
         })
         .done(function (result) {
           app.downloadTempFile(result);

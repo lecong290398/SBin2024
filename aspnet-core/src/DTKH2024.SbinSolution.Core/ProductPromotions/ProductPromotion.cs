@@ -1,4 +1,5 @@
 ﻿using DTKH2024.SbinSolution.Products;
+using DTKH2024.SbinSolution.CategoryPromotions;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,6 +30,11 @@ namespace DTKH2024.SbinSolution.ProductPromotions
 
         [ForeignKey("ProductId")]
         public Product ProductFk { get; set; }
+
+        public virtual int CategoryPromotionId { get; set; }
+
+        [ForeignKey("CategoryPromotionId")]
+        public CategoryPromotion CategoryPromotionFk { get; set; }
 
     }
 }

@@ -6,5 +6,7 @@
 
         public string ProductProductName { get; set; }
 
+        public string CategoryPromotionName { get; set; }
+
     }
 }

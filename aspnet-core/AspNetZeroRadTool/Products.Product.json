@@ -1,0 +1,264 @@
+{
+  "IsRegenerate": true,
+  "MenuPosition": "admin",
+  "RelativeNamespace": "Products",
+  "EntityName": "Product",
+  "EntityNamePlural": "Products",
+  "TableName": "Products",
+  "PrimaryKeyType": "int",
+  "BaseClass": "FullAuditedEntity",
+  "EntityHistory": false,
+  "AutoMigration": true,
+  "UpdateDatabase": true,
+  "CreateUserInterface": true,
+  "CreateViewOnly": true,
+  "CreateExcelExport": true,
+  "IsNonModalCRUDPage": false,
+  "IsMasterDetailPage": false,
+  "GenerateOverridableEntity": false,
+  "GenerateUnitTest": false,
+  "GenerateUiTest": false,
+  "PagePermission": {
+    "Host": false,
+    "Tenant": false
+  },
+  "Properties": [
+    {
+      "Name": "ProductName",
+      "Type": "string",
+      "MaxLength": 255,
+      "MinLength": 5,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": true,
+      "Nullable": false,
+      "Regex": "",
+      "IsMultiLingual": false,
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "TimeDescription",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "IsMultiLingual": false,
+      "UserInterface": {
+        "AdvancedFilter": false,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "ApplicableSubjects",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "IsMultiLingual": false,
+      "UserInterface": {
+        "AdvancedFilter": false,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "Regulations",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "IsMultiLingual": false,
+      "UserInterface": {
+        "AdvancedFilter": false,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "UserManual",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "IsMultiLingual": false,
+      "UserInterface": {
+        "AdvancedFilter": false,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "ScopeOfApplication",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "IsMultiLingual": false,
+      "UserInterface": {
+        "AdvancedFilter": false,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "SupportAndComplaints",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "IsMultiLingual": false,
+      "UserInterface": {
+        "AdvancedFilter": false,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "Description",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "IsMultiLingual": false,
+      "UserInterface": {
+        "AdvancedFilter": false,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "Image",
+      "Type": "file",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": true,
+      "Regex": "",
+      "IsMultiLingual": false,
+      "UserInterface": {
+        "AdvancedFilter": false,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    }
+  ],
+  "NavigationProperties": [
+    {
+      "Namespace": "DTKH2024.SbinSolution.ProductTypes",
+      "ForeignEntityName": "ProductType",
+      "ForeignEntityNamePlural": "ProductTypes",
+      "IdType": "int",
+      "IsNullable": false,
+      "PropertyName": "ProductTypeId",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "Dropdown",
+      "DisplayPropertyNameInfos": {
+        "MergeFormat": "{0}",
+        "DisplayPropertyNames": [
+          "Name"
+        ]
+      }
+    },
+    {
+      "Namespace": "DTKH2024.SbinSolution.Brands",
+      "ForeignEntityName": "Brand",
+      "ForeignEntityNamePlural": "Brands",
+      "IdType": "int",
+      "IsNullable": false,
+      "PropertyName": "BrandId",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "Dropdown",
+      "DisplayPropertyNameInfos": {
+        "MergeFormat": "{0}",
+        "DisplayPropertyNames": [
+          "Name"
+        ]
+      }
+    }
+  ],
+  "NavigationPropertyOneToManyTables": [],
+  "EnumDefinitions": [],
+  "DbContext": null
+}

@@ -1,0 +1,47 @@
+﻿
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.ProductPromotions
+@model ProductPromotionViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="ProductPromotionInformationsTab">
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("PromotionName") :</h6>
+                @Model.ProductPromotion.PromotionName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Point") :</h6>
+                @Model.ProductPromotion.Point
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("QuantityCurrent") :</h6>
+                @Model.ProductPromotion.QuantityCurrent
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("QuantityInStock") :</h6>
+                @Model.ProductPromotion.QuantityInStock
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("StartDate") :</h6>
+                @Model.ProductPromotion.StartDate
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("EndDate") :</h6>
+                @Model.ProductPromotion.EndDate
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("Product")) @L("ProductName") :</h6>
+                @Model.ProductProductName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")

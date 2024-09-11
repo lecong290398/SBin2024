@@ -1,0 +1,70 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.ProductPromotions
+@model CreateOrEditProductPromotionModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditProductPromotion")) : L("CreateNewProductPromotion")))
+
+<div class="modal-body">
+    <div id="ProductPromotionInformationsTab">
+        <form name="ProductPromotionInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.ProductPromotion.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="ProductProductName">@L("Product")</label>
+                <div class="input-group">
+                    <input class="form-control" id="ProductProductName" name="productProductName" value="@Model.ProductProductName" type="text" disabled>
+                    <button class="btn btn-primary blue" id="OpenProductLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+                    <button class="btn btn-danger btn-icon" type="button" id="ClearProductProductNameButton"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+            <input class="form-control" id="ProductPromotion_ProductId" value="@Model.ProductPromotion.ProductId" type="text" name="productId" required hidden />
+            }
+            else
+            {
+            <input class="form-control" id="ProductPromotion_ProductId" value="" type="text" name="productId" required hidden />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="ProductPromotion_PromotionName">@L("PromotionName")</label>
+                <input class="form-control" id="ProductPromotion_PromotionName" value="@Model.ProductPromotion.PromotionName" type="text" name="promotionName" required maxlength="@DTKH2024.SbinSolution.ProductPromotions.ProductPromotionConsts.MaxPromotionNameLength" minlength="@DTKH2024.SbinSolution.ProductPromotions.ProductPromotionConsts.MinPromotionNameLength" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="ProductPromotion_Point">@L("Point")</label>
+                <input class="form-control m-input" id="ProductPromotion_Point" value="@Model.ProductPromotion.Point.ToString(CultureInfo.InvariantCulture)" type="number" name="point" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="ProductPromotion_QuantityCurrent">@L("QuantityCurrent")</label>
+                <input class="form-control m-input" id="ProductPromotion_QuantityCurrent" value="@Model.ProductPromotion.QuantityCurrent.ToString(CultureInfo.InvariantCulture)" type="number" name="quantityCurrent" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="ProductPromotion_QuantityInStock">@L("QuantityInStock")</label>
+                <input class="form-control m-input" id="ProductPromotion_QuantityInStock" value="@Model.ProductPromotion.QuantityInStock.ToString(CultureInfo.InvariantCulture)" type="number" name="quantityInStock" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="ProductPromotion_StartDate">@L("StartDate")</label>
+                <input class="form-control m-input date-picker" id="ProductPromotion_StartDate" type="text" name="startDate" value="@Model.ProductPromotion.StartDate" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="ProductPromotion_EndDate">@L("EndDate")</label>
+                <input class="form-control m-input date-picker" id="ProductPromotion_EndDate" type="text" name="endDate" value="@Model.ProductPromotion.EndDate" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

@@ -51,7 +51,23 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                  .AddItem(new MenuItemDefinition(
                      AppPageNames.Common.ProductManagement,
                      L("ProductManagement"),
-                     icon: ("fa-solid fa-product-hunt"))
+                     icon: ("fa-brands fa-product-hunt"))
+                         .AddItem(new MenuItemDefinition(
+                                AppPageNames.Common.ProductPromotions,
+                                L("ProductPromotions"),
+                                url: "App/ProductPromotions",
+                                icon: "fa-solid fa-hand-holding-heart",
+                                permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_ProductPromotions)
+                            )
+                        )
+                         .AddItem(new MenuItemDefinition(
+                                AppPageNames.Common.Products,
+                                L("Products"),
+                                url: "App/Products",
+                                icon: "fa-solid fa-box",
+                                permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Products)
+                            )
+                        )
                           .AddItem(new MenuItemDefinition(
                                 AppPageNames.Common.ProductTypes,
                                 L("ProductTypes"),

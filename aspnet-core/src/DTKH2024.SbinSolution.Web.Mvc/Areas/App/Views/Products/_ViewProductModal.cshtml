@@ -1,0 +1,66 @@
+﻿
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Products
+@model ProductViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="ProductInformationsTab">
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("ProductName") :</h6>
+                @Model.Product.ProductName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("TimeDescription") :</h6>
+                @Model.Product.TimeDescription
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("ApplicableSubjects") :</h6>
+                @Model.Product.ApplicableSubjects
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Regulations") :</h6>
+                @Model.Product.Regulations
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("UserManual") :</h6>
+                @Model.Product.UserManual
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("ScopeOfApplication") :</h6>
+                @Model.Product.ScopeOfApplication
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("SupportAndComplaints") :</h6>
+                @Model.Product.SupportAndComplaints
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Description") :</h6>
+                @Model.Product.Description
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Image") :</h6>
+                @if (Model.Product.Image.HasValue)
+                {
+                <a href="@(" /File/DownloadBinaryFile?id=" + Model.Product.Image)" target="_blank">@Model.Product.ImageFileName</a>
+                }
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("ProductType")) @L("Name") :</h6>
+                @Model.ProductTypeName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("Brand")) @L("Name") :</h6>
+                @Model.BrandName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")

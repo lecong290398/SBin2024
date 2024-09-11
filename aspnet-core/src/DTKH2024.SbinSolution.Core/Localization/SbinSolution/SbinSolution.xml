@@ -1,6 +1,45 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="EndDateRange">End date range</text>
+    <text name="ProductPromotions">Product promotions</text>
+    <text name="ProductPromotion">Product promotion</text>
+    <text name="DTKH2024.SbinSolution.ProductPromotions.ProductPromotion">ProductPromotion</text>
+    <text name="PromotionName">Promotion name</text>
+    <text name="Point">Point</text>
+    <text name="QuantityCurrent">Quantity current</text>
+    <text name="QuantityInStock">Quantity in stock</text>
+    <text name="StartDate">Start date</text>
+    <text name="EndDate">End date</text>
+    <text name="ProductPromotionsHeaderInfo">Product promotions header info</text>
+    <text name="CreateNewProductPromotion">Create new product promotion</text>
+    <text name="EditProductPromotion">Edit product promotion</text>
+    <text name="DeleteProductPromotion">Delete product promotion</text>
+    <text name="ProductProductName">Product product name</text>
+    <text name="PickProduct">Pick product</text>
+    <text name="StartDateRange">Start date range</text>
+
+    <text name="BrandName">Brand name</text>
+    <text name="PickBrand">Pick brand</text>
+    <text name="SelectABrand">Select a brand</text>
+    <text name="Products">Products</text>
+    <text name="Product">Product</text>
+    <text name="DTKH2024.SbinSolution.Products.Product">Product</text>
+    <text name="ProductName">Product name</text>
+    <text name="TimeDescription">Time description</text>
+    <text name="ApplicableSubjects">Applicable subjects</text>
+    <text name="Regulations">Regulations</text>
+    <text name="UserManual">User manual</text>
+    <text name="ScopeOfApplication">Scope of application</text>
+    <text name="SupportAndComplaints">Support and complaints</text>
+    <text name="ProductsHeaderInfo">Products header info</text>
+    <text name="CreateNewProduct">Create new product</text>
+    <text name="EditProduct">Edit product</text>
+    <text name="DeleteProduct">Delete product</text>
+    <text name="ProductTypeName">Product type name</text>
+    <text name="PickProductType">Pick product type</text>
+    <text name="SelectAProductType">Select a product type</text>
+
     <text name="ProductTypes">Product types</text>
     <text name="ProductType">Product type</text>
     <text name="DTKH2024.SbinSolution.ProductTypes.ProductType">ProductType</text>

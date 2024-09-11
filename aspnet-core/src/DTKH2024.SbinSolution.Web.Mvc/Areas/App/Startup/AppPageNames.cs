@@ -4,6 +4,8 @@
     {
         public static class Common
         {
+            public const string ProductPromotions = "Administration.ProductPromotions.ProductPromotions";
+            public const string Products = "Administration.Products.Products";
             public const string ProductTypes = "Administration.ProductTypes.ProductTypes";
             public const string HistoryTypes = "Administration.HistoryTypes.HistoryTypes";
             public const string TransactionStatuses = "Administration.TransactionStatuses.TransactionStatuses";

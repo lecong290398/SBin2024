@@ -4,6 +4,7 @@ using DTKH2024.SbinSolution.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DTKH2024.SbinSolution.Migrations
 {
     [DbContext(typeof(SbinSolutionDbContext))]
-    partial class SbinSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240911113006_Add_Products")]
+    partial class Add_Products
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2534,65 +2537,6 @@ namespace DTKH2024.SbinSolution.Migrations
                     b.ToTable("OpenIddictTokens", (string)null);
                 });
 
-            modelBuilder.Entity("DTKH2024.SbinSolution.ProductPromotions.ProductPromotion", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("CreatorUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("DeleterUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<long?>("LastModifierUserId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Point")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProductId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PromotionName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
-
-                    b.Property<int>("QuantityCurrent")
-                        .HasColumnType("int");
-
-                    b.Property<int>("QuantityInStock")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("ProductPromotions");
-                });
-
             modelBuilder.Entity("DTKH2024.SbinSolution.ProductTypes.ProductType", b =>
                 {
                     b.Property<int>("Id")
@@ -2647,9 +2591,6 @@ namespace DTKH2024.SbinSolution.Migrations
                     b.Property<string>("ApplicableSubjects")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("BrandId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -2665,8 +2606,8 @@ namespace DTKH2024.SbinSolution.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("Image")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("Image")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -2701,8 +2642,6 @@ namespace DTKH2024.SbinSolution.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BrandId");
 
                     b.HasIndex("ProductTypeId");
 
@@ -3196,32 +3135,13 @@ namespace DTKH2024.SbinSolution.Migrations
                         .HasForeignKey("AuthorizationId");
                 });
 
-            modelBuilder.Entity("DTKH2024.SbinSolution.ProductPromotions.ProductPromotion", b =>
-                {
-                    b.HasOne("DTKH2024.SbinSolution.Products.Product", "ProductFk")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("ProductFk");
-                });
-
             modelBuilder.Entity("DTKH2024.SbinSolution.Products.Product", b =>
                 {
-                    b.HasOne("DTKH2024.SbinSolution.Brands.Brand", "BrandFk")
-                        .WithMany()
-                        .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("DTKH2024.SbinSolution.ProductTypes.ProductType", "ProductTypeFk")
                         .WithMany()
                         .HasForeignKey("ProductTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("BrandFk");
 
                     b.Navigation("ProductTypeFk");
                 });

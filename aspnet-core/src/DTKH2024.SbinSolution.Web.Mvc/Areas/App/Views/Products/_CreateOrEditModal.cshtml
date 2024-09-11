@@ -1,0 +1,93 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Products
+@model CreateOrEditProductModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditProduct")) : L("CreateNewProduct")))
+
+<div class="modal-body">
+    <div id="ProductInformationsTab">
+        <form name="ProductInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.Product.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="productTypeId">@L("ProductType")</label>
+                @Html.DropDownList("productTypeId", new SelectList(Model.ProductProductTypeList,"Id","DisplayName", (Model.IsEditMode ? Model.Product.ProductTypeId.ToString() : "")),@L("SelectAProductType"), new { @class = "form-control" , @required="required" })
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="brandId">@L("Brand")</label>
+                @Html.DropDownList("brandId", new SelectList(Model.ProductBrandList,"Id","DisplayName", (Model.IsEditMode ? Model.Product.BrandId.ToString() : "")),@L("SelectABrand"), new { @class = "form-control" , @required="required" })
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Product_ProductName">@L("ProductName")</label>
+                <input class="form-control" id="Product_ProductName" value="@Model.Product.ProductName" type="text" name="productName" required maxlength="@DTKH2024.SbinSolution.Products.ProductConsts.MaxProductNameLength" minlength="@DTKH2024.SbinSolution.Products.ProductConsts.MinProductNameLength" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Product_TimeDescription">@L("TimeDescription")</label>
+                <input class="form-control" id="Product_TimeDescription" value="@Model.Product.TimeDescription" type="text" name="timeDescription" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Product_ApplicableSubjects">@L("ApplicableSubjects")</label>
+                <input class="form-control" id="Product_ApplicableSubjects" value="@Model.Product.ApplicableSubjects" type="text" name="applicableSubjects" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Product_Regulations">@L("Regulations")</label>
+                <input class="form-control" id="Product_Regulations" value="@Model.Product.Regulations" type="text" name="regulations" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Product_UserManual">@L("UserManual")</label>
+                <input class="form-control" id="Product_UserManual" value="@Model.Product.UserManual" type="text" name="userManual" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Product_ScopeOfApplication">@L("ScopeOfApplication")</label>
+                <input class="form-control" id="Product_ScopeOfApplication" value="@Model.Product.ScopeOfApplication" type="text" name="scopeOfApplication" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Product_SupportAndComplaints">@L("SupportAndComplaints")</label>
+                <input class="form-control" id="Product_SupportAndComplaints" value="@Model.Product.SupportAndComplaints" type="text" name="supportAndComplaints" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="Product_Description">@L("Description")</label>
+                <input class="form-control" id="Product_Description" value="@Model.Product.Description" type="text" name="description" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" id="inputGroupFileAddon01">@L("Image")</label>
+                <input type="file" class="form-control" name="Product_Image" id="Product_Image" aria-describedby="inputGroupFileAddon01" accept="@Model.ImageFileAcceptedTypes" />
+
+                <div id="div_current_file" style="background-color: #e5e5e5; padding: 5px @(Model.ImageFileName.IsNullOrEmpty()?" ;display:none":"")">
+                    <span class="font-weight-bold">@L("CurrentFile") :</span>
+                    <div class="alert alert-custom alert-white alert-bold m-1" role="alert">
+                        <div class="alert-text">
+                            <a href="@(" /File/DownloadBinaryFile?id=" + Model.Product.Image)" target="_blank">@Model.ImageFileName</a>
+                        </div>
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close" id="Product_Image_Remove">
+                                <span aria-hidden="true">
+                                    <i class="la la-close fa-1x"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

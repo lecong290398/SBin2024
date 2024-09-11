@@ -3,6 +3,47 @@
 	<texts>
 
 		<text name="Description">Mô Tả</text>
+
+		<!--ProductPromotions-->
+		<text name="ProductPromotions">Chương trình bán hàng</text>
+		<text name="ProductPromotion">Chương trình bán hàng</text>
+		<text name="DTKH2024.SbinSolution.ProductPromotions.ProductPromotion">Chương trình bán hàng</text>
+		<text name="PromotionName">Tên chương trình</text>
+		<text name="Point">Diểm quy đổi</text>
+		<text name="QuantityCurrent">Sl hiện tại</text>
+		<text name="QuantityInStock">Sl tồn</text>
+		<text name="StartDate">Ngày bắt đầu</text>
+		<text name="EndDate">Ngày kết thúc</text>
+		<text name="ProductPromotionsHeaderInfo">Cấu hình chương trình bán hàng</text>
+		<text name="CreateNewProductPromotion">Thêm mới</text>
+		<text name="EditProductPromotion">Chỉnh sửa</text>
+		<text name="DeleteProductPromotion">Xóa</text>
+		<text name="ProductProductName">Sản phẩm</text>
+		<text name="PickProduct">Chọn sản phẩm</text>
+		<text name="StartDateRange">Phạm vi ngày bắt đầu</text>
+		<text name="EndDateRange">Phạm vi ngày kết thúc</text>
+
+		<!--Products-->
+		<text name="ProductTypeName">Loại sản phẩm</text>
+		<text name="PickProductType">Chọn loại sản phẩm</text>
+		<text name="SelectAProductType">Chọn loại sản phẩm</text>
+		<text name="Products">Sản phẩm</text>
+		<text name="Product">Sản phẩm</text>
+		<text name="DTKH2024.SbinSolution.Products.Product">Sản phẩm</text>
+		<text name="ProductName">Tên sản phẩm</text>
+		<text name="TimeDescription">Mô tả thời gian</text>
+		<text name="ApplicableSubjects">Đối tượng áp dụng</text>
+		<text name="Regulations">Quy định</text>
+		<text name="UserManual">Hướng dẫn sử dụng</text>
+		<text name="ScopeOfApplication">Phạm vi áp dụng</text>
+		<text name="SupportAndComplaints">Hỗ trợ và khiếu nại</text>
+		<text name="ProductsHeaderInfo">Cấu hình sản phẩm</text>
+		<text name="CreateNewProduct">Thêm mới sản phẩm</text>
+		<text name="EditProduct">Chỉnh sửa sản phẩm</text>
+		<text name="DeleteProduct">Xóa sản phẩm</text>
+		<text name="BrandName">Thương hiệu</text>
+		<text name="PickBrand">Chọn thương hiệu</text>
+		<text name="SelectABrand">Chọn thương hiệu</text>
 		<!--ProductTypes-->
 		<text name="ProductTypes">Loại sản phẩm</text>
 		<text name="ProductType">Loại sản phẩm</text>

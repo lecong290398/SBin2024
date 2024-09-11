@@ -1,4 +1,6 @@
-﻿using DTKH2024.SbinSolution.ProductTypes;
+﻿using DTKH2024.SbinSolution.ProductPromotions;
+using DTKH2024.SbinSolution.Products;
+using DTKH2024.SbinSolution.ProductTypes;
 using DTKH2024.SbinSolution.HistoryTypes;
 using DTKH2024.SbinSolution.TransactionStatuses;
 using DTKH2024.SbinSolution.BenefitsRankLevels;
@@ -30,6 +32,10 @@ namespace DTKH2024.SbinSolution.EntityFrameworkCore
 {
     public class SbinSolutionDbContext : AbpZeroDbContext<Tenant, Role, User, SbinSolutionDbContext>, IOpenIddictDbContext
     {
+        public virtual DbSet<ProductPromotion> ProductPromotions { get; set; }
+
+        public virtual DbSet<Product> Products { get; set; }
+
         public virtual DbSet<ProductType> ProductTypes { get; set; }
 
         public virtual DbSet<HistoryType> HistoryTypes { get; set; }

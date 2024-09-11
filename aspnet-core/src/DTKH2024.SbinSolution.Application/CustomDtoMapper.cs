@@ -1,4 +1,6 @@
-﻿using DTKH2024.SbinSolution.HistoryTypes.Dtos;
+﻿using DTKH2024.SbinSolution.ProductTypes.Dtos;
+using DTKH2024.SbinSolution.ProductTypes;
+using DTKH2024.SbinSolution.HistoryTypes.Dtos;
 using DTKH2024.SbinSolution.HistoryTypes;
 using DTKH2024.SbinSolution.TransactionStatuses.Dtos;
 using DTKH2024.SbinSolution.TransactionStatuses;
@@ -63,6 +65,8 @@ namespace DTKH2024.SbinSolution
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditProductTypeDto, ProductType>().ReverseMap();
+            configuration.CreateMap<ProductTypeDto, ProductType>().ReverseMap();
             configuration.CreateMap<CreateOrEditHistoryTypeDto, HistoryType>().ReverseMap();
             configuration.CreateMap<HistoryTypeDto, HistoryType>().ReverseMap();
             configuration.CreateMap<CreateOrEditTransactionStatusDto, TransactionStatus>().ReverseMap();

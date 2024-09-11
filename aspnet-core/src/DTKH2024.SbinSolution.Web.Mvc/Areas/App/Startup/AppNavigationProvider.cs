@@ -48,6 +48,20 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                         icon: "flaticon-interface-8"
                     )
 
+                 .AddItem(new MenuItemDefinition(
+                     AppPageNames.Common.ProductManagement,
+                     L("ProductManagement"),
+                     icon: ("fa-solid fa-product-hunt"))
+                          .AddItem(new MenuItemDefinition(
+                                AppPageNames.Common.ProductTypes,
+                                L("ProductTypes"),
+                                url: "App/ProductTypes",
+                                icon: "flaticon-more",
+                                permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_ProductTypes)
+                            )
+                        )
+                 )
+
                .AddItem(new MenuItemDefinition(
                      AppPageNames.Common.Ranks,
                      L("Ranks"),

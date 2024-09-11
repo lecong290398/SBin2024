@@ -33,6 +33,11 @@ namespace DTKH2024.SbinSolution.Authorization
 
             var administration = pages.CreateChildPermission(AppPermissions.Pages_Administration, L("Administration"));
 
+            var productTypes = administration.CreateChildPermission(AppPermissions.Pages_Administration_ProductTypes, L("ProductTypes"));
+            productTypes.CreateChildPermission(AppPermissions.Pages_Administration_ProductTypes_Create, L("CreateNewProductType"));
+            productTypes.CreateChildPermission(AppPermissions.Pages_Administration_ProductTypes_Edit, L("EditProductType"));
+            productTypes.CreateChildPermission(AppPermissions.Pages_Administration_ProductTypes_Delete, L("DeleteProductType"));
+
             var historyTypes = administration.CreateChildPermission(AppPermissions.Pages_Administration_HistoryTypes, L("HistoryTypes"));
             historyTypes.CreateChildPermission(AppPermissions.Pages_Administration_HistoryTypes_Create, L("CreateNewHistoryType"));
             historyTypes.CreateChildPermission(AppPermissions.Pages_Administration_HistoryTypes_Edit, L("EditHistoryType"));

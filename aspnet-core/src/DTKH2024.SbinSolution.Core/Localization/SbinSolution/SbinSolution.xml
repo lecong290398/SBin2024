@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="ProductTypes">Product types</text>
+    <text name="ProductType">Product type</text>
+    <text name="DTKH2024.SbinSolution.ProductTypes.ProductType">ProductType</text>
+    <text name="ProductTypesHeaderInfo">Product types header info</text>
+    <text name="CreateNewProductType">Create new product type</text>
+    <text name="EditProductType">Edit product type</text>
+    <text name="DeleteProductType">Delete product type</text>
+
     <text name="HistoryTypes">History types</text>
     <text name="HistoryType">History type</text>
     <text name="DTKH2024.SbinSolution.HistoryTypes.HistoryType">HistoryType</text>
@@ -1356,7 +1364,7 @@
 	  <text name="SettingNotify">Notification</text>
 	  <text name="Categories">Categories</text>
 	  <text name="Ranks">Ranks</text>
-
+	  <text name="ProductManagement">Product management</text>
 	  <text name="StatusActvice">Actvice</text>
 	  <text name="StatusNotActvice">Not Actvice</text>
 

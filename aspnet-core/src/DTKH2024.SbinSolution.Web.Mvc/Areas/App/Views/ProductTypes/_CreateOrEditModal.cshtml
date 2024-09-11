@@ -1,0 +1,37 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.ProductTypes
+@model CreateOrEditProductTypeModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditProductType")) : L("CreateNewProductType")))
+
+<div class="modal-body">
+    <div id="ProductTypeInformationsTab">
+        <form name="ProductTypeInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.ProductType.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="ProductType_Name">@L("Name")</label>
+                <input class="form-control" id="ProductType_Name" value="@Model.ProductType.Name" type="text" name="name" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="ProductType_Description">@L("Description")</label>
+                <input class="form-control" id="ProductType_Description" value="@Model.ProductType.Description" type="text" name="description" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="ProductType_Color">@L("Color")</label>
+                <input class="form-control" id="ProductType_Color" value="@Model.ProductType.Color" type="text" name="color" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

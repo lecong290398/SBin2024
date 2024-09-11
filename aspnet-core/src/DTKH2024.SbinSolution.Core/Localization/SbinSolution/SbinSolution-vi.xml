@@ -3,7 +3,15 @@
 	<texts>
 
 		<text name="Description">Mô Tả</text>
-		
+		<!--ProductTypes-->
+		<text name="ProductTypes">Loại sản phẩm</text>
+		<text name="ProductType">Loại sản phẩm</text>
+		<text name="DTKH2024.SbinSolution.ProductTypes.ProductType">Loại sản phẩm</text>
+		<text name="ProductTypesHeaderInfo">Cấu hình loại sản phẩm</text>
+		<text name="CreateNewProductType">Thêm mới</text>
+		<text name="EditProductType">Chỉnh sửa loại sản phẩm</text>
+		<text name="DeleteProductType">Xóa loại sản phẩm</text>
+
 		<!--HistoryTypes-->
 		<text name="HistoryTypes">Loại lịch sử mua hàng</text>
 		<text name="HistoryType">Loại lịch sử mua hàng</text>
@@ -867,5 +875,6 @@
 		<text name="Categories">Danh mục sản phẩm</text>
 		<text name="Ranks">Cấu hình Rank</text>
 		<text name="Username">Tài khoản</text>
+		<text name="ProductManagement">Quản lý sản phẩm</text>
 	</texts>
 </localizationDictionary>

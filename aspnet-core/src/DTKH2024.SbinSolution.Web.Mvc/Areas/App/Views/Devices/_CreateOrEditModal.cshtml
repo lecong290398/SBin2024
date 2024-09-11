@@ -60,6 +60,11 @@
             </div>
 
             <div class="my-3">
+                <label class="form-label" for="Device_PercentStatusOrther">@L("PercentStatusOrther")</label>
+                <input class="form-control m-input" id="Device_PercentStatusOrther" value="@Model.Device.PercentStatusOrther.ToString(CultureInfo.InvariantCulture)" type="number" name="percentStatusOrther" />
+            </div>
+
+            <div class="my-3">
                 <label class="form-label" for="Device_ErrorPoint">@L("ErrorPoint")</label>
                 <input class="form-control m-input" id="Device_ErrorPoint" value="@Model.Device.ErrorPoint.ToString(CultureInfo.InvariantCulture)" type="number" name="errorPoint" />
             </div>

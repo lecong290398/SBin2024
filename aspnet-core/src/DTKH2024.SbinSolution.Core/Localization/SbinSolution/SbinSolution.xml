@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+
     <text name="EndDateRange">End date range</text>
     <text name="ProductPromotions">Product promotions</text>
     <text name="ProductPromotion">Product promotion</text>
@@ -104,8 +105,9 @@
     <text name="StatusDeviceName">Status device name</text>
     <text name="PickStatusDevice">Pick status device</text>
     <text name="SelectAStatusDevice">Select a status device</text>
+	<text name="PercentStatusOrther">Percent status orther</text>
 
-    <text name="StatusDevices">Status devices</text>
+	  <text name="StatusDevices">Status devices</text>
     <text name="StatusDevice">Status device</text>
     <text name="DTKH2024.SbinSolution.StatusDevices.StatusDevice">StatusDevice</text>
     <text name="Color">Color</text>

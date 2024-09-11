@@ -1,5 +1,5 @@
 {
-  "IsRegenerate": false,
+  "IsRegenerate": true,
   "MenuPosition": "admin",
   "RelativeNamespace": "Devices",
   "EntityName": "Device",
@@ -48,8 +48,8 @@
     {
       "Name": "PlastisPoint",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -70,8 +70,8 @@
     {
       "Name": "SensorPlastisAvailable",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -92,8 +92,8 @@
     {
       "Name": "PercentStatusPlastis",
       "Type": "int",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -114,8 +114,8 @@
     {
       "Name": "MetalPoint",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -136,8 +136,8 @@
     {
       "Name": "SensorMetalAvailable",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -157,6 +157,28 @@
     },
     {
       "Name": "PercentStatusMetal",
+      "Type": "int",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "IsMultiLingual": false,
+      "UserInterface": {
+        "AdvancedFilter": false,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "PercentStatusOrther",
       "Type": "int",
       "MaxLength": 0,
       "MinLength": 0,

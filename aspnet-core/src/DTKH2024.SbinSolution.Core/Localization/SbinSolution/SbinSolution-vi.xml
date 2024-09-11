@@ -9,12 +9,12 @@
 		<text name="ProductPromotion">Chương trình bán hàng</text>
 		<text name="DTKH2024.SbinSolution.ProductPromotions.ProductPromotion">Chương trình bán hàng</text>
 		<text name="PromotionName">Tên chương trình</text>
-		<text name="Point">Diểm quy đổi</text>
+		<text name="Point">Điểm đổi thưởng</text>
 		<text name="QuantityCurrent">Sl hiện tại</text>
 		<text name="QuantityInStock">Sl tồn</text>
 		<text name="StartDate">Ngày bắt đầu</text>
 		<text name="EndDate">Ngày kết thúc</text>
-		<text name="ProductPromotionsHeaderInfo">Cấu hình chương trình bán hàng</text>
+		<text name="ProductPromotionsHeaderInfo">Cấu hình chương trình bán hàng - sản phẩm</text>
 		<text name="CreateNewProductPromotion">Thêm mới</text>
 		<text name="EditProductPromotion">Chỉnh sửa</text>
 		<text name="DeleteProductPromotion">Xóa</text>
@@ -99,11 +99,11 @@
 		<text name="PlastisPoint">Điểm rác nhựa</text>
 		<text name="SensorPlastisAvailable">Sensor nhựa</text>
 		<text name="NotSensorPlastisAvailable">Sensor nhựa không hoạt dộng9</text>
-		<text name="PercentStatusPlastis">Sức chứa thùng nhựa</text>
+		<text name="PercentStatusPlastis">Sức chứa rác nhựa</text>
 		<text name="MetalPoint">Điểm kim loại</text>
 		<text name="SensorMetalAvailable">Sensor kim loại</text>
 		<text name="NotSensorMetalAvailable">Sensor kim loại không hoạt động</text>
-		<text name="PercentStatusMetal">Sức chứa thùng KL</text>
+		<text name="PercentStatusMetal">Sức chứa rác kim loại</text>
 		<text name="ErrorPoint">Điểm Error</text>
 		<text name="DevicesHeaderInfo">Cấu hình thiết bị Sbin</text>
 		<text name="CreateNewDevice">Tạo mới thiết bị</text>
@@ -112,6 +112,7 @@
 		<text name="StatusDeviceName">Trạng thái thiết bị</text>
 		<text name="PickStatusDevice">Chọn trạng thái thiết bị</text>
 		<text name="SelectAStatusDevice">Chọn trạng thái thiết bị</text>
+		<text name="PercentStatusOrther">Sức chứa rác khác</text>
 
 		<!--StatusDevice-->
 		<text name="StatusDevices">Trạng thái</text>

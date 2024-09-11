@@ -21,6 +21,8 @@ namespace DTKH2024.SbinSolution.Devices.Dtos
 
         public int PercentStatusMetal { get; set; }
 
+        public int PercentStatusOrther { get; set; }
+
         public decimal ErrorPoint { get; set; }
 
         public string Address { get; set; }

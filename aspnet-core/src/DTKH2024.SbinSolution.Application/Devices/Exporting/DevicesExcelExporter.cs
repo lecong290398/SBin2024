@@ -40,6 +40,7 @@ namespace DTKH2024.SbinSolution.Devices.Exporting
                         {L("MetalPoint"), device.Device.MetalPoint},
                         {L("SensorMetalAvailable"), device.Device.SensorMetalAvailable},
                         {L("PercentStatusMetal"), device.Device.PercentStatusMetal},
+                        {L("PercentStatusOrther"), device.Device.PercentStatusOrther},
                         {L("ErrorPoint"), device.Device.ErrorPoint},
                         {L("Address"), device.Device.Address},
 

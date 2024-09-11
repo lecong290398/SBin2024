@@ -64,6 +64,7 @@ namespace DTKH2024.SbinSolution.Devices
                               o.MetalPoint,
                               o.SensorMetalAvailable,
                               o.PercentStatusMetal,
+                              o.PercentStatusOrther,
                               o.ErrorPoint,
                               o.Address,
                               Id = o.Id,
@@ -89,6 +90,7 @@ namespace DTKH2024.SbinSolution.Devices
                         MetalPoint = o.MetalPoint,
                         SensorMetalAvailable = o.SensorMetalAvailable,
                         PercentStatusMetal = o.PercentStatusMetal,
+                        PercentStatusOrther = o.PercentStatusOrther,
                         ErrorPoint = o.ErrorPoint,
                         Address = o.Address,
                         Id = o.Id,
@@ -198,6 +200,7 @@ namespace DTKH2024.SbinSolution.Devices
                                  MetalPoint = o.MetalPoint,
                                  SensorMetalAvailable = o.SensorMetalAvailable,
                                  PercentStatusMetal = o.PercentStatusMetal,
+                                 PercentStatusOrther = o.PercentStatusOrther,
                                  ErrorPoint = o.ErrorPoint,
                                  Address = o.Address,
                                  Id = o.Id

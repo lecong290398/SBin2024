@@ -1,6 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="DeviceName">Device name</text>
+
+    <text name="TransactionBins">Transaction bins</text>
+    <text name="TransactionBin">Transaction bin</text>
+    <text name="DTKH2024.SbinSolution.TransactionBins.TransactionBin">TransactionBin</text>
+    <text name="PlastisQuantity">Plastis quantity</text>
+    <text name="MetalQuantity">Metal quantity</text>
+    <text name="OrtherQuantity">Orther quantity</text>
+    <text name="TransactionCode">Transaction code</text>
+    <text name="TransactionBinsHeaderInfo">Transaction bins header info</text>
+    <text name="CreateNewTransactionBin">Create new transaction bin</text>
+    <text name="EditTransactionBin">Edit transaction bin</text>
+    <text name="DeleteTransactionBin">Delete transaction bin</text>
+    <text name="PickDevice">Pick device</text>
+    <text name="PickUser">Pick user</text>
+    <text name="TransactionStatusName">Transaction status name</text>
+    <text name="PickTransactionStatus">Pick transaction status</text>
+    <text name="SelectATransactionStatus">Select a transaction status</text>
+
     <text name="CategoryPromotionName">Category promotion name</text>
 
     <text name="PickCategoryPromotion">Pick category promotion</text>

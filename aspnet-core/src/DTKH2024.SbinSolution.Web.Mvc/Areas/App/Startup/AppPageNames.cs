@@ -4,6 +4,7 @@
     {
         public static class Common
         {
+            public const string TransactionBins = "Administration.TransactionBins.TransactionBins";
             public const string CategoryPromotions = "Administration.CategoryPromotions.CategoryPromotions";
             public const string ProductPromotions = "Administration.ProductPromotions.ProductPromotions";
             public const string Products = "Administration.Products.Products";

@@ -1,0 +1,98 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.TransactionBins
+@model CreateOrEditTransactionBinModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditTransactionBin")) : L("CreateNewTransactionBin")))
+
+<div class="modal-body">
+    <div id="TransactionBinInformationsTab">
+        <form name="TransactionBinInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.TransactionBin.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="DeviceName">@L("Device")</label>
+                <div class="input-group">
+                    <input class="form-control" id="DeviceName" name="deviceName" value="@Model.DeviceName" type="text" disabled>
+                    <button class="btn btn-primary blue" id="OpenDeviceLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+                    <button class="btn btn-danger btn-icon" type="button" id="ClearDeviceNameButton"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+            <input class="form-control" id="TransactionBin_DeviceId" value="@Model.TransactionBin.DeviceId" type="text" name="deviceId" required hidden />
+            }
+            else
+            {
+            <input class="form-control" id="TransactionBin_DeviceId" value="" type="text" name="deviceId" required hidden />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="UserName">@L("User")</label>
+                <div class="input-group">
+                    <input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+                    <button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+                    <button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+            <input class="form-control" id="TransactionBin_UserId" value="@Model.TransactionBin.UserId" type="text" name="userId" hidden />
+            }
+            else
+            {
+            <input class="form-control" id="TransactionBin_UserId" value="" type="text" name="userId" hidden />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="transactionStatusId">@L("TransactionStatus")</label>
+                @Html.DropDownList("transactionStatusId", new SelectList(Model.TransactionBinTransactionStatusList,"Id","DisplayName", (Model.IsEditMode ? Model.TransactionBin.TransactionStatusId.ToString() : "")),@L("SelectATransactionStatus"), new { @class = "form-control" , @required="required" })
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="TransactionBin_PlastisQuantity">@L("PlastisQuantity")</label>
+                <input class="form-control m-input" id="TransactionBin_PlastisQuantity" value="@Model.TransactionBin.PlastisQuantity.ToString(CultureInfo.InvariantCulture)" type="number" name="plastisQuantity" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="TransactionBin_PlastisPoint">@L("PlastisPoint")</label>
+                <input class="form-control m-input" id="TransactionBin_PlastisPoint" value="@Model.TransactionBin.PlastisPoint.ToString(CultureInfo.InvariantCulture)" type="number" name="plastisPoint" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="TransactionBin_MetalQuantity">@L("MetalQuantity")</label>
+                <input class="form-control m-input" id="TransactionBin_MetalQuantity" value="@Model.TransactionBin.MetalQuantity.ToString(CultureInfo.InvariantCulture)" type="number" name="metalQuantity" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="TransactionBin_MetalPoint">@L("MetalPoint")</label>
+                <input class="form-control m-input" id="TransactionBin_MetalPoint" value="@Model.TransactionBin.MetalPoint.ToString(CultureInfo.InvariantCulture)" type="number" name="metalPoint" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="TransactionBin_OrtherQuantity">@L("OrtherQuantity")</label>
+                <input class="form-control m-input" id="TransactionBin_OrtherQuantity" value="@Model.TransactionBin.OrtherQuantity.ToString(CultureInfo.InvariantCulture)" type="number" name="ortherQuantity" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="TransactionBin_ErrorPoint">@L("ErrorPoint")</label>
+                <input class="form-control m-input" id="TransactionBin_ErrorPoint" value="@Model.TransactionBin.ErrorPoint.ToString(CultureInfo.InvariantCulture)" type="number" name="errorPoint" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="TransactionBin_TransactionCode">@L("TransactionCode")</label>
+                <input class="form-control" id="TransactionBin_TransactionCode" value="@Model.TransactionBin.TransactionCode" type="text" name="transactionCode" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

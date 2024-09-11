@@ -1,0 +1,59 @@
+﻿
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.TransactionBins
+@model TransactionBinViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="TransactionBinInformationsTab">
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("PlastisQuantity") :</h6>
+                @Model.TransactionBin.PlastisQuantity
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("PlastisPoint") :</h6>
+                @Model.TransactionBin.PlastisPoint
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("MetalQuantity") :</h6>
+                @Model.TransactionBin.MetalQuantity
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("MetalPoint") :</h6>
+                @Model.TransactionBin.MetalPoint
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("OrtherQuantity") :</h6>
+                @Model.TransactionBin.OrtherQuantity
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("ErrorPoint") :</h6>
+                @Model.TransactionBin.ErrorPoint
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("TransactionCode") :</h6>
+                @Model.TransactionBin.TransactionCode
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("Device")) @L("Name") :</h6>
+                @Model.DeviceName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("User")) @L("Name") :</h6>
+                @Model.UserName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("TransactionStatus")) @L("Name") :</h6>
+                @Model.TransactionStatusName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")

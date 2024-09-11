@@ -4,8 +4,24 @@
 
 		<text name="Description">Mô Tả</text>
 		<text name="{0}IsRequired">{0} bắt buộc.</text>
-
-
+		<!--TransactionBins-->
+		<text name="DeviceName">Thiết bị</text>
+		<text name="TransactionBins">Giao dịch SBin</text>
+		<text name="TransactionBin">Giao dịch SBin</text>
+		<text name="DTKH2024.SbinSolution.TransactionBins.TransactionBin">Giao dịch SBin</text>
+		<text name="PlastisQuantity">SL rác nhựa</text>
+		<text name="MetalQuantity">SL rác kim loại</text>
+		<text name="OrtherQuantity">SL rác khác</text>
+		<text name="TransactionCode">Mã giao dịch</text>
+		<text name="TransactionBinsHeaderInfo">Danh sách các giao dịch của hệ thống phân loại rác Sbin</text>
+		<text name="CreateNewTransactionBin">Thêm mới</text>
+		<text name="EditTransactionBin">Chỉnh sửa</text>
+		<text name="DeleteTransactionBin">Xóa</text>
+		<text name="PickDevice">Chọn thiết bị</text>
+		<text name="PickUser">Chọn User</text>
+		<text name="TransactionStatusName">Trạng thái</text>
+		<text name="PickTransactionStatus">Chọn trạng thái</text>
+		<text name="SelectATransactionStatus">Chọn trạng thái</text>
 		<!--CategoryPromotions-->
 		<text name="CategoryPromotions">Thể loại chương trình</text>
 		<text name="CategoryPromotion">Thể loại chương trình</text>

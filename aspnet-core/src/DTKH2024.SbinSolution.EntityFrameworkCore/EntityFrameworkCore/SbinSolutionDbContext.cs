@@ -1,4 +1,5 @@
-﻿using DTKH2024.SbinSolution.CategoryPromotions;
+﻿using DTKH2024.SbinSolution.TransactionBins;
+using DTKH2024.SbinSolution.CategoryPromotions;
 using DTKH2024.SbinSolution.ProductPromotions;
 using DTKH2024.SbinSolution.Products;
 using DTKH2024.SbinSolution.ProductTypes;
@@ -33,6 +34,8 @@ namespace DTKH2024.SbinSolution.EntityFrameworkCore
 {
     public class SbinSolutionDbContext : AbpZeroDbContext<Tenant, Role, User, SbinSolutionDbContext>, IOpenIddictDbContext
     {
+        public virtual DbSet<TransactionBin> TransactionBins { get; set; }
+
         public virtual DbSet<CategoryPromotion> CategoryPromotions { get; set; }
 
         public virtual DbSet<ProductPromotion> ProductPromotions { get; set; }

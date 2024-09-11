@@ -74,7 +74,7 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                      AppPageNames.Common.ProductManagement,
                      L("ProductManagement"),
                      icon: ("fa-brands fa-product-hunt"))
-                         
+
                          .AddItem(new MenuItemDefinition(
                                 AppPageNames.Common.Products,
                                 L("Products"),

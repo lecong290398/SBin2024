@@ -15,6 +15,7 @@
 		<text name="DeleteCategoryPromotion">Xóa</text>
 
 		<!--ProductPromotions-->
+		<text name="PromotionCode">Mã</text>
 		<text name="ProductPromotions">Chương trình bán hàng</text>
 		<text name="ProductPromotion">Chương trình bán hàng</text>
 		<text name="DTKH2024.SbinSolution.ProductPromotions.ProductPromotion">Chương trình bán hàng</text>
@@ -32,6 +33,7 @@
 		<text name="PickProduct">Chọn sản phẩm</text>
 		<text name="StartDateRange">Phạm vi ngày bắt đầu</text>
 		<text name="EndDateRange">Phạm vi ngày kết thúc</text>
+		<text name="PickCategoryPromotion">Chọn chương trình</text>
 
 		<!--Products-->
 		<text name="ProductTypeName">Loại sản phẩm</text>

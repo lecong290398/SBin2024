@@ -7,10 +7,6 @@ namespace DTKH2024.SbinSolution.ProductPromotions.Dtos
     public class CreateOrEditProductPromotionDto : EntityDto<int?>
     {
 
-        [Required]
-        [StringLength(ProductPromotionConsts.MaxPromotionNameLength, MinimumLength = ProductPromotionConsts.MinPromotionNameLength)]
-        public string PromotionName { get; set; }
-
         public int Point { get; set; }
 
         public int QuantityCurrent { get; set; }
@@ -20,6 +16,8 @@ namespace DTKH2024.SbinSolution.ProductPromotions.Dtos
         public DateTime StartDate { get; set; }
 
         public DateTime EndDate { get; set; }
+
+        public string Description { get; set; }
 
         public int ProductId { get; set; }
 

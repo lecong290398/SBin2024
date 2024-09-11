@@ -4,6 +4,7 @@ using DTKH2024.SbinSolution.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DTKH2024.SbinSolution.Migrations
 {
     [DbContext(typeof(SbinSolutionDbContext))]
-    partial class SbinSolutionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240911163743_ReUpdate_ProductPromotion")]
+    partial class ReUpdate_ProductPromotion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2590,6 +2593,9 @@ namespace DTKH2024.SbinSolution.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CategoryPromotionId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -2636,6 +2642,8 @@ namespace DTKH2024.SbinSolution.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryPromotionId");
 
                     b.HasIndex("ProductId");
 
@@ -3247,11 +3255,19 @@ namespace DTKH2024.SbinSolution.Migrations
 
             modelBuilder.Entity("DTKH2024.SbinSolution.ProductPromotions.ProductPromotion", b =>
                 {
+                    b.HasOne("DTKH2024.SbinSolution.CategoryPromotions.CategoryPromotion", "CategoryPromotionFk")
+                        .WithMany()
+                        .HasForeignKey("CategoryPromotionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DTKH2024.SbinSolution.Products.Product", "ProductFk")
                         .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("CategoryPromotionFk");
 
                     b.Navigation("ProductFk");
                 });

@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="PickCategoryPromotion">Pick category promotion</text>
+
+    <text name="PromotionCode">Promotion code</text>
+
     <text name="CategoryPromotions">Category promotions</text>
     <text name="CategoryPromotion">Category promotion</text>
     <text name="DTKH2024.SbinSolution.CategoryPromotions.CategoryPromotion">CategoryPromotion</text>

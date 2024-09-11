@@ -7,8 +7,6 @@ namespace DTKH2024.SbinSolution.ProductPromotions.Dtos
     {
         public string Filter { get; set; }
 
-        public string PromotionNameFilter { get; set; }
-
         public int? MaxPointFilter { get; set; }
         public int? MinPointFilter { get; set; }
 
@@ -17,6 +15,8 @@ namespace DTKH2024.SbinSolution.ProductPromotions.Dtos
 
         public DateTime? MaxEndDateFilter { get; set; }
         public DateTime? MinEndDateFilter { get; set; }
+
+        public string PromotionCodeFilter { get; set; }
 
         public string ProductProductNameFilter { get; set; }
 

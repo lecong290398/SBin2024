@@ -24,28 +24,6 @@
   },
   "Properties": [
     {
-      "Name": "PromotionName",
-      "Type": "string",
-      "MaxLength": 255,
-      "MinLength": 5,
-      "Range": {
-        "IsRangeSet": false,
-        "MinimumValue": 0.0,
-        "MaximumValue": 0.0
-      },
-      "Required": true,
-      "Nullable": false,
-      "Regex": "",
-      "IsMultiLingual": false,
-      "UserInterface": {
-        "AdvancedFilter": true,
-        "List": true,
-        "CreateOrUpdate": true
-      },
-      "ViewType": null,
-      "AdditionalData": {}
-    },
-    {
       "Name": "Point",
       "Type": "int",
       "MaxLength": -1,
@@ -149,6 +127,50 @@
       "IsMultiLingual": false,
       "UserInterface": {
         "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": true
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "PromotionCode",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "IsMultiLingual": false,
+      "UserInterface": {
+        "AdvancedFilter": true,
+        "List": true,
+        "CreateOrUpdate": false
+      },
+      "ViewType": null,
+      "AdditionalData": {}
+    },
+    {
+      "Name": "Description",
+      "Type": "string",
+      "MaxLength": -1,
+      "MinLength": -1,
+      "Range": {
+        "IsRangeSet": false,
+        "MinimumValue": 0.0,
+        "MaximumValue": 0.0
+      },
+      "Required": false,
+      "Nullable": false,
+      "Regex": "",
+      "IsMultiLingual": false,
+      "UserInterface": {
+        "AdvancedFilter": false,
         "List": true,
         "CreateOrUpdate": true
       },

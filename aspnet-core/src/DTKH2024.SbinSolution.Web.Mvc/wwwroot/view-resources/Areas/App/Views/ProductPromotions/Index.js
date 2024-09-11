@@ -86,13 +86,13 @@
         inputFilter: function () {
           return {
             filter: $('#ProductPromotionsTableFilter').val(),
-            promotionNameFilter: $('#PromotionNameFilterId').val(),
             minPointFilter: $('#MinPointFilterId').val(),
             maxPointFilter: $('#MaxPointFilterId').val(),
             minStartDateFilter: getDateFilter($('#MinStartDateFilterId')),
             maxStartDateFilter: getMaxDateFilter($('#MaxStartDateFilterId')),
             minEndDateFilter: getDateFilter($('#MinEndDateFilterId')),
             maxEndDateFilter: getMaxDateFilter($('#MaxEndDateFilterId')),
+            promotionCodeFilter: $('#PromotionCodeFilterId').val(),
             productProductNameFilter: $('#ProductProductNameFilterId').val(),
           };
         },
@@ -146,26 +146,21 @@
         },
         {
           targets: 2,
-          data: 'productPromotion.promotionName',
-          name: 'promotionName',
-        },
-        {
-          targets: 3,
           data: 'productPromotion.point',
           name: 'point',
         },
         {
-          targets: 4,
+          targets: 3,
           data: 'productPromotion.quantityCurrent',
           name: 'quantityCurrent',
         },
         {
-          targets: 5,
+          targets: 4,
           data: 'productPromotion.quantityInStock',
           name: 'quantityInStock',
         },
         {
-          targets: 6,
+          targets: 5,
           data: 'productPromotion.startDate',
           name: 'startDate',
           render: function (startDate) {
@@ -176,7 +171,7 @@
           },
         },
         {
-          targets: 7,
+          targets: 6,
           data: 'productPromotion.endDate',
           name: 'endDate',
           render: function (endDate) {
@@ -187,7 +182,17 @@
           },
         },
         {
+          targets: 7,
+          data: 'productPromotion.promotionCode',
+          name: 'promotionCode',
+        },
+        {
           targets: 8,
+          data: 'productPromotion.description',
+          name: 'description',
+        },
+        {
+          targets: 9,
           data: 'productProductName',
           name: 'productFk.productName',
         },
@@ -233,13 +238,13 @@
       _productPromotionsService
         .getProductPromotionsToExcel({
           filter: $('#ProductPromotionsTableFilter').val(),
-          promotionNameFilter: $('#PromotionNameFilterId').val(),
           minPointFilter: $('#MinPointFilterId').val(),
           maxPointFilter: $('#MaxPointFilterId').val(),
           minStartDateFilter: getDateFilter($('#MinStartDateFilterId')),
           maxStartDateFilter: getMaxDateFilter($('#MaxStartDateFilterId')),
           minEndDateFilter: getDateFilter($('#MinEndDateFilterId')),
           maxEndDateFilter: getMaxDateFilter($('#MaxEndDateFilterId')),
+          promotionCodeFilter: $('#PromotionCodeFilterId').val(),
           productProductNameFilter: $('#ProductProductNameFilterId').val(),
         })
         .done(function (result) {

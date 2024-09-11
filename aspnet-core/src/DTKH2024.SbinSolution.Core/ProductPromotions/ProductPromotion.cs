@@ -11,10 +11,6 @@ namespace DTKH2024.SbinSolution.ProductPromotions
     public class ProductPromotion : FullAuditedEntity
     {
 
-        [Required]
-        [StringLength(ProductPromotionConsts.MaxPromotionNameLength, MinimumLength = ProductPromotionConsts.MinPromotionNameLength)]
-        public virtual string PromotionName { get; set; }
-
         public virtual int Point { get; set; }
 
         public virtual int QuantityCurrent { get; set; }
@@ -24,6 +20,10 @@ namespace DTKH2024.SbinSolution.ProductPromotions
         public virtual DateTime StartDate { get; set; }
 
         public virtual DateTime EndDate { get; set; }
+
+        public virtual string PromotionCode { get; set; }
+
+        public virtual string Description { get; set; }
 
         public virtual int ProductId { get; set; }
 

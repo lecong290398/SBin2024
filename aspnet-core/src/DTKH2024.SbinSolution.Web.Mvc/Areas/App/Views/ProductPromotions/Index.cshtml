@@ -43,12 +43,6 @@ ViewBag.CurrentPageName = AppPageNames.Common.ProductPromotions;
 
                 <div class="col-md-3">
                     <div class="my-3">
-                        <label class="form-label" for="PromotionNameFilterId">@L("PromotionName")</label>
-                        <input type="text" class="form-control reload-on-keyup" name="promotionNameFilter" id="PromotionNameFilterId">
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="my-3">
                         <label class="form-label" for="MinPointFilterId">@L("MinMax") @L("Point")</label>
                         <div class="input-group">
                             <input type="number" class="form-control m-input reload-on-keyup" placeholder="@L(" MinValue")" name="minPointFilter" id="MinPointFilterId" />
@@ -76,6 +70,12 @@ ViewBag.CurrentPageName = AppPageNames.Common.ProductPromotions;
                         </div>
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="my-3">
+                        <label class="form-label" for="PromotionCodeFilterId">@L("PromotionCode")</label>
+                        <input type="text" class="form-control reload-on-keyup" name="promotionCodeFilter" id="PromotionCodeFilterId">
+                    </div>
+                </div>
 
                 <div class="col-md-3">
                     <div class="my-3">
@@ -100,12 +100,13 @@ ViewBag.CurrentPageName = AppPageNames.Common.ProductPromotions;
                             <th></th>
 
                             <th>@L("Actions")</th>
-                            <th>@L("PromotionName")</th>
                             <th>@L("Point")</th>
                             <th>@L("QuantityCurrent")</th>
                             <th>@L("QuantityInStock")</th>
                             <th>@L("StartDate")</th>
                             <th>@L("EndDate")</th>
+                            <th>@L("PromotionCode")</th>
+                            <th>@L("Description")</th>
                             <th>@L("ProductProductName")</th>
                         </tr>
                     </thead>

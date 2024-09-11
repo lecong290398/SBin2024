@@ -40,14 +40,14 @@ namespace DTKH2024.SbinSolution.ProductPromotions
 
             var filteredProductPromotions = _productPromotionRepository.GetAll()
                         .Include(e => e.ProductFk)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.PromotionName.Contains(input.Filter))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.PromotionNameFilter), e => e.PromotionName.Contains(input.PromotionNameFilter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.PromotionCode.Contains(input.Filter) || e.Description.Contains(input.Filter))
                         .WhereIf(input.MinPointFilter != null, e => e.Point >= input.MinPointFilter)
                         .WhereIf(input.MaxPointFilter != null, e => e.Point <= input.MaxPointFilter)
                         .WhereIf(input.MinStartDateFilter != null, e => e.StartDate >= input.MinStartDateFilter)
                         .WhereIf(input.MaxStartDateFilter != null, e => e.StartDate <= input.MaxStartDateFilter)
                         .WhereIf(input.MinEndDateFilter != null, e => e.EndDate >= input.MinEndDateFilter)
                         .WhereIf(input.MaxEndDateFilter != null, e => e.EndDate <= input.MaxEndDateFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.PromotionCodeFilter), e => e.PromotionCode.Contains(input.PromotionCodeFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.ProductProductNameFilter), e => e.ProductFk != null && e.ProductFk.ProductName == input.ProductProductNameFilter);
 
             var pagedAndFilteredProductPromotions = filteredProductPromotions
@@ -61,12 +61,13 @@ namespace DTKH2024.SbinSolution.ProductPromotions
                                     select new
                                     {
 
-                                        o.PromotionName,
                                         o.Point,
                                         o.QuantityCurrent,
                                         o.QuantityInStock,
                                         o.StartDate,
                                         o.EndDate,
+                                        o.PromotionCode,
+                                        o.Description,
                                         Id = o.Id,
                                         ProductProductName = s1 == null || s1.ProductName == null ? "" : s1.ProductName.ToString()
                                     };
@@ -83,12 +84,13 @@ namespace DTKH2024.SbinSolution.ProductPromotions
                     ProductPromotion = new ProductPromotionDto
                     {
 
-                        PromotionName = o.PromotionName,
                         Point = o.Point,
                         QuantityCurrent = o.QuantityCurrent,
                         QuantityInStock = o.QuantityInStock,
                         StartDate = o.StartDate,
                         EndDate = o.EndDate,
+                        PromotionCode = o.PromotionCode,
+                        Description = o.Description,
                         Id = o.Id,
                     },
                     ProductProductName = o.ProductProductName
@@ -175,14 +177,14 @@ namespace DTKH2024.SbinSolution.ProductPromotions
 
             var filteredProductPromotions = _productPromotionRepository.GetAll()
                         .Include(e => e.ProductFk)
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.PromotionName.Contains(input.Filter))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.PromotionNameFilter), e => e.PromotionName.Contains(input.PromotionNameFilter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.PromotionCode.Contains(input.Filter) || e.Description.Contains(input.Filter))
                         .WhereIf(input.MinPointFilter != null, e => e.Point >= input.MinPointFilter)
                         .WhereIf(input.MaxPointFilter != null, e => e.Point <= input.MaxPointFilter)
                         .WhereIf(input.MinStartDateFilter != null, e => e.StartDate >= input.MinStartDateFilter)
                         .WhereIf(input.MaxStartDateFilter != null, e => e.StartDate <= input.MaxStartDateFilter)
                         .WhereIf(input.MinEndDateFilter != null, e => e.EndDate >= input.MinEndDateFilter)
                         .WhereIf(input.MaxEndDateFilter != null, e => e.EndDate <= input.MaxEndDateFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.PromotionCodeFilter), e => e.PromotionCode.Contains(input.PromotionCodeFilter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.ProductProductNameFilter), e => e.ProductFk != null && e.ProductFk.ProductName == input.ProductProductNameFilter);
 
             var query = (from o in filteredProductPromotions
@@ -193,12 +195,13 @@ namespace DTKH2024.SbinSolution.ProductPromotions
                          {
                              ProductPromotion = new ProductPromotionDto
                              {
-                                 PromotionName = o.PromotionName,
                                  Point = o.Point,
                                  QuantityCurrent = o.QuantityCurrent,
                                  QuantityInStock = o.QuantityInStock,
                                  StartDate = o.StartDate,
                                  EndDate = o.EndDate,
+                                 PromotionCode = o.PromotionCode,
+                                 Description = o.Description,
                                  Id = o.Id
                              },
                              ProductProductName = s1 == null || s1.ProductName == null ? "" : s1.ProductName.ToString()

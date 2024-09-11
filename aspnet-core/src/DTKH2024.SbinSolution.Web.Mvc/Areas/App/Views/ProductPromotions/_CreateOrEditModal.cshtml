@@ -34,11 +34,6 @@
             }
 
             <div class="my-3">
-                <label class="form-label" for="ProductPromotion_PromotionName">@L("PromotionName")</label>
-                <input class="form-control" id="ProductPromotion_PromotionName" value="@Model.ProductPromotion.PromotionName" type="text" name="promotionName" required maxlength="@DTKH2024.SbinSolution.ProductPromotions.ProductPromotionConsts.MaxPromotionNameLength" minlength="@DTKH2024.SbinSolution.ProductPromotions.ProductPromotionConsts.MinPromotionNameLength" />
-            </div>
-
-            <div class="my-3">
                 <label class="form-label" for="ProductPromotion_Point">@L("Point")</label>
                 <input class="form-control m-input" id="ProductPromotion_Point" value="@Model.ProductPromotion.Point.ToString(CultureInfo.InvariantCulture)" type="number" name="point" />
             </div>
@@ -61,6 +56,11 @@
             <div class="my-3">
                 <label class="form-label" for="ProductPromotion_EndDate">@L("EndDate")</label>
                 <input class="form-control m-input date-picker" id="ProductPromotion_EndDate" type="text" name="endDate" value="@Model.ProductPromotion.EndDate" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="ProductPromotion_Description">@L("Description")</label>
+                <input class="form-control" id="ProductPromotion_Description" value="@Model.ProductPromotion.Description" type="text" name="description" />
             </div>
 
         </form>

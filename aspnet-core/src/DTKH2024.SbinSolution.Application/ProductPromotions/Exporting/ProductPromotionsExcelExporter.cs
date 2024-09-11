@@ -33,12 +33,13 @@ namespace DTKH2024.SbinSolution.ProductPromotions.Exporting
             {
                 items.Add(new Dictionary<string, object>()
                     {
-                        {L("PromotionName"), productPromotion.ProductPromotion.PromotionName},
                         {L("Point"), productPromotion.ProductPromotion.Point},
                         {L("QuantityCurrent"), productPromotion.ProductPromotion.QuantityCurrent},
                         {L("QuantityInStock"), productPromotion.ProductPromotion.QuantityInStock},
                         {L("StartDate"), productPromotion.ProductPromotion.StartDate},
                         {L("EndDate"), productPromotion.ProductPromotion.EndDate},
+                        {L("PromotionCode"), productPromotion.ProductPromotion.PromotionCode},
+                        {L("Description"), productPromotion.ProductPromotion.Description},
 
                     });
             }

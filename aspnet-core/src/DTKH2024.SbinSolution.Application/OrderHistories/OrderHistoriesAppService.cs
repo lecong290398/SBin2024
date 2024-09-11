@@ -53,7 +53,6 @@ namespace DTKH2024.SbinSolution.OrderHistories
                         .Include(e => e.WareHouseGiftFk)
                         .Include(e => e.HistoryTypeFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Description.Contains(input.Filter) || e.Reason.Contains(input.Filter))
-                        .WhereIf(input.IsGiveFilter.HasValue && input.IsGiveFilter > -1, e => (input.IsGiveFilter == 1 && e.IsGive) || (input.IsGiveFilter == 0 && !e.IsGive))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.UserNameFilter), e => e.UserFk != null && e.UserFk.Name == input.UserNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.TransactionBinTransactionCodeFilter), e => e.TransactionBinFk != null && e.TransactionBinFk.TransactionCode == input.TransactionBinTransactionCodeFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.WareHouseGiftCodeFilter), e => e.WareHouseGiftFk != null && e.WareHouseGiftFk.Code == input.WareHouseGiftCodeFilter)
@@ -79,7 +78,6 @@ namespace DTKH2024.SbinSolution.OrderHistories
                                  select new
                                  {
 
-                                     o.IsGive,
                                      o.Description,
                                      o.Reason,
                                      o.Point,
@@ -102,7 +100,6 @@ namespace DTKH2024.SbinSolution.OrderHistories
                     OrderHistory = new OrderHistoryDto
                     {
 
-                        IsGive = o.IsGive,
                         Description = o.Description,
                         Reason = o.Reason,
                         Point = o.Point,
@@ -235,7 +232,6 @@ namespace DTKH2024.SbinSolution.OrderHistories
                         .Include(e => e.WareHouseGiftFk)
                         .Include(e => e.HistoryTypeFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Description.Contains(input.Filter) || e.Reason.Contains(input.Filter))
-                        .WhereIf(input.IsGiveFilter.HasValue && input.IsGiveFilter > -1, e => (input.IsGiveFilter == 1 && e.IsGive) || (input.IsGiveFilter == 0 && !e.IsGive))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.UserNameFilter), e => e.UserFk != null && e.UserFk.Name == input.UserNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.TransactionBinTransactionCodeFilter), e => e.TransactionBinFk != null && e.TransactionBinFk.TransactionCode == input.TransactionBinTransactionCodeFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.WareHouseGiftCodeFilter), e => e.WareHouseGiftFk != null && e.WareHouseGiftFk.Code == input.WareHouseGiftCodeFilter)
@@ -258,7 +254,6 @@ namespace DTKH2024.SbinSolution.OrderHistories
                          {
                              OrderHistory = new OrderHistoryDto
                              {
-                                 IsGive = o.IsGive,
                                  Description = o.Description,
                                  Reason = o.Reason,
                                  Point = o.Point,

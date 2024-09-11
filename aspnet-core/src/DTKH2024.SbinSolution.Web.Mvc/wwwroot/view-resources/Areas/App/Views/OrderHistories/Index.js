@@ -86,7 +86,6 @@
         inputFilter: function () {
           return {
             filter: $('#OrderHistoriesTableFilter').val(),
-            isGiveFilter: $('#IsGiveFilterId').val(),
             userNameFilter: $('#UserNameFilterId').val(),
             transactionBinTransactionCodeFilter: $('#TransactionBinTransactionCodeFilterId').val(),
             wareHouseGiftCodeFilter: $('#WareHouseGiftCodeFilterId').val(),
@@ -143,47 +142,36 @@
         },
         {
           targets: 2,
-          data: 'orderHistory.isGive',
-          name: 'isGive',
-          render: function (isGive) {
-            if (isGive) {
-              return '<div class="text-center"><i class="fa fa-check text-success" title="True"></i></div>';
-            }
-            return '<div class="text-center"><i class="fa fa-times-circle" title="False"></i></div>';
-          },
-        },
-        {
-          targets: 3,
           data: 'orderHistory.description',
           name: 'description',
         },
         {
-          targets: 4,
+          targets: 3,
           data: 'orderHistory.reason',
           name: 'reason',
         },
         {
-          targets: 5,
+          targets: 4,
           data: 'orderHistory.point',
           name: 'point',
         },
         {
-          targets: 6,
+          targets: 5,
           data: 'userName',
           name: 'userFk.name',
         },
         {
-          targets: 7,
+          targets: 6,
           data: 'transactionBinTransactionCode',
           name: 'transactionBinFk.transactionCode',
         },
         {
-          targets: 8,
+          targets: 7,
           data: 'wareHouseGiftCode',
           name: 'wareHouseGiftFk.code',
         },
         {
-          targets: 9,
+          targets: 8,
           data: 'historyTypeName',
           name: 'historyTypeFk.name',
         },
@@ -229,7 +217,6 @@
       _orderHistoriesService
         .getOrderHistoriesToExcel({
           filter: $('#OrderHistoriesTableFilter').val(),
-          isGiveFilter: $('#IsGiveFilterId').val(),
           userNameFilter: $('#UserNameFilterId').val(),
           transactionBinTransactionCodeFilter: $('#TransactionBinTransactionCodeFilterId').val(),
           wareHouseGiftCodeFilter: $('#WareHouseGiftCodeFilterId').val(),

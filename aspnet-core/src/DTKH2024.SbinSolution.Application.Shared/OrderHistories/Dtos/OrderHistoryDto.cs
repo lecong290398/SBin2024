@@ -5,8 +5,6 @@ namespace DTKH2024.SbinSolution.OrderHistories.Dtos
 {
     public class OrderHistoryDto : EntityDto
     {
-        public bool IsGive { get; set; }
-
         public string Description { get; set; }
 
         public string Reason { get; set; }

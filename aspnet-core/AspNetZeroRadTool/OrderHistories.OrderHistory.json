@@ -1,5 +1,5 @@
 {
-  "IsRegenerate": false,
+  "IsRegenerate": true,
   "MenuPosition": "main",
   "RelativeNamespace": "OrderHistories",
   "EntityName": "OrderHistory",
@@ -23,28 +23,6 @@
     "Tenant": false
   },
   "Properties": [
-    {
-      "Name": "IsGive",
-      "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
-      "Range": {
-        "IsRangeSet": false,
-        "MinimumValue": 0.0,
-        "MaximumValue": 0.0
-      },
-      "Required": false,
-      "Nullable": false,
-      "Regex": "",
-      "IsMultiLingual": false,
-      "UserInterface": {
-        "AdvancedFilter": true,
-        "List": true,
-        "CreateOrUpdate": true
-      },
-      "ViewType": null,
-      "AdditionalData": {}
-    },
     {
       "Name": "Description",
       "Type": "string",
@@ -92,8 +70,8 @@
     {
       "Name": "Point",
       "Type": "int",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,

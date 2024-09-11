@@ -33,7 +33,6 @@ namespace DTKH2024.SbinSolution.OrderHistories.Exporting
             {
                 items.Add(new Dictionary<string, object>()
                     {
-                        {L("IsGive"), orderHistory.OrderHistory.IsGive},
                         {L("Description"), orderHistory.OrderHistory.Description},
                         {L("Reason"), orderHistory.OrderHistory.Reason},
                         {L("Point"), orderHistory.OrderHistory.Point},

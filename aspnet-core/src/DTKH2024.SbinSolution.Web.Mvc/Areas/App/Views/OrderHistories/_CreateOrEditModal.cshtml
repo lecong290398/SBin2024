@@ -74,13 +74,6 @@
                 @Html.DropDownList("historyTypeId", new SelectList(Model.OrderHistoryHistoryTypeList,"Id","DisplayName", (Model.IsEditMode ? Model.OrderHistory.HistoryTypeId.ToString() : "")),@L("SelectAHistoryType"), new { @class = "form-control" , @required="required" })
             </div>
 
-            <label class="form-check form-check-custom">
-                <input id="OrderHistory_IsGive" name="isGive" type="checkbox" class="form-check-input" value="true" @Html.Raw(Model.OrderHistory.IsGive ?"checked=\"checked\"":"") />
-                <span class="form-check-label">
-                    @L("IsGive")
-                </span>
-            </label>
-
             <div class="my-3">
                 <label class="form-label" for="OrderHistory_Description">@L("Description")</label>
                 <input class="form-control" id="OrderHistory_Description" value="@Model.OrderHistory.Description" type="text" name="description" />

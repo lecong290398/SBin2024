@@ -7,8 +7,6 @@ namespace DTKH2024.SbinSolution.OrderHistories.Dtos
     {
         public string Filter { get; set; }
 
-        public int? IsGiveFilter { get; set; }
-
         public string UserNameFilter { get; set; }
 
         public string TransactionBinTransactionCodeFilter { get; set; }

@@ -14,8 +14,6 @@ namespace DTKH2024.SbinSolution.OrderHistories
     public class OrderHistory : CreationAuditedEntity
     {
 
-        public virtual bool IsGive { get; set; }
-
         public virtual string Description { get; set; }
 
         public virtual string Reason { get; set; }

@@ -43,17 +43,6 @@ ViewBag.CurrentPageName = AppPageNames.Common.OrderHistories;
 
                 <div class="col-md-3">
                     <div class="my-3">
-                        <label class="form-label" for="IsGiveFilterId">@L("IsGive")</label>
-                        <select class="form-select reload-on-change" name="IsGiveFilter" id="IsGiveFilterId">
-                            <option value="-1">@L("All")</option>
-                            <option value="0">@L("False")</option>
-                            <option value="1">@L("True")</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="col-md-3">
-                    <div class="my-3">
                         <label class="form-label" for="UserNameFilterId">(@L("User")) @L("Name")</label>
                         <input type="text" class="form-control" name="userNameFilter" id="UserNameFilterId">
                     </div>
@@ -93,7 +82,6 @@ ViewBag.CurrentPageName = AppPageNames.Common.OrderHistories;
                             <th></th>
 
                             <th>@L("Actions")</th>
-                            <th>@L("IsGive")</th>
                             <th>@L("Description")</th>
                             <th>@L("Reason")</th>
                             <th>@L("Point")</th>

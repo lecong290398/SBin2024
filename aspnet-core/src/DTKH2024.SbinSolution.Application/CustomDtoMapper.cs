@@ -1,4 +1,6 @@
-﻿using DTKH2024.SbinSolution.ProductPromotions.Dtos;
+﻿using DTKH2024.SbinSolution.CategoryPromotions.Dtos;
+using DTKH2024.SbinSolution.CategoryPromotions;
+using DTKH2024.SbinSolution.ProductPromotions.Dtos;
 using DTKH2024.SbinSolution.ProductPromotions;
 using DTKH2024.SbinSolution.Products.Dtos;
 using DTKH2024.SbinSolution.Products;
@@ -69,6 +71,8 @@ namespace DTKH2024.SbinSolution
     {
         public static void CreateMappings(IMapperConfigurationExpression configuration)
         {
+            configuration.CreateMap<CreateOrEditCategoryPromotionDto, CategoryPromotion>().ReverseMap();
+            configuration.CreateMap<CategoryPromotionDto, CategoryPromotion>().ReverseMap();
             configuration.CreateMap<CreateOrEditProductPromotionDto, ProductPromotion>().ReverseMap();
             configuration.CreateMap<ProductPromotionDto, ProductPromotion>().ReverseMap();
             configuration.CreateMap<CreateOrEditProductDto, Product>().ReverseMap();

@@ -3,6 +3,16 @@
 	<texts>
 
 		<text name="Description">Mô Tả</text>
+		
+		
+		<!--CategoryPromotions-->
+		<text name="CategoryPromotions">Thể loại chương trình</text>
+		<text name="CategoryPromotion">Thể loại chương trình</text>
+		<text name="DTKH2024.SbinSolution.CategoryPromotions.CategoryPromotion">Danh sách thể loại chương trình</text>
+		<text name="CategoryPromotionsHeaderInfo">Cấu hình thể loại chương trình</text>
+		<text name="CreateNewCategoryPromotion">Thêm mới</text>
+		<text name="EditCategoryPromotion">Chỉnh sửa</text>
+		<text name="DeleteCategoryPromotion">Xóa</text>
 
 		<!--ProductPromotions-->
 		<text name="ProductPromotions">Chương trình bán hàng</text>
@@ -918,5 +928,7 @@
 		<text name="Ranks">Cấu hình Rank</text>
 		<text name="Username">Tài khoản</text>
 		<text name="ProductManagement">Quản lý sản phẩm</text>
+		<text name="PromotionsManagement">Quản lý chương trình bán hàng</text>
+
 	</texts>
 </localizationDictionary>

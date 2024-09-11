@@ -4,6 +4,7 @@
     {
         public static class Common
         {
+            public const string CategoryPromotions = "Administration.CategoryPromotions.CategoryPromotions";
             public const string ProductPromotions = "Administration.ProductPromotions.ProductPromotions";
             public const string Products = "Administration.Products.Products";
             public const string ProductTypes = "Administration.ProductTypes.ProductTypes";
@@ -35,6 +36,7 @@
             public const string Categories = "Administration.Categories";
             public const string Ranks = "Administration.Ranks";
             public const string ProductManagement = "Administration.ProductManagement";
+            public const string PromotionsManagement = "Administration.Promotions";
         }
 
         public static class Host

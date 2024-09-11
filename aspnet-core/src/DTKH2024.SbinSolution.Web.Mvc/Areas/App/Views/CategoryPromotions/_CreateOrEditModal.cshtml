@@ -1,0 +1,37 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.CategoryPromotions
+@model CreateOrEditCategoryPromotionModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditCategoryPromotion")) : L("CreateNewCategoryPromotion")))
+
+<div class="modal-body">
+    <div id="CategoryPromotionInformationsTab">
+        <form name="CategoryPromotionInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.CategoryPromotion.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="CategoryPromotion_Name">@L("Name")</label>
+                <input class="form-control" id="CategoryPromotion_Name" value="@Model.CategoryPromotion.Name" type="text" name="name" required maxlength="@DTKH2024.SbinSolution.CategoryPromotions.CategoryPromotionConsts.MaxNameLength" minlength="@DTKH2024.SbinSolution.CategoryPromotions.CategoryPromotionConsts.MinNameLength" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="CategoryPromotion_Description">@L("Description")</label>
+                <input class="form-control" id="CategoryPromotion_Description" value="@Model.CategoryPromotion.Description" type="text" name="description" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="CategoryPromotion_Color">@L("Color")</label>
+                <input class="form-control" id="CategoryPromotion_Color" value="@Model.CategoryPromotion.Color" type="text" name="color" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

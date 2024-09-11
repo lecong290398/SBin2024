@@ -6,6 +6,11 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_Administration_CategoryPromotions = "Pages.Administration.CategoryPromotions";
+        public const string Pages_Administration_CategoryPromotions_Create = "Pages.Administration.CategoryPromotions.Create";
+        public const string Pages_Administration_CategoryPromotions_Edit = "Pages.Administration.CategoryPromotions.Edit";
+        public const string Pages_Administration_CategoryPromotions_Delete = "Pages.Administration.CategoryPromotions.Delete";
+
         public const string Pages_Administration_ProductPromotions = "Pages.Administration.ProductPromotions";
         public const string Pages_Administration_ProductPromotions_Create = "Pages.Administration.ProductPromotions.Create";
         public const string Pages_Administration_ProductPromotions_Edit = "Pages.Administration.ProductPromotions.Edit";

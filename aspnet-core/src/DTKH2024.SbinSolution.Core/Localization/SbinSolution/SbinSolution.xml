@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="CategoryPromotions">Category promotions</text>
+    <text name="CategoryPromotion">Category promotion</text>
+    <text name="DTKH2024.SbinSolution.CategoryPromotions.CategoryPromotion">CategoryPromotion</text>
+    <text name="CategoryPromotionsHeaderInfo">Category promotions header info</text>
+    <text name="CreateNewCategoryPromotion">Create new category promotion</text>
+    <text name="EditCategoryPromotion">Edit category promotion</text>
+    <text name="DeleteCategoryPromotion">Delete category promotion</text>
+
 
     <text name="EndDateRange">End date range</text>
     <text name="ProductPromotions">Product promotions</text>
@@ -1408,6 +1416,7 @@
 	  <text name="ProductManagement">Product management</text>
 	  <text name="StatusActvice">Actvice</text>
 	  <text name="StatusNotActvice">Not Actvice</text>
+	  <text name="PromotionsManagement">Promotions Management</text>
 
   </texts>
 </localizationDictionary>

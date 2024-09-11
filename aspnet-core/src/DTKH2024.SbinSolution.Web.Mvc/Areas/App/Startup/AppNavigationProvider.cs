@@ -23,6 +23,14 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                     )
                 )
                 .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.OrderHistories,
+                        L("OrderHistories"),
+                        url: "App/OrderHistories",
+                        icon: "fa-solid fa-clock-rotate-left",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_OrderHistories)
+                    )
+                )
+                .AddItem(new MenuItemDefinition(
                         AppPageNames.Common.WareHouseGifts,
                         L("WareHouseGifts"),
                         url: "App/WareHouseGifts",

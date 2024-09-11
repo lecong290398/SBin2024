@@ -4,7 +4,24 @@
 
 		<text name="Description">Mô Tả</text>
 		<text name="{0}IsRequired">{0} bắt buộc.</text>
-
+		<!--OrderHistories-->
+		<text name="OrderHistories">Lịch sử mua hàng</text>
+		<text name="OrderHistory">Lịch sử mua hàng</text>
+		<text name="DTKH2024.SbinSolution.OrderHistories.OrderHistory">Lịch sử mua hàng</text>
+		<text name="IsGive">Tích điểm</text>
+		<text name="NotIsGive">Trừ điểm</text>
+		<text name="Reason">Lý do</text>
+		<text name="OrderHistoriesHeaderInfo">Danh sách lịch sử mua hàng của khách hàng</text>
+		<text name="CreateNewOrderHistory">Thêm mới</text>
+		<text name="EditOrderHistory">Chỉnh sửa lịch sử mua hàng</text>
+		<text name="DeleteOrderHistory">Xóa lịch sử mua hàng</text>
+		<text name="TransactionBinTransactionCode">Mã giao dịch</text>
+		<text name="PickTransactionBin">Chọn giao dịch</text>
+		<text name="WareHouseGiftCode">Mã kho sản phẩm lưu trữ trong kho quà tặng</text>
+		<text name="PickWareHouseGift">Chọn kho sản phẩm lưu trữ trong kho quà tặng</text>
+		<text name="HistoryTypeName">Loại</text>
+		<text name="PickHistoryType">Chọn loại</text>
+		<text name="SelectAHistoryType">Chọn loại</text>
 		<!--WareHouseGifts-->
 		<text name="WareHouseGifts">Kho quà tặng</text>
 		<text name="WareHouseGift">Kho quà tặng</text>

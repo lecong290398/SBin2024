@@ -1,0 +1,103 @@
+﻿
+@using System.Globalization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.OrderHistories
+@model CreateOrEditOrderHistoryModalViewModel
+@using Abp.Extensions
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(Model.IsEditMode ? (L("EditOrderHistory")) : L("CreateNewOrderHistory")))
+
+<div class="modal-body">
+    <div id="OrderHistoryInformationsTab">
+        <form name="OrderHistoryInformationsForm" role="form" novalidate class="form-validation">
+
+            @if (Model.IsEditMode)
+            {
+            <input type="hidden" name="id" value="@Model.OrderHistory.Id" />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="UserName">@L("User")</label>
+                <div class="input-group">
+                    <input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+                    <button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+                    <button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+            <input class="form-control" id="OrderHistory_UserId" value="@Model.OrderHistory.UserId" type="text" name="userId" required hidden />
+            }
+            else
+            {
+            <input class="form-control" id="OrderHistory_UserId" value="" type="text" name="userId" required hidden />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="TransactionBinTransactionCode">@L("TransactionBin")</label>
+                <div class="input-group">
+                    <input class="form-control" id="TransactionBinTransactionCode" name="transactionBinTransactionCode" value="@Model.TransactionBinTransactionCode" type="text" disabled>
+                    <button class="btn btn-primary blue" id="OpenTransactionBinLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+                    <button class="btn btn-danger btn-icon" type="button" id="ClearTransactionBinTransactionCodeButton"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+            <input class="form-control" id="OrderHistory_TransactionBinId" value="@Model.OrderHistory.TransactionBinId" type="text" name="transactionBinId" hidden />
+            }
+            else
+            {
+            <input class="form-control" id="OrderHistory_TransactionBinId" value="" type="text" name="transactionBinId" hidden />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="WareHouseGiftCode">@L("WareHouseGift")</label>
+                <div class="input-group">
+                    <input class="form-control" id="WareHouseGiftCode" name="wareHouseGiftCode" value="@Model.WareHouseGiftCode" type="text" disabled>
+                    <button class="btn btn-primary blue" id="OpenWareHouseGiftLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+                    <button class="btn btn-danger btn-icon" type="button" id="ClearWareHouseGiftCodeButton"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+            <input class="form-control" id="OrderHistory_WareHouseGiftId" value="@Model.OrderHistory.WareHouseGiftId" type="text" name="wareHouseGiftId" hidden />
+            }
+            else
+            {
+            <input class="form-control" id="OrderHistory_WareHouseGiftId" value="" type="text" name="wareHouseGiftId" hidden />
+            }
+
+            <div class="my-3">
+                <label class="form-label" for="historyTypeId">@L("HistoryType")</label>
+                @Html.DropDownList("historyTypeId", new SelectList(Model.OrderHistoryHistoryTypeList,"Id","DisplayName", (Model.IsEditMode ? Model.OrderHistory.HistoryTypeId.ToString() : "")),@L("SelectAHistoryType"), new { @class = "form-control" , @required="required" })
+            </div>
+
+            <label class="form-check form-check-custom">
+                <input id="OrderHistory_IsGive" name="isGive" type="checkbox" class="form-check-input" value="true" @Html.Raw(Model.OrderHistory.IsGive ?"checked=\"checked\"":"") />
+                <span class="form-check-label">
+                    @L("IsGive")
+                </span>
+            </label>
+
+            <div class="my-3">
+                <label class="form-label" for="OrderHistory_Description">@L("Description")</label>
+                <input class="form-control" id="OrderHistory_Description" value="@Model.OrderHistory.Description" type="text" name="description" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="OrderHistory_Reason">@L("Reason")</label>
+                <input class="form-control" id="OrderHistory_Reason" value="@Model.OrderHistory.Reason" type="text" name="reason" />
+            </div>
+
+            <div class="my-3">
+                <label class="form-label" for="OrderHistory_Point">@L("Point")</label>
+                <input class="form-control m-input" id="OrderHistory_Point" value="@Model.OrderHistory.Point.ToString(CultureInfo.InvariantCulture)" type="number" name="point" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithSaveAndCancel.cshtml")

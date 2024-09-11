@@ -1,0 +1,51 @@
+﻿
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Common.Modals
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.OrderHistories
+@model OrderHistoryViewModel
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel(L("Details")))
+
+<div class="modal-body">
+    <div id="OrderHistoryInformationsTab">
+
+        <div class="row">
+            <div class="col-6 mb-3">
+                <h6>@L("IsGive") :</h6>
+                @Model.OrderHistory.IsGive
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Description") :</h6>
+                @Model.OrderHistory.Description
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Reason") :</h6>
+                @Model.OrderHistory.Reason
+            </div>
+            <div class="col-6 mb-3">
+                <h6>@L("Point") :</h6>
+                @Model.OrderHistory.Point
+            </div>
+
+            <div class="col-6 mb-3">
+                <h6>(@L("User")) @L("Name") :</h6>
+                @Model.UserName
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("TransactionBin")) @L("TransactionCode") :</h6>
+                @Model.TransactionBinTransactionCode
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("WareHouseGift")) @L("Code") :</h6>
+                @Model.WareHouseGiftCode
+            </div>
+            <div class="col-6 mb-3">
+                <h6>(@L("HistoryType")) @L("Name") :</h6>
+                @Model.HistoryTypeName
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+@await Html.PartialAsync("~/Areas/App/Views/Common/Modals/_ModalFooterWithClose.cshtml")

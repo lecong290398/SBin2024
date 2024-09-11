@@ -1,6 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
+    <text name="OrderHistories">Order histories</text>
+    <text name="OrderHistory">Order history</text>
+    <text name="DTKH2024.SbinSolution.OrderHistories.OrderHistory">OrderHistory</text>
+    <text name="IsGive">Is give</text>
+    <text name="NotIsGive">Not is give</text>
+    <text name="Reason">Reason</text>
+    <text name="OrderHistoriesHeaderInfo">Order histories header info</text>
+    <text name="CreateNewOrderHistory">Create new order history</text>
+    <text name="EditOrderHistory">Edit order history</text>
+    <text name="DeleteOrderHistory">Delete order history</text>
+    <text name="TransactionBinTransactionCode">Transaction bin transaction code</text>
+    <text name="PickTransactionBin">Pick transaction bin</text>
+    <text name="WareHouseGiftCode">Ware house gift code</text>
+    <text name="PickWareHouseGift">Pick ware house gift</text>
+    <text name="HistoryTypeName">History type name</text>
+    <text name="PickHistoryType">Pick history type</text>
+    <text name="SelectAHistoryType">Select a history type</text>
+
     <text name="WareHouseGifts">Ware house gifts</text>
     <text name="WareHouseGift">Ware house gift</text>
     <text name="DTKH2024.SbinSolution.WareHouseGifts.WareHouseGift">WareHouseGift</text>

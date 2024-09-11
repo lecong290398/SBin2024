@@ -30,6 +30,11 @@ namespace DTKH2024.SbinSolution.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var orderHistories = pages.CreateChildPermission(AppPermissions.Pages_OrderHistories, L("OrderHistories"));
+            orderHistories.CreateChildPermission(AppPermissions.Pages_OrderHistories_Create, L("CreateNewOrderHistory"));
+            orderHistories.CreateChildPermission(AppPermissions.Pages_OrderHistories_Edit, L("EditOrderHistory"));
+            orderHistories.CreateChildPermission(AppPermissions.Pages_OrderHistories_Delete, L("DeleteOrderHistory"));
+
             var wareHouseGifts = pages.CreateChildPermission(AppPermissions.Pages_WareHouseGifts, L("WareHouseGifts"));
             wareHouseGifts.CreateChildPermission(AppPermissions.Pages_WareHouseGifts_Create, L("CreateNewWareHouseGift"));
             wareHouseGifts.CreateChildPermission(AppPermissions.Pages_WareHouseGifts_Edit, L("EditWareHouseGift"));

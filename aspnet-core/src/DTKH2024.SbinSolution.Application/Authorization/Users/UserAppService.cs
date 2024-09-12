@@ -497,5 +497,15 @@ namespace DTKH2024.SbinSolution.Authorization.Users
 
             return query;
         }
+
+        [AbpAllowAnonymous]
+        public async Task<GetUserForEditOutput> GetUserForView(NullableIdDto<long> input)
+        {
+            var output = new GetUserForEditOutput();
+            var user = await UserManager.GetUserByIdAsync(input.Id.Value);
+            output.User = ObjectMapper.Map<UserEditDto>(user);
+            return output;
+        }
+
     }
 }

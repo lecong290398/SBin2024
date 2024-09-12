@@ -28,5 +28,7 @@ namespace DTKH2024.SbinSolution.Authorization.Users
         Task DeleteUser(EntityDto<long> input);
 
         Task UnlockUser(EntityDto<long> input);
+
+        Task<GetUserForEditOutput> GetUserForView(NullableIdDto<long> input);
     }
 }

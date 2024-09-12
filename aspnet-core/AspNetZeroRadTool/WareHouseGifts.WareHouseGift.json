@@ -1,5 +1,5 @@
 {
-  "IsRegenerate": false,
+  "IsRegenerate": true,
   "MenuPosition": "main",
   "RelativeNamespace": "WareHouseGifts",
   "EntityName": "WareHouseGift",
@@ -40,7 +40,7 @@
       "UserInterface": {
         "AdvancedFilter": true,
         "List": true,
-        "CreateOrUpdate": true
+        "CreateOrUpdate": false
       },
       "ViewType": null,
       "AdditionalData": {}
@@ -48,8 +48,8 @@
     {
       "Name": "IsUsed",
       "Type": "bool",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,

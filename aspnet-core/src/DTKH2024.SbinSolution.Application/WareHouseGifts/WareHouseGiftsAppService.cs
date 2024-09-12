@@ -160,7 +160,7 @@ namespace DTKH2024.SbinSolution.WareHouseGifts
         protected virtual async Task Create(CreateOrEditWareHouseGiftDto input)
         {
             var wareHouseGift = ObjectMapper.Map<WareHouseGift>(input);
-
+            wareHouseGift.Code = AppConsts.getCodeRandom("WHG.");
             await _wareHouseGiftRepository.InsertAsync(wareHouseGift);
 
         }

@@ -51,11 +51,6 @@
             <input class="form-control" id="WareHouseGift_ProductPromotionId" value="" type="text" name="productPromotionId" hidden />
             }
 
-            <div class="my-3">
-                <label class="form-label" for="WareHouseGift_Code">@L("Code")</label>
-                <input class="form-control" id="WareHouseGift_Code" value="@Model.WareHouseGift.Code" type="text" name="code" required />
-            </div>
-
             <label class="form-check form-check-custom">
                 <input id="WareHouseGift_IsUsed" name="isUsed" type="checkbox" class="form-check-input" value="true" @Html.Raw(Model.WareHouseGift.IsUsed ?"checked=\"checked\"":"") />
                 <span class="form-check-label">

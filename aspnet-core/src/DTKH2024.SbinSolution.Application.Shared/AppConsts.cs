@@ -50,5 +50,11 @@ namespace DTKH2024.SbinSolution
 
         public static TimeSpan AccessTokenExpiration = TimeSpan.FromDays(1);
         public static TimeSpan RefreshTokenExpiration = TimeSpan.FromDays(365);
+
+        public static string getCodeRandom(string key)
+        {
+            var epoch = key + (int)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
+            return epoch;
+        }
     }
 }

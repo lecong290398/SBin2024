@@ -19,8 +19,6 @@ namespace DTKH2024.SbinSolution.TransactionBins.Dtos
 
         public decimal ErrorPoint { get; set; }
 
-        public string TransactionCode { get; set; }
-
         public int DeviceId { get; set; }
 
         public long? UserId { get; set; }

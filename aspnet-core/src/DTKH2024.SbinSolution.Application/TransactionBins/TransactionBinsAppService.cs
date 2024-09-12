@@ -191,7 +191,8 @@ namespace DTKH2024.SbinSolution.TransactionBins
         protected virtual async Task Create(CreateOrEditTransactionBinDto input)
         {
             var transactionBin = ObjectMapper.Map<TransactionBin>(input);
-
+            var epoch = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
+            transactionBin.TransactionCode = AppConsts.getCodeRandom("SB.");
             await _transactionBinRepository.InsertAsync(transactionBin);
 
         }

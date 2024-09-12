@@ -175,7 +175,7 @@ namespace DTKH2024.SbinSolution.ProductPromotions
         protected virtual async Task Create(CreateOrEditProductPromotionDto input)
         {
             var productPromotion = ObjectMapper.Map<ProductPromotion>(input);
-
+            productPromotion.PromotionCode = AppConsts.getCodeRandom("PMO_");
             await _productPromotionRepository.InsertAsync(productPromotion);
 
         }

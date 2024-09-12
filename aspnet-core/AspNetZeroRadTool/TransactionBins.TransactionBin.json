@@ -172,7 +172,7 @@
       "UserInterface": {
         "AdvancedFilter": true,
         "List": true,
-        "CreateOrUpdate": true
+        "CreateOrUpdate": false
       },
       "ViewType": null,
       "AdditionalData": {}

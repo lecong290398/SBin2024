@@ -84,8 +84,8 @@
         abp
           .ajax({
             type: 'GET',
-            url: '/api/services/app/Users/GetUserForView',
-            data: {
+              url: '/api/services/app/User/GetUserForView',
+              data: {
               id: selectedEntityId.val(),
             },
           })

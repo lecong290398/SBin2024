@@ -55,6 +55,7 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Controllers
             {
                 Device = getDeviceForEditOutput.Device,
                 StatusDeviceName = getDeviceForEditOutput.StatusDeviceName,
+                UserName = getDeviceForEditOutput.UserName,
                 DeviceStatusDeviceList = await _devicesAppService.GetAllStatusDeviceForTableDropdown(),
 
             };
@@ -72,9 +73,25 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Controllers
                 ,
                 StatusDeviceName = getDeviceForViewDto.StatusDeviceName
 
+                ,
+                UserName = getDeviceForViewDto.UserName
+
             };
 
             return PartialView("_ViewDeviceModal", model);
+        }
+
+        [AbpMvcAuthorize(AppPermissions.Pages_Administration_Devices_Create, AppPermissions.Pages_Administration_Devices_Edit)]
+        public PartialViewResult UserLookupTableModal(long? id, string displayName)
+        {
+            var viewModel = new DeviceUserLookupTableViewModel()
+            {
+                Id = id,
+                DisplayName = displayName,
+                FilterText = ""
+            };
+
+            return PartialView("_DeviceUserLookupTableModal", viewModel);
         }
 
     }

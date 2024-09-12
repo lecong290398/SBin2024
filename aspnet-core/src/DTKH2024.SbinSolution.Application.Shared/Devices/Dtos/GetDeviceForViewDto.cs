@@ -6,5 +6,7 @@
 
         public string StatusDeviceName { get; set; }
 
+        public string UserName { get; set; }
+
     }
 }

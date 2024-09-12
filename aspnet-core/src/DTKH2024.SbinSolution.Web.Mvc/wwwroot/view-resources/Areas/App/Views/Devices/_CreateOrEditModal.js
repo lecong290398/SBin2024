@@ -10,6 +10,11 @@
       scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/Devices/_DeviceStatusDeviceLookupTableModal.js',
       modalClass: 'StatusDeviceLookupTableModal',
     });
+    var _DeviceuserLookupTableModal = new app.ModalManager({
+      viewUrl: abp.appPath + 'App/Devices/UserLookupTableModal',
+      scriptUrl: abp.appPath + 'view-resources/Areas/App/Views/Devices/_DeviceUserLookupTableModal.js',
+      modalClass: 'UserLookupTableModal',
+    });
 
     this.init = function (modalManager) {
       _modalManager = modalManager;
@@ -76,6 +81,61 @@
             typeaheadStatusDeviceId.append(option).trigger('change');
           });
       }
+      // Init select2
+      var typeaheadUserId = $('#userId-typeahead-selector');
+
+      typeaheadUserId.select2({
+        placeholder: 'Select',
+        theme: 'bootstrap5',
+        selectionCssClass: 'form-select',
+        dropdownParent: _modalManager.getModal(),
+        minimumInputLength: 2,
+        ajax: {
+          url: abp.appPath + 'api/services/app/Users/GetAll',
+          dataType: 'json',
+          delay: 250,
+          data: function (params) {
+            return {
+              NameFilter: params.term, // search term
+              SkipCount: (params.page || 0) * 10,
+              MaxResultCount: 10,
+            };
+          },
+          processResults: function (data, params) {
+            params.page = params.page || 0;
+
+            return {
+              results: $.map(data.result.items, function (item) {
+                return {
+                  text: item.user.name,
+                  id: item.user.id,
+                };
+              }),
+              pagination: {
+                more: params.page * 10 < data.result.totalCount,
+              },
+            };
+          },
+          cache: true,
+        },
+      });
+
+      var selectedEntityId = $('#Device_UserId');
+
+      if (selectedEntityId && selectedEntityId.val()) {
+        abp
+          .ajax({
+            type: 'GET',
+              url: '/api/services/app/User/GetUserForView',
+              data: {
+              id: selectedEntityId.val(),
+            },
+          })
+          .done(function (data) {
+            var option = new Option(data.user.name, data.user.id, true, true);
+            typeaheadUserId.append(option).trigger('change');
+          });
+      }
 
       _$deviceInformationForm = _modalManager.getModal().find('form[name=DeviceInformationsForm]');
       _$deviceInformationForm.validate();
@@ -98,12 +158,30 @@
       _$deviceInformationForm.find('input[name=statusDeviceId]').val('');
     });
 
+    $('#OpenUserLookupTableButton').click(function () {
+      var device = _$deviceInformationForm.serializeFormToObject();
+
+      _DeviceuserLookupTableModal.open({ id: device.userId, displayName: device.userName }, function (data) {
+        _$deviceInformationForm.find('input[name=userName]').val(data.displayName);
+        _$deviceInformationForm.find('input[name=userId]').val(data.id);
+      });
+    });
+
+    $('#ClearUserNameButton').click(function () {
+      _$deviceInformationForm.find('input[name=userName]').val('');
+      _$deviceInformationForm.find('input[name=userId]').val('');
+    });
+
     this.save = function () {
       if (!_$deviceInformationForm.valid()) {
         return;
       }
       if ($('#Device_StatusDeviceId').prop('required') && $('#Device_StatusDeviceId').val() == '') {
         abp.message.error(app.localize('{0}IsRequired', app.localize('StatusDevice')));
+        return;
+      }
+      if ($('#Device_UserId').prop('required') && $('#Device_UserId').val() == '') {
+        abp.message.error(app.localize('{0}IsRequired', app.localize('User')));
         return;
       }
 

@@ -29,5 +29,7 @@ namespace DTKH2024.SbinSolution.Devices.Dtos
 
         public int StatusDeviceId { get; set; }
 
+        public long? UserId { get; set; }
+
     }
 }

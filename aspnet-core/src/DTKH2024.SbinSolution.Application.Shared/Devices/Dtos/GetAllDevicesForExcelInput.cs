@@ -15,5 +15,7 @@ namespace DTKH2024.SbinSolution.Devices.Dtos
 
         public string StatusDeviceNameFilter { get; set; }
 
+        public string UserNameFilter { get; set; }
+
     }
 }

@@ -180,8 +180,8 @@
     {
       "Name": "PercentStatusOrther",
       "Type": "int",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -202,8 +202,8 @@
     {
       "Name": "ErrorPoint",
       "Type": "decimal",
-      "MaxLength": 0,
-      "MinLength": 0,
+      "MaxLength": -1,
+      "MinLength": -1,
       "Range": {
         "IsRangeSet": false,
         "MinimumValue": 0.0,
@@ -255,6 +255,23 @@
       "DuplicationNumber": 0,
       "RelationType": "single",
       "ViewType": "Dropdown",
+      "DisplayPropertyNameInfos": {
+        "MergeFormat": "{0}",
+        "DisplayPropertyNames": [
+          "Name"
+        ]
+      }
+    },
+    {
+      "Namespace": "DTKH2024.SbinSolution.Authorization.Users",
+      "ForeignEntityName": "User",
+      "ForeignEntityNamePlural": "Users",
+      "IdType": "long",
+      "IsNullable": true,
+      "PropertyName": "UserId",
+      "DuplicationNumber": 0,
+      "RelationType": "single",
+      "ViewType": "LookupTable",
       "DisplayPropertyNameInfos": {
         "MergeFormat": "{0}",
         "DisplayPropertyNames": [

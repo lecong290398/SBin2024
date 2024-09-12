@@ -1,4 +1,5 @@
 ﻿using DTKH2024.SbinSolution.StatusDevices;
+using DTKH2024.SbinSolution.Authorization.Users;
 
 using System;
 using System.Linq;
@@ -26,12 +27,14 @@ namespace DTKH2024.SbinSolution.Devices
         private readonly IRepository<Device> _deviceRepository;
         private readonly IDevicesExcelExporter _devicesExcelExporter;
         private readonly IRepository<StatusDevice, int> _lookup_statusDeviceRepository;
+        private readonly IRepository<User, long> _lookup_userRepository;
 
-        public DevicesAppService(IRepository<Device> deviceRepository, IDevicesExcelExporter devicesExcelExporter, IRepository<StatusDevice, int> lookup_statusDeviceRepository)
+        public DevicesAppService(IRepository<Device> deviceRepository, IDevicesExcelExporter devicesExcelExporter, IRepository<StatusDevice, int> lookup_statusDeviceRepository, IRepository<User, long> lookup_userRepository)
         {
             _deviceRepository = deviceRepository;
             _devicesExcelExporter = devicesExcelExporter;
             _lookup_statusDeviceRepository = lookup_statusDeviceRepository;
+            _lookup_userRepository = lookup_userRepository;
 
         }
 
@@ -40,11 +43,13 @@ namespace DTKH2024.SbinSolution.Devices
 
             var filteredDevices = _deviceRepository.GetAll()
                         .Include(e => e.StatusDeviceFk)
+                        .Include(e => e.UserFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Address.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter))
                         .WhereIf(input.SensorPlastisAvailableFilter.HasValue && input.SensorPlastisAvailableFilter > -1, e => (input.SensorPlastisAvailableFilter == 1 && e.SensorPlastisAvailable) || (input.SensorPlastisAvailableFilter == 0 && !e.SensorPlastisAvailable))
                         .WhereIf(input.SensorMetalAvailableFilter.HasValue && input.SensorMetalAvailableFilter > -1, e => (input.SensorMetalAvailableFilter == 1 && e.SensorMetalAvailable) || (input.SensorMetalAvailableFilter == 0 && !e.SensorMetalAvailable))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.StatusDeviceNameFilter), e => e.StatusDeviceFk != null && e.StatusDeviceFk.Name == input.StatusDeviceNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.StatusDeviceNameFilter), e => e.StatusDeviceFk != null && e.StatusDeviceFk.Name == input.StatusDeviceNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.UserNameFilter), e => e.UserFk != null && e.UserFk.Name == input.UserNameFilter);
 
             var pagedAndFilteredDevices = filteredDevices
                 .OrderBy(input.Sorting ?? "id asc")
@@ -53,6 +58,9 @@ namespace DTKH2024.SbinSolution.Devices
             var devices = from o in pagedAndFilteredDevices
                           join o1 in _lookup_statusDeviceRepository.GetAll() on o.StatusDeviceId equals o1.Id into j1
                           from s1 in j1.DefaultIfEmpty()
+
+                          join o2 in _lookup_userRepository.GetAll() on o.UserId equals o2.Id into j2
+                          from s2 in j2.DefaultIfEmpty()
 
                           select new
                           {
@@ -68,7 +76,8 @@ namespace DTKH2024.SbinSolution.Devices
                               o.ErrorPoint,
                               o.Address,
                               Id = o.Id,
-                              StatusDeviceName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
+                              StatusDeviceName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                              UserName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
                           };
 
             var totalCount = await filteredDevices.CountAsync();
@@ -95,7 +104,8 @@ namespace DTKH2024.SbinSolution.Devices
                         Address = o.Address,
                         Id = o.Id,
                     },
-                    StatusDeviceName = o.StatusDeviceName
+                    StatusDeviceName = o.StatusDeviceName,
+                    UserName = o.UserName
                 };
 
                 results.Add(res);
@@ -120,6 +130,12 @@ namespace DTKH2024.SbinSolution.Devices
                 output.StatusDeviceName = _lookupStatusDevice?.Name?.ToString();
             }
 
+            if (output.Device.UserId != null)
+            {
+                var _lookupUser = await _lookup_userRepository.FirstOrDefaultAsync((long)output.Device.UserId);
+                output.UserName = _lookupUser?.Name?.ToString();
+            }
+
             return output;
         }
 
@@ -134,6 +150,12 @@ namespace DTKH2024.SbinSolution.Devices
             {
                 var _lookupStatusDevice = await _lookup_statusDeviceRepository.FirstOrDefaultAsync((int)output.Device.StatusDeviceId);
                 output.StatusDeviceName = _lookupStatusDevice?.Name?.ToString();
+            }
+
+            if (output.Device.UserId != null)
+            {
+                var _lookupUser = await _lookup_userRepository.FirstOrDefaultAsync((long)output.Device.UserId);
+                output.UserName = _lookupUser?.Name?.ToString();
             }
 
             return output;
@@ -179,15 +201,20 @@ namespace DTKH2024.SbinSolution.Devices
 
             var filteredDevices = _deviceRepository.GetAll()
                         .Include(e => e.StatusDeviceFk)
+                        .Include(e => e.UserFk)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Address.Contains(input.Filter))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter))
                         .WhereIf(input.SensorPlastisAvailableFilter.HasValue && input.SensorPlastisAvailableFilter > -1, e => (input.SensorPlastisAvailableFilter == 1 && e.SensorPlastisAvailable) || (input.SensorPlastisAvailableFilter == 0 && !e.SensorPlastisAvailable))
                         .WhereIf(input.SensorMetalAvailableFilter.HasValue && input.SensorMetalAvailableFilter > -1, e => (input.SensorMetalAvailableFilter == 1 && e.SensorMetalAvailable) || (input.SensorMetalAvailableFilter == 0 && !e.SensorMetalAvailable))
-                        .WhereIf(!string.IsNullOrWhiteSpace(input.StatusDeviceNameFilter), e => e.StatusDeviceFk != null && e.StatusDeviceFk.Name == input.StatusDeviceNameFilter);
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.StatusDeviceNameFilter), e => e.StatusDeviceFk != null && e.StatusDeviceFk.Name == input.StatusDeviceNameFilter)
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.UserNameFilter), e => e.UserFk != null && e.UserFk.Name == input.UserNameFilter);
 
             var query = (from o in filteredDevices
                          join o1 in _lookup_statusDeviceRepository.GetAll() on o.StatusDeviceId equals o1.Id into j1
                          from s1 in j1.DefaultIfEmpty()
+
+                         join o2 in _lookup_userRepository.GetAll() on o.UserId equals o2.Id into j2
+                         from s2 in j2.DefaultIfEmpty()
 
                          select new GetDeviceForViewDto()
                          {
@@ -205,7 +232,8 @@ namespace DTKH2024.SbinSolution.Devices
                                  Address = o.Address,
                                  Id = o.Id
                              },
-                             StatusDeviceName = s1 == null || s1.Name == null ? "" : s1.Name.ToString()
+                             StatusDeviceName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
+                             UserName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
                          });
 
             var deviceListDtos = await query.ToListAsync();
@@ -222,6 +250,36 @@ namespace DTKH2024.SbinSolution.Devices
                     Id = statusDevice.Id,
                     DisplayName = statusDevice == null || statusDevice.Name == null ? "" : statusDevice.Name.ToString()
                 }).ToListAsync();
+        }
+
+        [AbpAuthorize(AppPermissions.Pages_Administration_Devices)]
+        public async Task<PagedResultDto<DeviceUserLookupTableDto>> GetAllUserForLookupTable(GetAllForLookupTableInput input)
+        {
+            var query = _lookup_userRepository.GetAll().WhereIf(
+                   !string.IsNullOrWhiteSpace(input.Filter),
+                  e => e.Name != null && e.Name.Contains(input.Filter)
+               );
+
+            var totalCount = await query.CountAsync();
+
+            var userList = await query
+                .PageBy(input)
+                .ToListAsync();
+
+            var lookupTableDtoList = new List<DeviceUserLookupTableDto>();
+            foreach (var user in userList)
+            {
+                lookupTableDtoList.Add(new DeviceUserLookupTableDto
+                {
+                    Id = user.Id,
+                    DisplayName = user.Name?.ToString()
+                });
+            }
+
+            return new PagedResultDto<DeviceUserLookupTableDto>(
+                totalCount,
+                lookupTableDtoList
+            );
         }
 
     }

@@ -57,5 +57,11 @@ namespace DTKH2024.SbinSolution.Authorization.Users
         {
             return await ApiClient.GetAsync<List<string>>(GetEndpoint(nameof(GetUserExcelColumnsToExcel)));
         }
+
+        public async Task<GetUserForEditOutput> GetUserForView(NullableIdDto<long> input)
+        {
+            return await ApiClient.GetAsync<GetUserForEditOutput>(GetEndpoint(nameof(GetUserForView)), input);
+        }
+
     }
 }

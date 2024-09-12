@@ -74,6 +74,12 @@ ViewBag.CurrentPageName = AppPageNames.Common.Devices;
                         <input type="text" class="form-control" name="statusDeviceNameFilter" id="StatusDeviceNameFilterId">
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="my-3">
+                        <label class="form-label" for="UserNameFilterId">(@L("User")) @L("Name")</label>
+                        <input type="text" class="form-control" name="userNameFilter" id="UserNameFilterId">
+                    </div>
+                </div>
                 <div class="col-md-12 mt-5">
                     <button class="btn btn-secondary btn-sm" id="btn-reset-filters">Reset</button>
                 </div>
@@ -102,6 +108,7 @@ ViewBag.CurrentPageName = AppPageNames.Common.Devices;
                             <th>@L("ErrorPoint")</th>
                             <th>@L("Address")</th>
                             <th>@L("StatusDeviceName")</th>
+                            <th>@L("UserName")</th>
                         </tr>
                     </thead>
                 </table>

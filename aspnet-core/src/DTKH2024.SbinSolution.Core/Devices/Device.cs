@@ -1,4 +1,5 @@
 ﻿using DTKH2024.SbinSolution.StatusDevices;
+using DTKH2024.SbinSolution.Authorization.Users;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -35,6 +36,11 @@ namespace DTKH2024.SbinSolution.Devices
 
         [ForeignKey("StatusDeviceId")]
         public StatusDevice StatusDeviceFk { get; set; }
+
+        public virtual long? UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public User UserFk { get; set; }
 
     }
 }

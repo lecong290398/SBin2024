@@ -90,6 +90,7 @@
             sensorPlastisAvailableFilter: $('#SensorPlastisAvailableFilterId').val(),
             sensorMetalAvailableFilter: $('#SensorMetalAvailableFilterId').val(),
             statusDeviceNameFilter: $('#StatusDeviceNameFilterId').val(),
+            userNameFilter: $('#UserNameFilterId').val(),
           };
         },
       },
@@ -207,6 +208,11 @@
           data: 'statusDeviceName',
           name: 'statusDeviceFk.name',
         },
+        {
+          targets: 13,
+          data: 'userName',
+          name: 'userFk.name',
+        },
       ],
     });
 
@@ -253,6 +259,7 @@
           sensorPlastisAvailableFilter: $('#SensorPlastisAvailableFilterId').val(),
           sensorMetalAvailableFilter: $('#SensorMetalAvailableFilterId').val(),
           statusDeviceNameFilter: $('#StatusDeviceNameFilterId').val(),
+          userNameFilter: $('#UserNameFilterId').val(),
         })
         .done(function (result) {
           app.downloadTempFile(result);

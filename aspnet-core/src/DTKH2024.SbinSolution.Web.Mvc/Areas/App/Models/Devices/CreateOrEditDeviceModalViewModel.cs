@@ -11,6 +11,8 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Models.Devices
 
         public string StatusDeviceName { get; set; }
 
+        public string UserName { get; set; }
+
         public List<DeviceStatusDeviceLookupTableDto> DeviceStatusDeviceList { get; set; }
 
         public bool IsEditMode => Device.Id.HasValue;

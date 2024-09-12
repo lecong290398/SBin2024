@@ -21,6 +21,24 @@
             </div>
 
             <div class="my-3">
+                <label class="form-label" for="UserName">@L("User")</label>
+                <div class="input-group">
+                    <input class="form-control" id="UserName" name="userName" value="@Model.UserName" type="text" disabled>
+                    <button class="btn btn-primary blue" id="OpenUserLookupTableButton" type="button"><i class="fa fa-search"></i> @L("Pick")</button>
+                    <button class="btn btn-danger btn-icon" type="button" id="ClearUserNameButton"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            @if (Model.IsEditMode)
+            {
+            <input class="form-control" id="Device_UserId" value="@Model.Device.UserId" type="text" name="userId" hidden />
+            }
+            else
+            {
+            <input class="form-control" id="Device_UserId" value="" type="text" name="userId" hidden />
+            }
+
+            <div class="my-3">
                 <label class="form-label" for="Device_Name">@L("Name")</label>
                 <input class="form-control" id="Device_Name" value="@Model.Device.Name" type="text" name="name" />
             </div>

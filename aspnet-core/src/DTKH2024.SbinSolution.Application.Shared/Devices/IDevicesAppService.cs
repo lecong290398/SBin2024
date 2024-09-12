@@ -24,5 +24,7 @@ namespace DTKH2024.SbinSolution.Devices
 
         Task<List<DeviceStatusDeviceLookupTableDto>> GetAllStatusDeviceForTableDropdown();
 
+        Task<PagedResultDto<DeviceUserLookupTableDto>> GetAllUserForLookupTable(GetAllForLookupTableInput input);
+
     }
 }

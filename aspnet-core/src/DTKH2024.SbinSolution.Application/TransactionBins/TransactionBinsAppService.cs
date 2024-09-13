@@ -31,14 +31,16 @@ namespace DTKH2024.SbinSolution.TransactionBins
         private readonly IRepository<Device, int> _lookup_deviceRepository;
         private readonly IRepository<User, long> _lookup_userRepository;
         private readonly IRepository<TransactionStatus, int> _lookup_transactionStatusRepository;
+        private readonly IAbpSession _abpSession;
 
-        public TransactionBinsAppService(IRepository<TransactionBin> transactionBinRepository, ITransactionBinsExcelExporter transactionBinsExcelExporter, IRepository<Device, int> lookup_deviceRepository, IRepository<User, long> lookup_userRepository, IRepository<TransactionStatus, int> lookup_transactionStatusRepository)
+        public TransactionBinsAppService(IRepository<TransactionBin> transactionBinRepository, IAbpSession abpSession, ITransactionBinsExcelExporter transactionBinsExcelExporter, IRepository<Device, int> lookup_deviceRepository, IRepository<User, long> lookup_userRepository, IRepository<TransactionStatus, int> lookup_transactionStatusRepository)
         {
             _transactionBinRepository = transactionBinRepository;
             _transactionBinsExcelExporter = transactionBinsExcelExporter;
             _lookup_deviceRepository = lookup_deviceRepository;
             _lookup_userRepository = lookup_userRepository;
             _lookup_transactionStatusRepository = lookup_transactionStatusRepository;
+            _abpSession = abpSession ?? NullAbpSession.Instance;
 
         }
 
@@ -55,12 +57,11 @@ namespace DTKH2024.SbinSolution.TransactionBins
                         .WhereIf(!string.IsNullOrWhiteSpace(input.UserNameFilter), e => e.UserFk != null && e.UserFk.Name == input.UserNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.TransactionStatusNameFilter), e => e.TransactionStatusFk != null && e.TransactionStatusFk.Name == input.TransactionStatusNameFilter);
 
-            var userID = AbpSession.GetUserId();
+            var userID = _abpSession.GetUserId();
             if (userID != AppConsts.UserIdAdmin)
             {
                 filteredTransactionBins.Where(e => e.UserFk != null && e.UserFk.Id == userID);
             }
-
 
             var pagedAndFilteredTransactionBins = filteredTransactionBins
                 .OrderBy(input.Sorting ?? "id asc")

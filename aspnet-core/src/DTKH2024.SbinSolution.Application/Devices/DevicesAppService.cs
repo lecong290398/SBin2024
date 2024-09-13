@@ -29,15 +29,15 @@ namespace DTKH2024.SbinSolution.Devices
         private readonly IDevicesExcelExporter _devicesExcelExporter;
         private readonly IRepository<StatusDevice, int> _lookup_statusDeviceRepository;
         private readonly IRepository<User, long> _lookup_userRepository;
-        public IAbpSession AbpSession { get; set; }
+        private readonly IAbpSession _abpSession;
 
-        public DevicesAppService(IRepository<Device> deviceRepository, IDevicesExcelExporter devicesExcelExporter, IRepository<StatusDevice, int> lookup_statusDeviceRepository, IRepository<User, long> lookup_userRepository)
+        public DevicesAppService(IAbpSession abpSession , IRepository<Device> deviceRepository, IDevicesExcelExporter devicesExcelExporter, IRepository<StatusDevice, int> lookup_statusDeviceRepository, IRepository<User, long> lookup_userRepository)
         {
             _deviceRepository = deviceRepository;
             _devicesExcelExporter = devicesExcelExporter;
             _lookup_statusDeviceRepository = lookup_statusDeviceRepository;
             _lookup_userRepository = lookup_userRepository;
-            AbpSession = NullAbpSession.Instance;
+            _abpSession = abpSession ?? NullAbpSession.Instance;
 
         }
 
@@ -54,7 +54,7 @@ namespace DTKH2024.SbinSolution.Devices
                         .WhereIf(!string.IsNullOrWhiteSpace(input.StatusDeviceNameFilter), e => e.StatusDeviceFk != null && e.StatusDeviceFk.Name == input.StatusDeviceNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.UserNameFilter), e => e.UserFk != null && e.UserFk.Name == input.UserNameFilter);
 
-            var userID = AbpSession.GetUserId();
+            var userID = _abpSession.GetUserId();
             if (userID != AppConsts.UserIdAdmin)
             {
                 filteredDevices.Where(e => e.UserFk != null && e.UserFk.Id == userID);

@@ -20,6 +20,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using DTKH2024.SbinSolution.Storage;
+using Abp.Runtime.Session;
 
 namespace DTKH2024.SbinSolution.OrderHistories
 {
@@ -32,8 +33,9 @@ namespace DTKH2024.SbinSolution.OrderHistories
         private readonly IRepository<TransactionBin, int> _lookup_transactionBinRepository;
         private readonly IRepository<WareHouseGift, int> _lookup_wareHouseGiftRepository;
         private readonly IRepository<HistoryType, int> _lookup_historyTypeRepository;
+        private readonly IAbpSession _abpSession;
 
-        public OrderHistoriesAppService(IRepository<OrderHistory> orderHistoryRepository, IOrderHistoriesExcelExporter orderHistoriesExcelExporter, IRepository<User, long> lookup_userRepository, IRepository<TransactionBin, int> lookup_transactionBinRepository, IRepository<WareHouseGift, int> lookup_wareHouseGiftRepository, IRepository<HistoryType, int> lookup_historyTypeRepository)
+        public OrderHistoriesAppService(IRepository<OrderHistory> orderHistoryRepository , IAbpSession abpSession, IOrderHistoriesExcelExporter orderHistoriesExcelExporter, IRepository<User, long> lookup_userRepository, IRepository<TransactionBin, int> lookup_transactionBinRepository, IRepository<WareHouseGift, int> lookup_wareHouseGiftRepository, IRepository<HistoryType, int> lookup_historyTypeRepository)
         {
             _orderHistoryRepository = orderHistoryRepository;
             _orderHistoriesExcelExporter = orderHistoriesExcelExporter;
@@ -57,7 +59,11 @@ namespace DTKH2024.SbinSolution.OrderHistories
                         .WhereIf(!string.IsNullOrWhiteSpace(input.TransactionBinTransactionCodeFilter), e => e.TransactionBinFk != null && e.TransactionBinFk.TransactionCode == input.TransactionBinTransactionCodeFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.WareHouseGiftCodeFilter), e => e.WareHouseGiftFk != null && e.WareHouseGiftFk.Code == input.WareHouseGiftCodeFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.HistoryTypeNameFilter), e => e.HistoryTypeFk != null && e.HistoryTypeFk.Name == input.HistoryTypeNameFilter);
-
+            var userID = _abpSession.GetUserId();
+            if (userID != AppConsts.UserIdAdmin)
+            {
+                filteredOrderHistories.Where(e => e.UserFk != null && e.UserFk.Id == userID);
+            }
             var pagedAndFilteredOrderHistories = filteredOrderHistories
                 .OrderBy(input.Sorting ?? "id asc")
                 .PageBy(input);

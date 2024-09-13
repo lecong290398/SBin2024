@@ -18,6 +18,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using DTKH2024.SbinSolution.Storage;
+using Abp.Runtime.Session;
 
 namespace DTKH2024.SbinSolution.Devices
 {
@@ -28,6 +29,7 @@ namespace DTKH2024.SbinSolution.Devices
         private readonly IDevicesExcelExporter _devicesExcelExporter;
         private readonly IRepository<StatusDevice, int> _lookup_statusDeviceRepository;
         private readonly IRepository<User, long> _lookup_userRepository;
+        public IAbpSession AbpSession { get; set; }
 
         public DevicesAppService(IRepository<Device> deviceRepository, IDevicesExcelExporter devicesExcelExporter, IRepository<StatusDevice, int> lookup_statusDeviceRepository, IRepository<User, long> lookup_userRepository)
         {
@@ -35,12 +37,13 @@ namespace DTKH2024.SbinSolution.Devices
             _devicesExcelExporter = devicesExcelExporter;
             _lookup_statusDeviceRepository = lookup_statusDeviceRepository;
             _lookup_userRepository = lookup_userRepository;
+            AbpSession = NullAbpSession.Instance;
 
         }
 
         public virtual async Task<PagedResultDto<GetDeviceForViewDto>> GetAll(GetAllDevicesInput input)
         {
-
+      
             var filteredDevices = _deviceRepository.GetAll()
                         .Include(e => e.StatusDeviceFk)
                         .Include(e => e.UserFk)
@@ -50,6 +53,12 @@ namespace DTKH2024.SbinSolution.Devices
                         .WhereIf(input.SensorMetalAvailableFilter.HasValue && input.SensorMetalAvailableFilter > -1, e => (input.SensorMetalAvailableFilter == 1 && e.SensorMetalAvailable) || (input.SensorMetalAvailableFilter == 0 && !e.SensorMetalAvailable))
                         .WhereIf(!string.IsNullOrWhiteSpace(input.StatusDeviceNameFilter), e => e.StatusDeviceFk != null && e.StatusDeviceFk.Name == input.StatusDeviceNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.UserNameFilter), e => e.UserFk != null && e.UserFk.Name == input.UserNameFilter);
+
+            var userID = AbpSession.GetUserId();
+            if (userID != AppConsts.UserIdAdmin)
+            {
+                filteredDevices.Where(e => e.UserFk != null && e.UserFk.Id == userID);
+            }
 
             var pagedAndFilteredDevices = filteredDevices
                 .OrderBy(input.Sorting ?? "id asc")

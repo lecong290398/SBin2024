@@ -56,5 +56,8 @@ namespace DTKH2024.SbinSolution
             var epoch = key + (int)(DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
             return epoch;
         }
+        public const int UserIdAdmin = 2;
+
+
     }
 }

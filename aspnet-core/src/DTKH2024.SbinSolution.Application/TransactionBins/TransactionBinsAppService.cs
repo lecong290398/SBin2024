@@ -19,6 +19,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using DTKH2024.SbinSolution.Storage;
+using Abp.Runtime.Session;
 
 namespace DTKH2024.SbinSolution.TransactionBins
 {
@@ -53,6 +54,13 @@ namespace DTKH2024.SbinSolution.TransactionBins
                         .WhereIf(!string.IsNullOrWhiteSpace(input.DeviceNameFilter), e => e.DeviceFk != null && e.DeviceFk.Name == input.DeviceNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.UserNameFilter), e => e.UserFk != null && e.UserFk.Name == input.UserNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.TransactionStatusNameFilter), e => e.TransactionStatusFk != null && e.TransactionStatusFk.Name == input.TransactionStatusNameFilter);
+
+            var userID = AbpSession.GetUserId();
+            if (userID != AppConsts.UserIdAdmin)
+            {
+                filteredTransactionBins.Where(e => e.UserFk != null && e.UserFk.Id == userID);
+            }
+
 
             var pagedAndFilteredTransactionBins = filteredTransactionBins
                 .OrderBy(input.Sorting ?? "id asc")

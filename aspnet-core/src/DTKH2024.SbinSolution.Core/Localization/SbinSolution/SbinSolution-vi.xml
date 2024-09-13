@@ -513,7 +513,7 @@
 		<text name="SuccessfullyUnlinked">Đã hủy liên kết thành công</text>
 		<text name="LinkedUserDeleteWarningMessage">Liên kết tới người dùng {0} sẽ bị xóa.</text>
 		<text name="SwitchToLinkedAccountTokenErrorMessage">Mã thông báo mạo danh không hợp lệ hoặc đã hết hạn!</text>
-		<text name="WelcomeToTheApplicationNotificationMessage">Chào mừng bạn đến với DemoCore! Hệ thống thông báo được sử dụng để thông báo cho bạn về các sự kiện dự định. Bạn có thể chọn loại thông báo bạn muốn nhận từ cài đặt thông báo.</text>
+		<text name="WelcomeToTheApplicationNotificationMessage">Chào mừng bạn đến với Sbin! Hệ thống quản trị, quy đổi điểm thưởng....</text>
 		<text name="NewUserRegisteredNotificationDefinition">Khi có người dùng mới được đăng ký vào ứng dụng.</text>
 		<text name="NewUserRegisteredNotificationMessage">Một người dùng mới đã đăng ký vào ứng dụng. Tên người dùng: {userName}, Địa chỉ email: {emailAddress}.</text>
 		<text name="SeeAllNotifications">Xem tất cả thông báo</text>

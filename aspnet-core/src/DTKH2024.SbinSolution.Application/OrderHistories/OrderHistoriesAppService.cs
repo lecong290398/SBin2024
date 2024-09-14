@@ -43,7 +43,7 @@ namespace DTKH2024.SbinSolution.OrderHistories
             _lookup_transactionBinRepository = lookup_transactionBinRepository;
             _lookup_wareHouseGiftRepository = lookup_wareHouseGiftRepository;
             _lookup_historyTypeRepository = lookup_historyTypeRepository;
-
+            _abpSession = abpSession;
         }
 
         public virtual async Task<PagedResultDto<GetOrderHistoryForViewDto>> GetAll(GetAllOrderHistoriesInput input)

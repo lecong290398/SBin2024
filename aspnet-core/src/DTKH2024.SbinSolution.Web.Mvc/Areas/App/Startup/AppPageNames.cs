@@ -4,6 +4,8 @@
     {
         public static class Common
         {
+            public const string RedeemGifts = "RedeemGifts.RedeemGifts";
+            public const string ScanQR = "ScanQR.ScanQR";
             public const string OrderHistories = "OrderHistories.OrderHistories";
             public const string WareHouseGifts = "WareHouseGifts.WareHouseGifts";
             public const string TransactionBins = "Administration.TransactionBins.TransactionBins";

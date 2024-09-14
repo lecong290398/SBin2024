@@ -6,6 +6,8 @@
     /// </summary>
     public static class AppPermissions
     {
+        public const string Pages_RedeemGifts = "Pages.RedeemGifts";
+        public const string Pages_ScanQR = "Pages.ScanQR";
         public const string Pages_OrderHistories = "Pages.OrderHistories";
         public const string Pages_OrderHistories_Create = "Pages.OrderHistories.Create";
         public const string Pages_OrderHistories_Edit = "Pages.OrderHistories.Edit";

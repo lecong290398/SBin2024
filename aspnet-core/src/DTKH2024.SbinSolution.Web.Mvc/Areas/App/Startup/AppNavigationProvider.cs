@@ -22,6 +22,25 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Administration_Host_Dashboard)
                     )
                 )
+
+                 .AddItem(new MenuItemDefinition(
+                         AppPageNames.Common.RedeemGifts,
+                         L("RedeemGifts"),
+                         url: "App/RedeemGifts",
+                         icon: "fa-solid fa-gifts",
+                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_RedeemGifts)
+                     )
+                 )
+
+                 .AddItem(new MenuItemDefinition(
+                        AppPageNames.Common.ScanQR,
+                        L("ScanQR"),
+                        url: "App/ScanQR",
+                        icon: "fa-solid fa-qrcode",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_ScanQR)
+                    )
+                )
+
                 .AddItem(new MenuItemDefinition(
                         AppPageNames.Common.OrderHistories,
                         L("OrderHistories"),

@@ -15,4 +15,9 @@
     <ProjectReference Include="..\DTKH2024.SbinSolution.Core.Shared\DTKH2024.SbinSolution.Core.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RedeemGifts\Dto\" />
+    <Folder Include="ScanQR\Dto\" />
+  </ItemGroup>
+
 </Project>

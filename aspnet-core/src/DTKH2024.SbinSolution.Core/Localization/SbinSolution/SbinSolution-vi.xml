@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="vi">
 	<texts>
+		<text name="ScanQR">Quét mã tích điểm</text>
+		<text name="RedeemGifts">Đổi thưởng</text>
 
 		<text name="Description">Mô Tả</text>
 		<text name="{0}IsRequired">{0} bắt buộc.</text>

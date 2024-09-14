@@ -28,4 +28,8 @@
     <ProjectReference Include="..\DTKH2024.SbinSolution.EntityFrameworkCore\DTKH2024.SbinSolution.EntityFrameworkCore.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="RedeemGifts\Dto\" />
+  </ItemGroup>
+
 </Project>

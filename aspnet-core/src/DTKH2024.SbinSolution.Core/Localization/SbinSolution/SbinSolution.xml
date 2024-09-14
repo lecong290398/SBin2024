@@ -1472,6 +1472,8 @@
 	  <text name="StatusActvice">Actvice</text>
 	  <text name="StatusNotActvice">Not Actvice</text>
 	  <text name="PromotionsManagement">Promotions Management</text>
+	  <text name="ScanQR">Scan QR</text>
+	  <text name="RedeemGifts">Redeem Gifts</text>
 
   </texts>
 </localizationDictionary>

@@ -27,7 +27,7 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                          AppPageNames.Common.RedeemGifts,
                          L("RedeemGifts"),
                          url: "App/RedeemGifts",
-                         icon: "fa-solid fa-gifts",
+                         icon: "fa-solid fa-cart-shopping",
                          permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_RedeemGifts)
                      )
                  )

@@ -4,15 +4,59 @@
 @{
     ViewBag.CurrentPageName = AppPageNames.Common.ScanQR;
 }
-
 <abp-page-subheader title='@L("ScanQR")' description='@L("ScanQRHeaderInfo")'>
 </abp-page-subheader>
 
 <div class="@(await GetContainerClass())">
-    <div class="card card-custom gutter-b">
-        <div class="card-body">
-           <h2>Scan QR</h2>
-           <h4>Tích hợp vào nhé</h4>
-        </div>
-    </div>
+    <div id="qr-reader"></div>
+    <div id="qr-reader-results"></div>
 </div>
+<style>
+/* QR SCANNER */
+#qr-reader {
+    background: #fff;
+    border: 1px dashed #20914f !important;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    margin: 55px 0;
+}
+#qr-reader span {
+    color: #20914f;
+}
+#qr-reader button, #qr-reader select {
+    background: transparent;
+    border-radius: 30px;
+    padding: 10px;
+    border: 4px solid #20914f;
+    color: #103f24;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 24px 0;
+    cursor: pointer;
+    outline: none;
+}
+#qr-reader video {
+    width: 100%;
+}
+</style>
+<!-- QR Scanner -->
+<script src="https://unpkg.com/html5-qrcode"></script>
+<script>
+// QR Scanner
+var resultContainer = document.getElementById('qr-reader-results');
+var lastResult, countResults = 0;
+function onScanSuccess(decodedText, decodedResult) {
+    if (decodedText !== lastResult) {
+        ++countResults;
+        lastResult = decodedText;
+        // Handle on success condition with the decoded message.
+        console.log(`Scan result ${decodedText}`, decodedResult);
+        window.location.href = `${decodedText}`;
+        resultContainer.innerHTML = `<a style="color: var(--dark-blue);" href="${decodedText}">Your QR Code is: ${decodedText}</a>`
+    }
+}
+var html5QrcodeScanner = new Html5QrcodeScanner(
+    "qr-reader", { fps: 10, qrbox: 250 });
+html5QrcodeScanner.render(onScanSuccess);
+</script>

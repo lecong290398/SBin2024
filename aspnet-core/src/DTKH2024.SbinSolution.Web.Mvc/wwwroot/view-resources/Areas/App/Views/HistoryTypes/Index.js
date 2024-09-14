@@ -150,7 +150,12 @@
         {
           targets: 4,
           data: 'historyType.color',
-          name: 'color',
+          name: 'color',render: function (color) {
+            if (color) {
+              return `<div style="width: 30px;height: 30px;background: ${color};border-radius: 50%;"></div>`
+            }
+            else return ""
+          }
         },
       ],
     });

@@ -1473,7 +1473,9 @@
 	  <text name="StatusNotActvice">Not Actvice</text>
 	  <text name="PromotionsManagement">Promotions Management</text>
 	  <text name="ScanQR">Scan QR</text>
+	  <text name="ScanQRHeaderInfo">Scan QR code to earn bonus points</text>
 	  <text name="RedeemGifts">Redeem Gifts</text>
+	  <text name="RedeemGiftsHeaderInfo">Redeem rewards with many valuable gifts....</text>
 
   </texts>
 </localizationDictionary>

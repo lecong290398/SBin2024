@@ -1,17 +1,18 @@
-﻿
-<div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
-    <div class="kt-subheader kt-grid__item">
-        <div class="kt-container ">
-            <div class="kt-subheader__main">
-                <h3 class="kt-subheader__title">
-                </h3>
-                <span class="kt-subheader__separator kt-subheader__separator--v"></span>
-                <span class="kt-subheader__desc">
-                </span>
-            </div>
+﻿@using DTKH2024.SbinSolution.Authorization
+@using DTKH2024.SbinSolution.Web.Areas.App.Models.Brands
+@using DTKH2024.SbinSolution.Web.Areas.App.Startup
+@{
+    ViewBag.CurrentPageName = AppPageNames.Common.ScanQR;
+}
+
+<abp-page-subheader title='@L("RedeemGifts")' description='@L("RedeemGiftsHeaderInfo")'>
+</abp-page-subheader>
+
+<div class="@(await GetContainerClass())">
+    <div class="card card-custom gutter-b">
+        <div class="card-body">
+            <h2>Redeem Gifts</h2>
+            <h4>Tích hợp vào nhé</h4>
         </div>
-    </div>
-    <div class="kt-container kt-grid__item kt-grid__item--fluid">
-        <p>RedeemGiftsController!</p>
     </div>
 </div>

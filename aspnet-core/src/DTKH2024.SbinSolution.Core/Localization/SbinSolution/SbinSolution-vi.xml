@@ -2,7 +2,10 @@
 <localizationDictionary culture="vi">
 	<texts>
 		<text name="ScanQR">Quét mã tích điểm</text>
+		<text name="ScanQRHeaderInfo">Quét mã QR tích điểm thưởng</text>
+	
 		<text name="RedeemGifts">Đổi thưởng</text>
+		<text name="RedeemGiftsHeaderInfo">Đổi thưởng với muôn vàn phần quà giá trị....</text>
 
 		<text name="Description">Mô Tả</text>
 		<text name="{0}IsRequired">{0} bắt buộc.</text>

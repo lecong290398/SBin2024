@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DTKH2024.SbinSolution.Web.Mvc", "DTKH2024.SbinSolution.Web.Mvc.csproj", "{3C19E142-97C9-48C4-A254-3D723B6DD510}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3C19E142-97C9-48C4-A254-3D723B6DD510}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C19E142-97C9-48C4-A254-3D723B6DD510}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C19E142-97C9-48C4-A254-3D723B6DD510}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C19E142-97C9-48C4-A254-3D723B6DD510}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6ED46BFE-FF56-46C1-B22F-0DCAB8A75BC4}
+	EndGlobalSection
+EndGlobal

@@ -22,6 +22,8 @@
         public const string Pages_Administration_TransactionBins_Create = "Pages.Administration.TransactionBins.Create";
         public const string Pages_Administration_TransactionBins_Edit = "Pages.Administration.TransactionBins.Edit";
         public const string Pages_Administration_TransactionBins_Delete = "Pages.Administration.TransactionBins.Delete";
+        public const string Pages_Administration_Device_TransactionBins_Create = "Pages.Administration.Device.TransactionBins.Create";
+
 
         public const string Pages_Administration_CategoryPromotions = "Pages.Administration.CategoryPromotions";
         public const string Pages_Administration_CategoryPromotions_Create = "Pages.Administration.CategoryPromotions.Create";

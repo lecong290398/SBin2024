@@ -1476,6 +1476,7 @@
 	  <text name="ScanQRHeaderInfo">Scan QR code to earn bonus points</text>
 	  <text name="RedeemGifts">Redeem Gifts</text>
 	  <text name="RedeemGiftsHeaderInfo">Redeem rewards with many valuable gifts....</text>
+    <text name="CreateNewTransactionBinAdminDevice">Create new transaction bin admin device</text>
 
   </texts>
 </localizationDictionary>

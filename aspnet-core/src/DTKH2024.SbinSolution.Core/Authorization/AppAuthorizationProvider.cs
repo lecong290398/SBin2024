@@ -53,6 +53,7 @@ namespace DTKH2024.SbinSolution.Authorization
             transactionBins.CreateChildPermission(AppPermissions.Pages_Administration_TransactionBins_Create, L("CreateNewTransactionBin"));
             transactionBins.CreateChildPermission(AppPermissions.Pages_Administration_TransactionBins_Edit, L("EditTransactionBin"));
             transactionBins.CreateChildPermission(AppPermissions.Pages_Administration_TransactionBins_Delete, L("DeleteTransactionBin"));
+            transactionBins.CreateChildPermission(AppPermissions.Pages_Administration_Device_TransactionBins_Create, L("CreateNewTransactionBinAdminDevice"));
 
             var categoryPromotions = administration.CreateChildPermission(AppPermissions.Pages_Administration_CategoryPromotions, L("CategoryPromotions"));
             categoryPromotions.CreateChildPermission(AppPermissions.Pages_Administration_CategoryPromotions_Create, L("CreateNewCategoryPromotion"));

@@ -196,7 +196,7 @@ namespace DTKH2024.SbinSolution.TransactionBins
             }
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Administration_TransactionBins_Create)]
+        [AbpAuthorize(AppPermissions.Pages_Administration_TransactionBins_Create), AbpAuthorize(AppPermissions.Pages_Administration_Device_TransactionBins_Create)]
         protected virtual async Task Create(CreateOrEditTransactionBinDto input)
         {
             var transactionBin = ObjectMapper.Map<TransactionBin>(input);

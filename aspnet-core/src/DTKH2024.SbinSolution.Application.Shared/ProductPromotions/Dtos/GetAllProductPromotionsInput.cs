@@ -28,4 +28,11 @@ namespace DTKH2024.SbinSolution.ProductPromotions.Dtos
     {
         public int? BrandID { get; set; }
     }
+
+
+    public class GetProductPromotionsInputForCustomer 
+    {
+        public int ProductID { get; set; }
+        public int ProductPromotionID { get; set; }
+    }
 }

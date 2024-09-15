@@ -12,6 +12,7 @@ namespace DTKH2024.SbinSolution.RedeemGifts
     public interface IRedeemGiftsAppService : IApplicationService
     {
         Task<PagedResultDto<GetBrandForViewDto>> GetAllBrand(GetAllBrandsInput input);
-        Task<PagedResultDto<GetProductPromotionForCustomerDto>> GetAllProduct(GetAllProductPromotionsInputForCustomer input);
+        Task<PagedResultDto<GetProductPromotionForViewDto>> GetAllProduct(GetAllProductPromotionsInputForCustomer input);
+        Task<GetProductPromotionForCustomerDto> GetProductPromotionDetail(GetProductPromotionsInputForCustomer input);
     }
 }

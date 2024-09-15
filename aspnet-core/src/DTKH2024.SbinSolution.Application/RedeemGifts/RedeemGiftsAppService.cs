@@ -116,7 +116,7 @@ namespace DTKH2024.SbinSolution.RedeemGifts
             return file?.Description;
         }
 
-        public virtual async Task<PagedResultDto<GetProductPromotionForCustomerDto>> GetAllProduct(GetAllProductPromotionsInputForCustomer input)
+        public virtual async Task<PagedResultDto<GetProductPromotionForViewDto>> GetAllProduct(GetAllProductPromotionsInputForCustomer input)
         {
 
             var filteredProductPromotions = _productPromotionRepository.GetAll()
@@ -163,18 +163,16 @@ namespace DTKH2024.SbinSolution.RedeemGifts
                                         ProductProductName = s1 == null || s1.ProductName == null ? "" : s1.ProductName.ToString(),
                                         CategoryPromotionName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
                                         BrandName = s3 == null || s3.Name == null ? "" : s3.Name.ToString(),
-                                        ProductFk = s1 // Assign the product entity directly
-
                                     };
 
             var totalCount = await filteredProductPromotions.CountAsync();
 
             var dbList = await productPromotions.ToListAsync();
-            var results = new List<GetProductPromotionForCustomerDto>();
+            var results = new List<GetProductPromotionForViewDto>();
 
             foreach (var o in dbList)
             {
-                var res = new GetProductPromotionForCustomerDto()
+                var res = new GetProductPromotionForViewDto()
                 {
                     ProductPromotion = new ProductPromotionDto
                     {
@@ -190,31 +188,88 @@ namespace DTKH2024.SbinSolution.RedeemGifts
                     },
                     ProductProductName = o.ProductProductName,
                     CategoryPromotionName = o.CategoryPromotionName,
-                    InformationProduct = new ProductDtoForCustomer
-                    {
-                        ProductName = o.ProductProductName,
-                        TimeDescription = o.ProductFk.TimeDescription,
-                        ApplicableSubjects = o.ProductFk.ApplicableSubjects,
-                        Regulations = o.ProductFk.Regulations,
-                        UserManual = o.ProductFk.UserManual,
-                        ScopeOfApplication = o.ProductFk.ScopeOfApplication,
-                        SupportAndComplaints = o.ProductFk.SupportAndComplaints,
-                        Description = o.ProductFk.Description,
-                        Id = o.Id,
-                        BrandId = o.ProductFk.BrandId,
-                        BrandName = o.BrandName
-                    }
                 };
-           
+
                 results.Add(res);
             }
 
-            return new PagedResultDto<GetProductPromotionForCustomerDto>(
+            return new PagedResultDto<GetProductPromotionForViewDto>(
                 totalCount,
                 results
             );
 
         }
 
+        public virtual async Task<GetProductPromotionForCustomerDto> GetProductPromotionDetail(GetProductPromotionsInputForCustomer input)
+        {
+
+            var filteredProductPromotions = _productPromotionRepository.GetAll()
+                        .Include(e => e.ProductFk)
+                        .Include(e => e.ProductFk.BrandFk)
+                        .Include(e => e.CategoryPromotionFk)
+                        .Where(c => c.ProductId == input.ProductID)
+                        .Where(c => c.Id == input.ProductPromotionID);
+
+            var productPromotions = from o in filteredProductPromotions
+                                    join o1 in _lookup_productRepository.GetAll() on o.ProductId equals o1.Id into j1
+                                    from s1 in j1.DefaultIfEmpty()
+
+                                    join o2 in _lookup_categoryPromotionRepository.GetAll() on o.CategoryPromotionId equals o2.Id into j2
+                                    from s2 in j2.DefaultIfEmpty()
+
+                                    join o3 in _brandRepository.GetAll() on s1.BrandId equals o3.Id into j3
+                                    from s3 in j3.DefaultIfEmpty()
+
+                                    select new
+                                    {
+                                        o.Point,
+                                        o.QuantityCurrent,
+                                        o.QuantityInStock,
+                                        o.StartDate,
+                                        o.EndDate,
+                                        o.PromotionCode,
+                                        o.Description,
+                                        Id = o.Id,
+                                        ProductProductName = s1 == null || s1.ProductName == null ? "" : s1.ProductName.ToString(),
+                                        CategoryPromotionName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
+                                        BrandName = s3 == null || s3.Name == null ? "" : s3.Name.ToString(),
+                                        ProductFk = s1 // Assign the product entity directly
+
+                                    };
+
+            var data = await productPromotions.FirstAsync();
+            var results = new GetProductPromotionForCustomerDto()
+            {
+                ProductPromotion = new ProductPromotionDto
+                {
+
+                    Point = data.Point,
+                    QuantityCurrent = data.QuantityCurrent,
+                    QuantityInStock = data.QuantityInStock,
+                    StartDate = data.StartDate,
+                    EndDate = data.EndDate,
+                    PromotionCode = data.PromotionCode,
+                    Description = data.Description,
+                    Id = data.Id,
+                },
+                ProductProductName = data.ProductProductName,
+                CategoryPromotionName = data.CategoryPromotionName,
+                InformationProduct = new ProductDtoForCustomer
+                {
+                    ProductName = data.ProductProductName,
+                    TimeDescription = data.ProductFk.TimeDescription,
+                    ApplicableSubjects = data.ProductFk.ApplicableSubjects,
+                    Regulations = data.ProductFk.Regulations,
+                    UserManual = data.ProductFk.UserManual,
+                    ScopeOfApplication = data.ProductFk.ScopeOfApplication,
+                    SupportAndComplaints = data.ProductFk.SupportAndComplaints,
+                    Description = data.ProductFk.Description,
+                    Id = data.Id,
+                    BrandId = data.ProductFk.BrandId,
+                    BrandName = data.BrandName
+                }
+            };
+            return results;
+        }
     }
 }

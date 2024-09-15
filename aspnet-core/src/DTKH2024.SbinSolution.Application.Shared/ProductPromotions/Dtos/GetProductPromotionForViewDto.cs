@@ -9,12 +9,13 @@ namespace DTKH2024.SbinSolution.ProductPromotions.Dtos
         public string ProductProductName { get; set; }
 
         public string CategoryPromotionName { get; set; }
-
+        public string BrandName { get; set; }
     }
 
     public class GetProductPromotionForCustomerDto : GetProductPromotionForViewDto
     {
         public ProductDtoForCustomer  InformationProduct { get; set; }
+
     }
 
 

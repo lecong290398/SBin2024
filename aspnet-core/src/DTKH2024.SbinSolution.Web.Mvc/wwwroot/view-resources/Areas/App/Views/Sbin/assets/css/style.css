@@ -10,6 +10,7 @@ body {
     background-size: cover;
     background-repeat: repeat;
     height: 100vh;
+    overflow-x: hidden;
 }
 #preload {
     background: var(--white-color) url('../img/background/preload.gif') center center no-repeat;

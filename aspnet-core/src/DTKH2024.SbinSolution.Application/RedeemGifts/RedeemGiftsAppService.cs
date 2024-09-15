@@ -23,6 +23,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using DTKH2024.SbinSolution.Storage;
+using DTKH2024.SbinSolution.Products;
 
 namespace DTKH2024.SbinSolution.RedeemGifts
 {
@@ -32,11 +33,13 @@ namespace DTKH2024.SbinSolution.RedeemGifts
     {
         private readonly IRepository<Brand> _brandRepository;
         private readonly IBinaryObjectManager _binaryObjectManager;
+        private readonly IRepository<Product> _productRepository;
 
-        public RedeemGiftsAppService(IRepository<Brand> brandRepository, IBinaryObjectManager binaryObjectManager)
+        public RedeemGiftsAppService(IRepository<Brand> brandRepository , IRepository<Product> productRepository, IBinaryObjectManager binaryObjectManager)
         {
             _brandRepository = brandRepository;
             _binaryObjectManager = binaryObjectManager;
+            _productRepository = productRepository;
         }
 
         public async Task<PagedResultDto<GetBrandForViewDto>> GetAllBrand(GetAllBrandsInput input)
@@ -64,8 +67,10 @@ namespace DTKH2024.SbinSolution.RedeemGifts
             var dbList = await brands.ToListAsync();
             var results = new List<GetBrandForViewDto>();
 
+
             foreach (var o in dbList)
             {
+                var countProduct = await _productRepository.CountAsync(c => c.BrandId == o.Id);
                 var res = new GetBrandForViewDto()
                 {
                     Brand = new BrandDto
@@ -75,10 +80,10 @@ namespace DTKH2024.SbinSolution.RedeemGifts
                         Description = o.Description,
                         Logo = o.Logo,
                         Id = o.Id,
+                        ProductCount = countProduct
                     }
                 };
                 res.Brand.LogoFileName = await GetBinaryFileName(o.Logo);
-
                 results.Add(res);
             }
 

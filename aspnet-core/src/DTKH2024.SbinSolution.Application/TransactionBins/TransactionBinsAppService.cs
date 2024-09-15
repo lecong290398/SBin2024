@@ -60,7 +60,7 @@ namespace DTKH2024.SbinSolution.TransactionBins
             var userID = _abpSession.GetUserId();
             if (userID != AppConsts.UserIdAdmin)
             {
-                filteredTransactionBins.Where(e => e.UserFk != null && e.UserFk.Id == userID);
+                filteredTransactionBins = filteredTransactionBins.Where(e => e.DeviceFk != null && e.DeviceFk.UserId != null && e.DeviceFk.UserId == userID);
             }
 
             var pagedAndFilteredTransactionBins = filteredTransactionBins

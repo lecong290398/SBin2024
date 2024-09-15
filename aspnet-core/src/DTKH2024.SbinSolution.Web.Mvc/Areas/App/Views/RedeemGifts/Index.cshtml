@@ -1,6 +1,8 @@
 ﻿@using DTKH2024.SbinSolution.Authorization
 @using DTKH2024.SbinSolution.Web.Areas.App.Models.Brands
 @using DTKH2024.SbinSolution.Web.Areas.App.Startup
+@using DTKH2024.SbinSolution.Brands.Dtos;
+
 @{
     ViewBag.CurrentPageName = AppPageNames.Common.RedeemGifts;
 }
@@ -15,7 +17,8 @@
             margin: 0px !important;
         }
         ul, p {
-            padding: 0;
+            padding: 0px !important;
+            margin: 0px !important;
         }
     </style>
 }
@@ -40,38 +43,17 @@
                 <div class="category">
                     <h3 class="category__heading">Category</h3>
                     <ul class="category__list">
-                        <li class="category__item flex-center">
-                            <input onchange="filterSearch('CGV Voucher')" class="category__checker" type="radio" name="voucher">
-                            <div class="category__describe flex-center">
-                                <img class="category__brand" src="https://s-bin.vercel.app/assets/img/brand/cgv.png">
-                                <p class="category__name">CGV Voucher</p>
-                            </div>
-                            <p class="category__quantity">(2)</p>
-                        </li>
-                        <li class="category__item flex-center">
-                            <input onchange="filterSearch('Lazada Voucher')" class="category__checker" type="radio" name="voucher">
-                            <div class="category__describe flex-center">
-                                <img class="category__brand" src="https://s-bin.vercel.app/assets/img/brand/lazada.png">
-                                <p class="category__name">Lazada Voucher</p>
-                            </div>
-                            <p class="category__quantity">(1)</p>
-                        </li>
-                        <li class="category__item flex-center">
-                            <input onchange="filterSearch('Highlands Voucher')"  class="category__checker" type="radio" name="voucher">
-                            <div class="category__describe flex-center">
-                                <img class="category__brand" src="https://s-bin.vercel.app/assets/img/brand/highlands.png">
-                                <p class="category__name">Highlands Voucher</p>
-                            </div>
-                            <p class="category__quantity">(1)</p>
-                        </li>
-                        <li class="category__item flex-center">
-                            <input onchange="filterSearch('Pizza Hut Voucher')" class="category__checker" type="radio" name="voucher">
-                            <div class="category__describe flex-center">
-                                <img class="category__brand" src="https://s-bin.vercel.app/assets/img/brand/pizza-hut.png">
-                                <p class="category__name">Pizza Hut Voucher</p>
-                            </div>
-                            <p class="category__quantity">(1)</p>
-                        </li>
+                        @foreach (var brand in (List<DTKH2024.SbinSolution.Brands.Dtos.GetBrandForViewDto>)ViewBag.Brands)
+                        {
+                            <li class="category__item flex-center">
+                                <input onchange="filterSearch('@brand.Brand.Name')" class="category__checker" type="radio" name="voucher">
+                                <div class="category__describe flex-center" style="justify-content: flex-start;">
+                                    <img class="category__brand" src="/view-resources/Areas/App/Views/Sbin/assets/img/brand/@(brand.Brand.Id).png" />
+                                    <p class="category__name" style="margin-left: 5px !important">@brand.Brand.Name</p>
+                                </div>
+                                <p class="category__quantity">(@brand.Brand.Id)</p>
+                            </li>
+                        }
                     </ul>
                 </div>
             </div>

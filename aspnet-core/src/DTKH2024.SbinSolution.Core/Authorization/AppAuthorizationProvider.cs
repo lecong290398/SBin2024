@@ -30,6 +30,9 @@ namespace DTKH2024.SbinSolution.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var adminDevice = pages.CreateChildPermission(AppPermissions.Pages_AdministrationDevice_TransactionBins_Create, L("CreateNewTransactionBinAdminDevice"));
+            var userTransaction = pages.CreateChildPermission(AppPermissions.Pages_CustomerTransactionBins_Update, L("CustomerUpdateTransaction"));
+
 
             var scanQR = pages.CreateChildPermission(AppPermissions.Pages_ScanQR, L("ScanQR"));
 
@@ -53,7 +56,6 @@ namespace DTKH2024.SbinSolution.Authorization
             transactionBins.CreateChildPermission(AppPermissions.Pages_Administration_TransactionBins_Create, L("CreateNewTransactionBin"));
             transactionBins.CreateChildPermission(AppPermissions.Pages_Administration_TransactionBins_Edit, L("EditTransactionBin"));
             transactionBins.CreateChildPermission(AppPermissions.Pages_Administration_TransactionBins_Delete, L("DeleteTransactionBin"));
-            transactionBins.CreateChildPermission(AppPermissions.Pages_Administration_Device_TransactionBins_Create, L("CreateNewTransactionBinAdminDevice"));
 
             var categoryPromotions = administration.CreateChildPermission(AppPermissions.Pages_Administration_CategoryPromotions, L("CategoryPromotions"));
             categoryPromotions.CreateChildPermission(AppPermissions.Pages_Administration_CategoryPromotions_Create, L("CreateNewCategoryPromotion"));

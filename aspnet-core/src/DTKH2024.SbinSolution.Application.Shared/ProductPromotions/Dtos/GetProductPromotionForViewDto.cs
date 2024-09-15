@@ -1,4 +1,6 @@
-﻿namespace DTKH2024.SbinSolution.ProductPromotions.Dtos
+﻿using DTKH2024.SbinSolution.Products.Dtos;
+
+namespace DTKH2024.SbinSolution.ProductPromotions.Dtos
 {
     public class GetProductPromotionForViewDto
     {
@@ -9,4 +11,11 @@
         public string CategoryPromotionName { get; set; }
 
     }
+
+    public class GetProductPromotionForCustomerDto : GetProductPromotionForViewDto
+    {
+        public ProductDtoForCustomer  InformationProduct { get; set; }
+    }
+
+
 }

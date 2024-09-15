@@ -29,16 +29,18 @@
 }
 <div id="redeem-gifts">
     <div class="grid wide">
-        <h3 class="heading__h3">@L("RedeemGiftsHeaderInfo")!</h3>
-        <h1 class="heading-section"><i class="fa-solid fa-ticket"></i> @L("RedeemGifts")</h1>
+        <h1 class="heading-section"><i style="" class="fa-solid fa-ticket"></i> @L("RedeemGifts")</h1>
+        <h3 style="margin-bottom: 20px" class="heading__h3">@L("RedeemGiftsHeaderInfo")!</h3>
         <div class="redeem-gifts row">
             <div class="col l-3 m-0 c-0">
-                <div class="my-voucher js-MyVoucher">
-                    <div class="flex-center">
-                        <h3 class="my-voucher__heading">My voucher</h3>
-                        <i class="fa-solid fa-gift"></i>
-                    </div>
-                    <p class="no-margin">You don't have any voucher</p>
+                <div class="my-voucher">
+                    <a href="#">
+                        <div class="flex-center">
+                            <h3 class="my-voucher__heading">My voucher</h3>
+                            <i class="fa-solid fa-gift"></i>
+                        </div>
+                        <p>You don't have any voucher</p>
+                    </a>
                 </div>
                 <div class="category">
                     <h3 class="category__heading">Category</h3>
@@ -62,7 +64,7 @@
                     <input id="filter__search" class="input-form" type="text" placeholder="Search items by keyword, price, etc">
                     <i class="search-btn fa-solid fa-search" onclick="filterSearch()"></i>
                 </div>
-                <div class="my-voucher hide-on-pc js-MyVoucher" style="margin: 0; margin-top: 30px;">
+                <div class="my-voucher hide-on-pc" style="margin: 0; margin-top: 26px !important;">
                     <div class="flex-center">
                         <h3 class="my-voucher__heading">My voucher</h3>
                         <i class="fa-solid fa-gift"></i>
@@ -136,70 +138,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- MODAL -->
-<div class="modal js-ModalMyVoucher">
-    <div class="modal__overlay js-CloseModalMyVoucher"></div>
-    <div class="modal__body">
-        <!--  My voucher -->
-        <div class="my-voucher--modal">
-            <div class="flex-center" style="justify-content: space-between; padding-bottom: 10px;">
-                <div class="flex-center">
-                    <h1>My voucher</h1>
-                    <i style="font-size: 30px; color: var(--red-color); margin-left: 10px;" class="fa-solid fa-gift"></i>
-                </div>
-                <i class="js-CloseModalMyVoucher my-voucher--close fa-solid fa-xmark"></i>
-            </div>
-            <div class="row my-voucher--list no-margin">
-                <div class="col l-4 m-4 c-6">
-                    <div class="voucher__item">
-                        <div class="voucher__img" style="background-image: url('https://s-bin.vercel.app/assets/img/coupons/coupons-blue.png');"></div>
-                        <div class="voucher__describe">
-                            <p class="voucher__name">CGV Voucher</p>
-                            <p class="voucher__date">Out of date: 20/10/2024</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col l-4 m-4 c-6">
-                    <div class="voucher__item">
-                        <div class="voucher__img" style="background-image: url('https://s-bin.vercel.app/assets/img/coupons/coupons-orange.png');"></div>
-                        <div class="voucher__describe">
-                            <p class="voucher__name">Lazada Voucher</p>
-                            <p class="voucher__date">Out of date: 20/10/2024</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col l-4 m-4 c-6">
-                    <div class="voucher__item">
-                        <div class="voucher__img" style="background-image: url('https://s-bin.vercel.app/assets/img/coupons/coupons-yellow.png');"></div>
-                        <div class="voucher__describe">
-                            <p class="voucher__name">Highlands Voucher</p>
-                            <p class="voucher__date">Out of date: 20/10/2024</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col l-4 m-4 c-6">
-                    <div class="voucher__item">
-                        <div class="voucher__img" style="background-image: url('https://s-bin.vercel.app/assets/img/coupons/coupons-light-blue.png');"></div>
-                        <div class="voucher__describe">
-                            <p class="voucher__name">Pizza Hut Voucher</p>
-                            <p class="voucher__date">Out of date: 20/10/2024</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col l-4 m-4 c-6">
-                    <div class="voucher__item">
-                        <div class="voucher__img" style="background-image: url('https://s-bin.vercel.app/assets/img/coupons/coupons-blue.png');"></div>
-                        <div class="voucher__describe">
-                            <p class="voucher__name">CGV Voucher</p>
-                            <p class="voucher__date">Out of date: 20/10/2024</p>
-                        </div>
-                    </div>
-                </div>
-
             </div>
         </div>
     </div>

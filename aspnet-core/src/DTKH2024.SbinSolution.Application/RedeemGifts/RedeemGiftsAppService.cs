@@ -163,6 +163,7 @@ namespace DTKH2024.SbinSolution.RedeemGifts
                                         ProductProductName = s1 == null || s1.ProductName == null ? "" : s1.ProductName.ToString(),
                                         CategoryPromotionName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
                                         BrandName = s3 == null || s3.Name == null ? "" : s3.Name.ToString(),
+                                        o.ProductId
                                     };
 
             var totalCount = await filteredProductPromotions.CountAsync();
@@ -185,9 +186,12 @@ namespace DTKH2024.SbinSolution.RedeemGifts
                         PromotionCode = o.PromotionCode,
                         Description = o.Description,
                         Id = o.Id,
+                        ProductId = o.ProductId
                     },
                     ProductProductName = o.ProductProductName,
                     CategoryPromotionName = o.CategoryPromotionName,
+                    BrandName = o.BrandName,
+
                 };
 
                 results.Add(res);
@@ -202,74 +206,65 @@ namespace DTKH2024.SbinSolution.RedeemGifts
 
         public virtual async Task<GetProductPromotionForCustomerDto> GetProductPromotionDetail(GetProductPromotionsInputForCustomer input)
         {
+            var filteredProductPromotions = await _productPromotionRepository.GetAll()
+                .Include(e => e.ProductFk)
+                .Include(e => e.ProductFk.BrandFk)
+                .Include(e => e.CategoryPromotionFk)
+                .Where(c => c.ProductId == input.ProductID && c.Id == input.ProductPromotionID)
+                .Select(o => new
+                {
+                    o.Point,
+                    o.QuantityCurrent,
+                    o.QuantityInStock,
+                    o.StartDate,
+                    o.EndDate,
+                    o.PromotionCode,
+                    o.Description,
+                    Id = o.Id,
+                    ProductProductName = o.ProductFk.ProductName,
+                    CategoryPromotionName = o.CategoryPromotionFk.Name,
+                    BrandName = o.ProductFk.BrandFk.Name,
+                    ProductFk = o.ProductFk
+                })
+                .FirstOrDefaultAsync();
 
-            var filteredProductPromotions = _productPromotionRepository.GetAll()
-                        .Include(e => e.ProductFk)
-                        .Include(e => e.ProductFk.BrandFk)
-                        .Include(e => e.CategoryPromotionFk)
-                        .Where(c => c.ProductId == input.ProductID)
-                        .Where(c => c.Id == input.ProductPromotionID);
+            if (filteredProductPromotions == null)
+            {
+                throw new UserFriendlyException("Product promotion not found");
+            }
 
-            var productPromotions = from o in filteredProductPromotions
-                                    join o1 in _lookup_productRepository.GetAll() on o.ProductId equals o1.Id into j1
-                                    from s1 in j1.DefaultIfEmpty()
-
-                                    join o2 in _lookup_categoryPromotionRepository.GetAll() on o.CategoryPromotionId equals o2.Id into j2
-                                    from s2 in j2.DefaultIfEmpty()
-
-                                    join o3 in _brandRepository.GetAll() on s1.BrandId equals o3.Id into j3
-                                    from s3 in j3.DefaultIfEmpty()
-
-                                    select new
-                                    {
-                                        o.Point,
-                                        o.QuantityCurrent,
-                                        o.QuantityInStock,
-                                        o.StartDate,
-                                        o.EndDate,
-                                        o.PromotionCode,
-                                        o.Description,
-                                        Id = o.Id,
-                                        ProductProductName = s1 == null || s1.ProductName == null ? "" : s1.ProductName.ToString(),
-                                        CategoryPromotionName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
-                                        BrandName = s3 == null || s3.Name == null ? "" : s3.Name.ToString(),
-                                        ProductFk = s1 // Assign the product entity directly
-
-                                    };
-
-            var data = await productPromotions.FirstAsync();
-            var results = new GetProductPromotionForCustomerDto()
+            var result = new GetProductPromotionForCustomerDto()
             {
                 ProductPromotion = new ProductPromotionDto
                 {
-
-                    Point = data.Point,
-                    QuantityCurrent = data.QuantityCurrent,
-                    QuantityInStock = data.QuantityInStock,
-                    StartDate = data.StartDate,
-                    EndDate = data.EndDate,
-                    PromotionCode = data.PromotionCode,
-                    Description = data.Description,
-                    Id = data.Id,
+                    Point = filteredProductPromotions.Point,
+                    QuantityCurrent = filteredProductPromotions.QuantityCurrent,
+                    QuantityInStock = filteredProductPromotions.QuantityInStock,
+                    StartDate = filteredProductPromotions.StartDate,
+                    EndDate = filteredProductPromotions.EndDate,
+                    PromotionCode = filteredProductPromotions.PromotionCode,
+                    Description = filteredProductPromotions.Description,
+                    Id = filteredProductPromotions.Id,
                 },
-                ProductProductName = data.ProductProductName,
-                CategoryPromotionName = data.CategoryPromotionName,
+                ProductProductName = filteredProductPromotions.ProductProductName,
+                CategoryPromotionName = filteredProductPromotions.CategoryPromotionName,
                 InformationProduct = new ProductDtoForCustomer
                 {
-                    ProductName = data.ProductProductName,
-                    TimeDescription = data.ProductFk.TimeDescription,
-                    ApplicableSubjects = data.ProductFk.ApplicableSubjects,
-                    Regulations = data.ProductFk.Regulations,
-                    UserManual = data.ProductFk.UserManual,
-                    ScopeOfApplication = data.ProductFk.ScopeOfApplication,
-                    SupportAndComplaints = data.ProductFk.SupportAndComplaints,
-                    Description = data.ProductFk.Description,
-                    Id = data.Id,
-                    BrandId = data.ProductFk.BrandId,
-                    BrandName = data.BrandName
+                    ProductName = filteredProductPromotions.ProductProductName,
+                    TimeDescription = filteredProductPromotions.ProductFk.TimeDescription,
+                    ApplicableSubjects = filteredProductPromotions.ProductFk.ApplicableSubjects,
+                    Regulations = filteredProductPromotions.ProductFk.Regulations,
+                    UserManual = filteredProductPromotions.ProductFk.UserManual,
+                    ScopeOfApplication = filteredProductPromotions.ProductFk.ScopeOfApplication,
+                    SupportAndComplaints = filteredProductPromotions.ProductFk.SupportAndComplaints,
+                    Description = filteredProductPromotions.ProductFk.Description,
+                    Id = filteredProductPromotions.Id,
+                    BrandId = filteredProductPromotions.ProductFk.BrandId,
+                    BrandName = filteredProductPromotions.BrandName
                 }
             };
-            return results;
+
+            return result;
         }
     }
 }

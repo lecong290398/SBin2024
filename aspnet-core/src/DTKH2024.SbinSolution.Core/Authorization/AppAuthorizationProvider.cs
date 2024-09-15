@@ -30,6 +30,9 @@ namespace DTKH2024.SbinSolution.Authorization
 
             var pages = context.GetPermissionOrNull(AppPermissions.Pages) ?? context.CreatePermission(AppPermissions.Pages, L("Pages"));
 
+            var adminDevice = pages.CreateChildPermission(AppPermissions.Pages_AdministrationDevice_TransactionBins_Create, L("CreateNewTransactionBinAdminDevice"));
+            var userTransaction = pages.CreateChildPermission(AppPermissions.Pages_CustomerTransactionBins_Update, L("CustomerUpdateTransaction"));
+
 
             var scanQR = pages.CreateChildPermission(AppPermissions.Pages_ScanQR, L("ScanQR"));
 

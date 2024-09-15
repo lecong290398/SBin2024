@@ -35,7 +35,7 @@ namespace DTKH2024.SbinSolution.OrderHistories
         private readonly IRepository<HistoryType, int> _lookup_historyTypeRepository;
         private readonly IAbpSession _abpSession;
 
-        public OrderHistoriesAppService(IRepository<OrderHistory> orderHistoryRepository , IAbpSession abpSession, IOrderHistoriesExcelExporter orderHistoriesExcelExporter, IRepository<User, long> lookup_userRepository, IRepository<TransactionBin, int> lookup_transactionBinRepository, IRepository<WareHouseGift, int> lookup_wareHouseGiftRepository, IRepository<HistoryType, int> lookup_historyTypeRepository)
+        public OrderHistoriesAppService(IRepository<OrderHistory> orderHistoryRepository, IAbpSession abpSession, IOrderHistoriesExcelExporter orderHistoriesExcelExporter, IRepository<User, long> lookup_userRepository, IRepository<TransactionBin, int> lookup_transactionBinRepository, IRepository<WareHouseGift, int> lookup_wareHouseGiftRepository, IRepository<HistoryType, int> lookup_historyTypeRepository)
         {
             _orderHistoryRepository = orderHistoryRepository;
             _orderHistoriesExcelExporter = orderHistoriesExcelExporter;
@@ -43,7 +43,7 @@ namespace DTKH2024.SbinSolution.OrderHistories
             _lookup_transactionBinRepository = lookup_transactionBinRepository;
             _lookup_wareHouseGiftRepository = lookup_wareHouseGiftRepository;
             _lookup_historyTypeRepository = lookup_historyTypeRepository;
-
+            _abpSession = abpSession;
         }
 
         public virtual async Task<PagedResultDto<GetOrderHistoryForViewDto>> GetAll(GetAllOrderHistoriesInput input)

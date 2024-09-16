@@ -142,7 +142,7 @@
         height: 200px !important;
     }
     .popup__modal {
-        padding: 10px !important;
+        padding: 30px !important;
     }
     .popup__header {
         font-size: 24px;
@@ -150,5 +150,8 @@
     .popup__describe {
         width: 320px !important;
         font-size: 16px !important;
+    }
+    .exchange__voucher--lazyload {
+        width: 306px !important;
     }
 }

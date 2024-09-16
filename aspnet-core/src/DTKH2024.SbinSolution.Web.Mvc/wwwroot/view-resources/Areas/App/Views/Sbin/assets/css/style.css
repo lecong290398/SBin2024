@@ -1057,7 +1057,37 @@ body {
 textarea.form-control {
     resize: vertical;
 }
-
 .text-center {
     text-align: center;
+}
+/* Exchange Voucher */
+.exchange__voucher--heading {
+    font-size: 30px;
+}
+.exchange__voucher--sub-heading {
+    font-size: 15px;
+    margin-bottom: 35px !important;
+}
+.exchange__voucher--brand {
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border: 1px solid;
+}
+.exchange__voucher--brand-sub {
+    font-size: 13px;
+    margin: 10px !important;
+    opacity: .8;
+}
+.exchange__voucher--description {
+    border-radius: 24px;
+    padding: 20px 32px;
+    background: var(--light-grey);
+    height: 200px;
+    margin-top: 18px;
+    text-align: left;
+    overflow-y: scroll;
+}
+.exchange__voucher--lazyload {
+    width: 500px;
 }

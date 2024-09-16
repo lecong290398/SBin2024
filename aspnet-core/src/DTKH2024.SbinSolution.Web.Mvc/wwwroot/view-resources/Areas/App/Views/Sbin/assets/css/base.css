@@ -155,7 +155,7 @@ html::-webkit-scrollbar-thumb {
     right: 0;
     display: none;
     animation: ease-in .2s;
-    z-index: 10;
+    z-index: 9999 !important;
 }
 .modal__body {
     animation: inSlide .2s ease;
@@ -321,4 +321,10 @@ html::-webkit-scrollbar-thumb {
 }
 .skeleton-text__small {
     width: 30%;
+}
+
+.dashed-line {
+    border: none;
+    border-top: 2px dashed var(--black-color);
+    width: 100%;
 }

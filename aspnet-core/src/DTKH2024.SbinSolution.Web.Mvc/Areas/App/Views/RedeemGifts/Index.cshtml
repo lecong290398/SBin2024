@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/base.css">
     <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/grid.min.css">
     <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/responsive.css">
-
     <style>
         .no-margin, .no-margin > * {
             margin: 0px !important;
@@ -48,7 +47,7 @@
                         @foreach (var brand in (List<DTKH2024.SbinSolution.Brands.Dtos.GetBrandForViewDto>)ViewBag.Brands)
                         {
                             <li class="category__item flex-center">
-                                <input onchange="filterSearch('@brand.Brand.Name')" class="category__checker" type="radio" name="voucher">
+                                <input class="category__checker" type="radio" name="voucher">
                                 <div class="category__describe flex-center" style="justify-content: flex-start;">
                                     <img class="category__brand" src="/view-resources/Areas/App/Views/Sbin/assets/img/brand/@(brand.Brand.Id).png" />
                                     <p class="category__name" style="margin-left: 5px !important">@brand.Brand.Name</p>
@@ -86,7 +85,7 @@
                         </div>
                     </div>
                     <div class="col l-4 m-4 c-6">
-                        <div class="voucher__item">
+                        <div class="voucher__item" data-index="1">
                             <div class="voucher__value flex-center">
                                 <span class="voucher__price">100</span>
                                 <img class="coin" src="/view-resources/Areas/App/Views/Sbin/assets/img/coin.png">
@@ -146,11 +145,37 @@
 <div class="modal js-Modalpopup">
     <div class="modal__overlay js-CloseModalpopup"></div>
     <div class="modal__body">
-        <div class="popup__modal">
-            <img src="./assets/img/gem0.png" alt="">
-            <h1 class="popup__header">Giảm 30K</h1>
-            <p class="popup__describe">Earn free coin by clicking claim now every single day!</p>
-            <button class="js-CloseModalpopup _btn">Claim</button>
+        <div class="popup__modal js-VoucherDetails">
+            @* <h1 class="popup__header exchange__voucher--heading">Giảm 30K</h1>
+            <p class="popup__describe exchange__voucher--sub-heading">Cho tất cả khung giờ</p>
+            <hr class="dashed-line">
+            <div class="flex-center" style="justify-content: space-between;">
+                <div class="flex-center">
+                    <img class="exchange__voucher--brand" src="/view-resources/Areas/App/Views/Sbin/assets/img/brand/1.png" alt="">
+                    <p class="exchange__voucher--brand-sub">Highlands Coffee</p>
+                </div>
+                <p class="exchange__voucher--brand-sub">Hot</p>
+            </div>
+            <div class="exchange__voucher--description">
+                <p class="bold">Điều Khoản Sử Dụng</p>
+                <ul>
+                    <li>Áp dụng cho hóa đơn từ 20.000đ  khi mua Coffee tại  Highlands.</li>
+                    <li>Áp dụng duy nhất 1 lần cho 1 hóa đơn.</li>
+                </ul>
+            </div>
+            <div class="flex-center" style="justify-content: space-between;">
+                <button style="font-size: 13px;" class="js-CloseModalpopup _btn">Hủy Chọn</button>
+                <button style="font-size: 13px;" class="js-CloseModalpopup _btn">Đổi Ngay</button>
+            </div> *@
+            <div class="exchange__voucher--lazyload">
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+            </div>
         </div>
     </div>
 </div>

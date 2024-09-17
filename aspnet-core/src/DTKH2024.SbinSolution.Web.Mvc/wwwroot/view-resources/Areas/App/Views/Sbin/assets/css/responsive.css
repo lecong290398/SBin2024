@@ -148,7 +148,6 @@
         font-size: 24px;
     }
     .popup__describe {
-        width: 320px !important;
         font-size: 16px !important;
     }
     .exchange__voucher--lazyload {

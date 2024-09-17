@@ -1078,6 +1078,7 @@ textarea.form-control {
     font-size: 13px;
     margin: 10px !important;
     opacity: .8;
+    text-align: center;
 }
 .exchange__voucher--description {
     border-radius: 24px;

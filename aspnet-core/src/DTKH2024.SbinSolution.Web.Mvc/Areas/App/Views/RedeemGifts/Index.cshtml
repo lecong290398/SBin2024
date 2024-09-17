@@ -15,6 +15,9 @@
         .no-margin, .no-margin > * {
             margin: 0px !important;
         }
+        .no-margin > .skeleton {
+            margin-top: 26px !important;
+        }
         ul, p {
             padding: 0px !important;
             margin: 0px !important;
@@ -70,72 +73,16 @@
                     </div>
                     <p>You don't have any voucher</p>
                 </div>
-                <div class="no-margin row">
-                    <div class="col l-4 m-4 c-6">
-                        <div class="voucher__item js-popup">
-                            <div class="voucher__value flex-center">
-                                <span>500</span>
-                                <img class="coin" src="/view-resources/Areas/App/Views/Sbin/assets/img/coin.png">
-                            </div>
-                            <div class="voucher__img" style="background-image: url('/view-resources/Areas/App/Views/Sbin/assets/img/coupons/coupons-blue.png');"></div>
-                            <div class="voucher__describe">
-                                <p class="voucher__name">Katinat Voucher</p>
-                                <p class="voucher__date">Out of date: 20/10/2024</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col l-4 m-4 c-6">
-                        <div class="voucher__item" data-index="1">
-                            <div class="voucher__value flex-center">
-                                <span class="voucher__price">100</span>
-                                <img class="coin" src="/view-resources/Areas/App/Views/Sbin/assets/img/coin.png">
-                            </div>
-                            <div class="voucher__img" style="background-image: url('/view-resources/Areas/App/Views/Sbin/assets/img/coupons/coupons-orange.png');"></div>
-                            <div class="voucher__describe">
-                                <p class="voucher__name">Circle K Voucher</p>
-                                <p class="voucher__date">Out of date: 20/10/2024</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col l-4 m-4 c-6">
-                        <div class="voucher__item">
-                            <div class="voucher__value flex-center">
-                                <span class="voucher__price">600</span>
-                                <img class="coin" src="/view-resources/Areas/App/Views/Sbin/assets/img/coin.png">
-                            </div>
-                            <div class="voucher__img" style="background-image: url('/view-resources/Areas/App/Views/Sbin/assets/img/coupons/coupons-yellow.png');"></div>
-                            <div class="voucher__describe">
-                                <p class="voucher__name">Highlands Voucher</p>
-                                <p class="voucher__date">Out of date: 20/10/2024</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col l-4 m-4 c-6">
-                        <div class="voucher__item">
-                            <div class="voucher__value flex-center">
-                                <span class="voucher__price">300</span>
-                                <img class="coin" src="/view-resources/Areas/App/Views/Sbin/assets/img/coin.png">
-                            </div>
-                            <div class="voucher__img" style="background-image: url('/view-resources/Areas/App/Views/Sbin/assets/img/coupons/coupons-light-blue.png');"></div>
-                            <div class="voucher__describe">
-                                <p class="voucher__name">Vietle Voucher</p>
-                                <p class="voucher__date">Out of date: 20/10/2024</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col l-4 m-4 c-6">
-                        <div class="voucher__item">
-                            <div class="voucher__value flex-center">
-                                <span class="voucher__price">500</span>
-                                <img class="coin" src="/view-resources/Areas/App/Views/Sbin/assets/img/coin.png">
-                            </div>
-                            <div class="voucher__img" style="background-image: url('/view-resources/Areas/App/Views/Sbin/assets/img/coupons/coupons-blue.png');"></div>
-                            <div class="voucher__describe">
-                                <p class="voucher__name">Đậu Má Mix Voucher</p>
-                                <p class="voucher__date">Out of date: 20/10/2024</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="no-margin row js-Voucher">
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
                 </div>
             </div>
         </div>
@@ -146,27 +93,6 @@
     <div class="modal__overlay js-CloseModalpopup"></div>
     <div class="modal__body">
         <div class="popup__modal js-VoucherDetails">
-            @* <h1 class="popup__header exchange__voucher--heading">Giảm 30K</h1>
-            <p class="popup__describe exchange__voucher--sub-heading">Cho tất cả khung giờ</p>
-            <hr class="dashed-line">
-            <div class="flex-center" style="justify-content: space-between;">
-                <div class="flex-center">
-                    <img class="exchange__voucher--brand" src="/view-resources/Areas/App/Views/Sbin/assets/img/brand/1.png" alt="">
-                    <p class="exchange__voucher--brand-sub">Highlands Coffee</p>
-                </div>
-                <p class="exchange__voucher--brand-sub">Hot</p>
-            </div>
-            <div class="exchange__voucher--description">
-                <p class="bold">Điều Khoản Sử Dụng</p>
-                <ul>
-                    <li>Áp dụng cho hóa đơn từ 20.000đ  khi mua Coffee tại  Highlands.</li>
-                    <li>Áp dụng duy nhất 1 lần cho 1 hóa đơn.</li>
-                </ul>
-            </div>
-            <div class="flex-center" style="justify-content: space-between;">
-                <button style="font-size: 13px;" class="js-CloseModalpopup _btn">Hủy Chọn</button>
-                <button style="font-size: 13px;" class="js-CloseModalpopup _btn">Đổi Ngay</button>
-            </div> *@
             <div class="exchange__voucher--lazyload">
                 <div class="skeleton skeleton-text skeleton-text__large"></div>
                 <div class="skeleton skeleton-text skeleton-text__large"></div>

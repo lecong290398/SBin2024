@@ -25,6 +25,9 @@ namespace DTKH2024.SbinSolution.Authorization.Users
         
         public List<UserOrganizationUnit> OrganizationUnits { get; set; }
 
+        public virtual int Point { get; set; }
+        public virtual int PositivePoint { get; set; }
+
         //Can add application specific user properties here
 
         public User()

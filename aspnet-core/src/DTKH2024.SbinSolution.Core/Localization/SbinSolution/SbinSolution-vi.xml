@@ -1,14 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="vi">
 	<texts>
+		<text name="CreateNewTransactionBinAdminDevice">Thiết bị Insert giao dịch Sbin </text>
+		<text name="CustomerUpdateTransaction">Khách hàng Update giao dịch SBin</text>
 		<text name="ScanQR">Quét mã tích điểm</text>
 		<text name="ScanQRHeaderInfo">Quét mã QR tích điểm thưởng</text>
 	
 		<text name="RedeemGifts">Đổi thưởng</text>
-		<text name="RedeemGiftsHeaderInfo">Đổi thưởng với muôn vàn phần quà giá trị....</text>
+		<text name="RedeemGiftsHeaderInfo">Đổi thưởng với muôn vàn phần quà giá trị!</text>
 
 		<text name="Description">Mô Tả</text>
 		<text name="{0}IsRequired">{0} bắt buộc.</text>
+		<text name="Customer">Tên khách hàng</text>
+		
 		<!--OrderHistories-->
 		<text name="OrderHistories">Lịch sử mua hàng</text>
 		<text name="OrderHistory">Lịch sử mua hàng</text>

@@ -60,7 +60,7 @@ namespace DTKH2024.SbinSolution.TransactionBins
             var userID = _abpSession.GetUserId();
             if (userID != AppConsts.UserIdAdmin)
             {
-                filteredTransactionBins.Where(e => e.UserFk != null && e.UserFk.Id == userID);
+                filteredTransactionBins = filteredTransactionBins.Where(e => e.DeviceFk != null && e.DeviceFk.UserId != null && e.DeviceFk.UserId == userID);
             }
 
             var pagedAndFilteredTransactionBins = filteredTransactionBins
@@ -196,7 +196,7 @@ namespace DTKH2024.SbinSolution.TransactionBins
             }
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Administration_TransactionBins_Create)]
+        [AbpAuthorize(AppPermissions.Pages_Administration_TransactionBins_Create), AbpAuthorize(AppPermissions.Pages_AdministrationDevice_TransactionBins_Create)]
         protected virtual async Task Create(CreateOrEditTransactionBinDto input)
         {
             var transactionBin = ObjectMapper.Map<TransactionBin>(input);
@@ -206,7 +206,7 @@ namespace DTKH2024.SbinSolution.TransactionBins
 
         }
 
-        [AbpAuthorize(AppPermissions.Pages_Administration_TransactionBins_Edit)]
+        [AbpAuthorize(AppPermissions.Pages_Administration_TransactionBins_Edit), AbpAuthorize(AppPermissions.Pages_CustomerTransactionBins_Update)]
         protected virtual async Task Update(CreateOrEditTransactionBinDto input)
         {
             var transactionBin = await _transactionBinRepository.FirstOrDefaultAsync((int)input.Id);

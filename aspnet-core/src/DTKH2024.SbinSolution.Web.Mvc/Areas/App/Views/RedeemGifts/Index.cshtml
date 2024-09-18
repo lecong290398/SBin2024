@@ -1,18 +1,107 @@
 ﻿@using DTKH2024.SbinSolution.Authorization
 @using DTKH2024.SbinSolution.Web.Areas.App.Models.Brands
 @using DTKH2024.SbinSolution.Web.Areas.App.Startup
+@using DTKH2024.SbinSolution.Brands.Dtos;
+
 @{
-    ViewBag.CurrentPageName = AppPageNames.Common.ScanQR;
+    ViewBag.CurrentPageName = AppPageNames.Common.RedeemGifts;
 }
+@section Styles {
+    <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/style.css">
+    <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/base.css">
+    <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/grid.min.css">
+    <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/responsive.css">
+    <style>
+        .no-margin, .no-margin > * {
+            margin: 0px !important;
+        }
+        .no-margin > .skeleton {
+            margin-top: 28px !important;
+        }
+        ul, p {
+            padding: 0px !important;
+            margin: 0px !important;
+        }
+    </style>
+}
+@section Scripts {
+    <script src="~/view-resources/Areas/App/Views/Sbin/js/constant.js"></script>
+    <script src="~/view-resources/Areas/App/Views/Sbin/js/redeem-gift.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+}
+<div id="redeem-gifts">
+    <div class="grid wide">
+        <h1 class="heading-section"><i style="color: var(--dark-green); font-size: 22px;" class="fa-solid fa-ticket"></i> @L("RedeemGifts")</h1>
+        <h3 style="margin-bottom: 20px" class="heading__h3">@L("RedeemGiftsHeaderInfo")!</h3>
+        <div class="redeem-gifts row">
+            <div class="col l-3 m-0 c-0">
+                <div class="my-voucher">
+                    <a href="@Url.Action("Index", "WareHouseGifts")">
+                        <div class="flex-center">
+                            <h3 class="my-voucher__heading">My voucher</h3>
+                            <i class="fa-solid fa-gift"></i>
+                        </div>
+                        <p>You don't have any voucher</p>
+                    </a>
+                </div>
+                <div class="category">
+                    <h3 class="category__heading">Category</h3>
+                    <ul class="category__list">
+                        @foreach (var brand in (List<DTKH2024.SbinSolution.Brands.Dtos.GetBrandForViewDto>)ViewBag.Brands)
+                        {
+                            <li class="category__item flex-center">
+                                <input data-index="@(brand.Brand.Id)" class="js-Sorting category__checker" type="radio" name="voucher">
+                                <div class="category__describe flex-center" style="justify-content: flex-start;">
+                                    <img class="category__brand" src="/view-resources/Areas/App/Views/Sbin/assets/img/brand/@(brand.Brand.Id).png" />
+                                    <p class="category__name" style="margin-left: 5px !important">@brand.Brand.Name</p>
+                                </div>
+                                <p class="category__quantity">(@brand.Brand.ProductCount)</p>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <div class="no-margin col l-9 m-12 c-12">
+                <div class="filter flex-center">
+                    <input id="filter__search" class="input-form" type="text" placeholder="Search items by keyword, price, etc">
+                    <i style="color: var(--white-color);" class="search-btn fa-solid fa-search"></i>
+                </div>
+                <div class="my-voucher hide-on-pc" style="margin: 0; margin-top: 26px !important;">
+                    <div class="flex-center">
+                        <h3 class="my-voucher__heading">My voucher</h3>
+                        <i class="fa-solid fa-gift"></i>
+                    </div>
+                    <p>You don't have any voucher</p>
+                </div>
+                <div class="no-margin row js-Voucher">
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                    <div class="skeleton skeleton-text skeleton-text__large"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<abp-page-subheader title='@L("RedeemGifts")' description='@L("RedeemGiftsHeaderInfo")'>
-</abp-page-subheader>
-
-<div class="@(await GetContainerClass())">
-    <div class="card card-custom gutter-b">
-        <div class="card-body">
-            <h2>Redeem Gifts</h2>
-            <h4>Tích hợp vào nhé</h4>
+<div class="modal js-Modalpopup">
+    <div class="modal__overlay js-CloseModalpopup"></div>
+    <div class="modal__body">
+        <div class="popup__modal js-VoucherDetails">
+            <div class="exchange__voucher--lazyload">
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+            </div>
         </div>
     </div>
 </div>

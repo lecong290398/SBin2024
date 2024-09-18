@@ -35,7 +35,7 @@ namespace DTKH2024.SbinSolution.OrderHistories
         private readonly IRepository<HistoryType, int> _lookup_historyTypeRepository;
         private readonly IAbpSession _abpSession;
 
-        public OrderHistoriesAppService(IRepository<OrderHistory> orderHistoryRepository , IAbpSession abpSession, IOrderHistoriesExcelExporter orderHistoriesExcelExporter, IRepository<User, long> lookup_userRepository, IRepository<TransactionBin, int> lookup_transactionBinRepository, IRepository<WareHouseGift, int> lookup_wareHouseGiftRepository, IRepository<HistoryType, int> lookup_historyTypeRepository)
+        public OrderHistoriesAppService(IRepository<OrderHistory> orderHistoryRepository, IAbpSession abpSession, IOrderHistoriesExcelExporter orderHistoriesExcelExporter, IRepository<User, long> lookup_userRepository, IRepository<TransactionBin, int> lookup_transactionBinRepository, IRepository<WareHouseGift, int> lookup_wareHouseGiftRepository, IRepository<HistoryType, int> lookup_historyTypeRepository)
         {
             _orderHistoryRepository = orderHistoryRepository;
             _orderHistoriesExcelExporter = orderHistoriesExcelExporter;

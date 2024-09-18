@@ -13,6 +13,9 @@
         public const string Pages_OrderHistories_Edit = "Pages.OrderHistories.Edit";
         public const string Pages_OrderHistories_Delete = "Pages.OrderHistories.Delete";
 
+        public const string Pages_AdministrationDevice_TransactionBins_Create = "Pages.DeviceTransactionBinsCreate";
+        public const string Pages_CustomerTransactionBins_Update = "Pages.CustomerUpdateTransaction";
+
         public const string Pages_WareHouseGifts = "Pages.WareHouseGifts";
         public const string Pages_WareHouseGifts_Create = "Pages.WareHouseGifts.Create";
         public const string Pages_WareHouseGifts_Edit = "Pages.WareHouseGifts.Edit";
@@ -22,6 +25,7 @@
         public const string Pages_Administration_TransactionBins_Create = "Pages.Administration.TransactionBins.Create";
         public const string Pages_Administration_TransactionBins_Edit = "Pages.Administration.TransactionBins.Edit";
         public const string Pages_Administration_TransactionBins_Delete = "Pages.Administration.TransactionBins.Delete";
+
 
         public const string Pages_Administration_CategoryPromotions = "Pages.Administration.CategoryPromotions";
         public const string Pages_Administration_CategoryPromotions_Create = "Pages.Administration.CategoryPromotions.Create";

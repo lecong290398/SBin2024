@@ -13,5 +13,7 @@ namespace DTKH2024.SbinSolution.Brands.Dtos
 
         public string LogoFileName { get; set; }
 
+        public int ProductCount { get; set; }
+
     }
 }

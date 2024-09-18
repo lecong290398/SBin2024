@@ -23,4 +23,16 @@ namespace DTKH2024.SbinSolution.ProductPromotions.Dtos
         public string CategoryPromotionNameFilter { get; set; }
 
     }
+
+    public class GetAllProductPromotionsInputForCustomer : GetAllProductPromotionsInput
+    {
+        public int? BrandID { get; set; }
+    }
+
+
+    public class GetProductPromotionsInputForCustomer 
+    {
+        public int ProductID { get; set; }
+        public int ProductPromotionID { get; set; }
+    }
 }

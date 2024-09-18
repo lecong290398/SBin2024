@@ -73,7 +73,7 @@
                 {{/notifications.length}}
             </div>
             {{#notifications.length}}
-            <div class="m-1 mb-4 d-flex" style="align-items:center;justify-content: space-between;">
+            <div class="m-1 mb-4 d-flex" style="align-items:center;justify-content: space-between;max-width: 100%;">
                 {{#unreadCount}}
                     <a class="btn btn-secondary col col-xs-12" href="" id="setAllNotificationsAsReadLink">@L("SetAllAsRead")</a>
                     <a class="btn btn-primary col col-xs-12" href="@Url.Action("Index", "Notifications", new {area = "App"})">@L("SeeAllNotifications")</a>        

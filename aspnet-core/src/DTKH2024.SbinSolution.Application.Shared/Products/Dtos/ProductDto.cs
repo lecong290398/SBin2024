@@ -30,4 +30,10 @@ namespace DTKH2024.SbinSolution.Products.Dtos
         public int BrandId { get; set; }
 
     }
+
+    public class ProductDtoForCustomer : ProductDto
+    {
+        public string BrandName { get; set; }
+
+    }
 }

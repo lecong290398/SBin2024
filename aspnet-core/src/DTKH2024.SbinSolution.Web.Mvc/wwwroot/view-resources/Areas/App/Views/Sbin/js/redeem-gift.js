@@ -1,58 +1,47 @@
 const popupModal = document.querySelector('.js-Modalpopup');
 const popupCloseBtnList = document.querySelectorAll('.js-CloseModalpopup');
 
-// Hàm mở popup và gọi API
 function openPopup(event) {
-    // Lấy giá trị của thuộc tính data-index từ phần tử được click
     const voucherItem = event.currentTarget.closest('[data-index]');
-    const id = voucherItem.getAttribute('data-index'); // Lấy giá trị data-index
-
-    // Mở popup
+    const id = voucherItem.getAttribute('data-index');
+    
     popupModal.classList.add('open');
     document.body.style.overflow = 'hidden';
-
-    // Gọi API với id lấy từ data-index
+    
     getVoucherDetails.start(id);
 }
 
-// Hàm đóng popup
 function closePopup() {
     popupModal.classList.remove('open');
     document.body.style.overflow = 'auto';
 }
 
-// Hàm gán sự kiện cho nút đóng popup
-popupCloseBtnList.forEach((btn) => {
-    btn.addEventListener('click', closePopup);
-});
-// Hủy chọn
-function cancelExchange() {
-    popupModal.classList.remove('open');
-    document.body.style.overflow = 'auto';
-}
-function exchangeVoucher() {
-    
-}
-// Hàm gọi API lấy chi tiết voucher
-const getVoucherDetails = {
-    api: API_ENDPOINTS.GET_PRODUCTS, // Gốc của API
-    render(id) {
-        // Tạo URL với id từ data-index
-        const apiUrl = `${this.api}?id=${id}`;
+// Attach event listeners to popup close buttons
+popupCloseBtnList.forEach((btn) => btn.addEventListener('click', closePopup));
 
+function cancelExchange() {
+    closePopup();
+}
+
+function exchangeVoucher() {
+    // Add logic for voucher exchange
+}
+
+// Fetch and display voucher details
+const getVoucherDetails = {
+    api: API_ENDPOINTS.GET_PRODUCTS,
+    start(id) {
+        const apiUrl = `${this.api}?id=${id}`;
         $.ajax({
-            url: apiUrl,  // Sử dụng URL với id
+            url: apiUrl,
             type: 'GET',
             success: function(response) {
-                // Kiểm tra xem kết quả trả về là một đối tượng hoặc một mảng
-                if (response.result && typeof response.result === 'object' && !Array.isArray(response.result)) {
-                    // Trường hợp kết quả là đối tượng
-                    const product = response.result.product;
+                if (response.result && typeof response.result === 'object') {
+                    const { product } = response.result;
                     const jsVoucherDetails = document.querySelector(".js-VoucherDetails");
 
                     if (jsVoucherDetails) {
-                        // Tạo HTML cho đối tượng sản phẩm đơn lẻ
-                        const html = `
+                        jsVoucherDetails.innerHTML = `
                             <h1 class="popup__header exchange__voucher--heading">${product.productName}</h1>
                             <p class="popup__describe exchange__voucher--sub-heading">${product.timeDescription}</p>
                             <hr class="dashed-line">
@@ -77,83 +66,135 @@ const getVoucherDetails = {
                                 <button style="font-size: 13px;" onclick="exchangeVoucher()" class="_btn">Đổi Ngay</button>
                             </div>
                         `;
-                        jsVoucherDetails.innerHTML = html;
                     } else {
                         console.error("Không tìm thấy phần tử với class .js-VoucherDetails");
                     }
                 } else {
-                    console.error("Kết quả trả về không phải là đối tượng hợp lệ", response);
+                    console.error("Kết quả trả về không hợp lệ", response);
                 }
             },
-            error: function(xhr, status, error) {
-                console.error("Lỗi khi lấy dữ liệu từ API:", error);
+            error: function() {
+                console.error("Lỗi khi lấy dữ liệu từ API");
             }
         });
-    },
-    start(id) {
-        this.render(id); // Truyền id vào khi gọi hàm
-    },
+    }
 };
 
-
-// Hàm gọi API và hiển thị voucher
+// Fetch and display the voucher list
 const getVoucher = {
     api: API_ENDPOINTS.GET_VOUCHER,
-    render() {
+    start() {
         $.ajax({
             url: this.api,
             type: 'GET',
             success: function(response) {
                 if (Array.isArray(response.result.items)) {
-                    const jsVoucherDetails = document.querySelector(".js-Voucher");
-                    if (jsVoucherDetails) {
-                        const html = response.result.items.map((content) => {
-                            return `
-                                <div class="col l-4 m-4 c-6" data-index="${content.productPromotion.id}">
-                                    <div class="voucher__item js-popup">
-                                        <div class="voucher__value flex-center">
-                                            <span>${content.productPromotion.point}</span>
-                                            <img  alt="${content.productPromotion.description}" class="coin" src="/view-resources/Areas/App/Views/Sbin/assets/img/coin.png">
-                                        </div>
-                                        <div class="voucher__img" style="background-image: url('/view-resources/Areas/App/Views/Sbin/assets/img/coupons/coupons-blue.png');"></div>
-                                        <div class="voucher__describe">
-                                            <p class="voucher__name">${content.productProductName}</p>
-                                            <p class="voucher__date">Out of date: ${content.productPromotion.endDate}</p>
-                                        </div>
+                    const voucherContainer = document.querySelector(".js-Voucher");
+
+                    if (voucherContainer) {
+                        voucherContainer.innerHTML = response.result.items.map((content) => `
+                            <div class="col l-4 m-4 c-6" data-index="${content.productPromotion.id}">
+                                <div class="voucher__item js-popup">
+                                    <div class="voucher__value flex-center">
+                                        <span>${content.productPromotion.point}</span>
+                                        <img alt="${content.productPromotion.description}" class="coin" src="/view-resources/Areas/App/Views/Sbin/assets/img/coin.png">
+                                    </div>
+                                    <div class="voucher__img" style="background-image: url('/view-resources/Areas/App/Views/Sbin/assets/img/coupons/coupons-blue.png');"></div>
+                                    <div class="voucher__describe">
+                                        <p class="voucher__name">${content.productProductName}</p>
+                                        <p class="voucher__date">Out of date: ${content.productPromotion.endDate}</p>
                                     </div>
                                 </div>
-                            `;
-                        }).join("");
-                        jsVoucherDetails.innerHTML = html;
+                            </div>
+                        `).join("");
 
-                        // Gán sự kiện click cho các phần tử .js-popup
                         attachPopupEvent();
                     } else {
                         console.error("Không tìm thấy phần tử với class .js-Voucher");
                     }
                 } else {
-                    console.error("Kết quả trả về không phải là mảng", response);
+                    console.error("API không trả về mảng hợp lệ", response);
                 }
-
-                console.log(response);
             },
-            error: function(xhr, status, error) {
-                console.error("Lỗi khi lấy dữ liệu từ API:", error);
+            error: function() {
+                console.error("Lỗi khi gọi API");
             }
         });
-    },
-    start() {
-        this.render();
-    },
+    }
 };
 
-// Hàm gán sự kiện mở popup
+// Attach event listener to voucher items to open popup
 function attachPopupEvent() {
-    const popupBtnList = document.querySelectorAll('.js-popup');
-    popupBtnList.forEach((btn) => {
+    document.querySelectorAll('.js-popup').forEach((btn) => {
         btn.addEventListener('click', openPopup);
     });
 }
 
-// Gọi API để hiển thị danh sách voucher ban đầu
 getVoucher.start();
+
+// Handle filtering vouchers by brand
+document.querySelectorAll('.js-Sorting').forEach((radio) => {
+    radio.addEventListener('change', function() {
+        const brandId = this.getAttribute('data-index');
+        if (brandId) fetchVoucherData(brandId);
+        const voucherContainer = document.querySelector(".js-Voucher");
+        voucherContainer.innerHTML = `
+        <div class="skeleton skeleton-text skeleton-text__large"></div>
+        <div class="skeleton skeleton-text skeleton-text__large"></div>
+        <div class="skeleton skeleton-text skeleton-text__large"></div>
+        <div class="skeleton skeleton-text skeleton-text__large"></div>
+        <div class="skeleton skeleton-text skeleton-text__large"></div>
+        <div class="skeleton skeleton-text skeleton-text__large"></div>
+        <div class="skeleton skeleton-text skeleton-text__large"></div>
+        <div class="skeleton skeleton-text skeleton-text__large"></div>
+        <div class="skeleton skeleton-text skeleton-text__large"></div>`
+    });
+});
+
+// Fetch vouchers for a specific brand
+function fetchVoucherData(brandId) {
+    const apiUrl = `${API_ENDPOINTS.GET_VOUCHER_FOR_VIEW}?id=${brandId}`;
+    
+    $.ajax({
+        url: apiUrl,
+        type: 'GET',
+        success: function(response) {
+            if (response.result) {
+                const voucherContainer = document.querySelector(".js-Voucher");
+                if (voucherContainer && response.result) {
+                    const content = response.result;
+                    const html = `
+                        <div class="col l-4 m-4 c-6" data-index="${content.productPromotion.id}">
+                            <div class="voucher__item js-popup">
+                                <div class="voucher__value flex-center">
+                                    <span>${content.productPromotion.point}</span>
+                                    <img alt="${content.productPromotion.description}" class="coin" src="/view-resources/Areas/App/Views/Sbin/assets/img/coin.png">
+                                </div>
+                                <div class="voucher__img" style="background-image: url('/view-resources/Areas/App/Views/Sbin/assets/img/coupons/coupons-blue.png');"></div>
+                                <div class="voucher__describe">
+                                    <p class="voucher__name">${content.productProductName}</p>
+                                    <p class="voucher__date">Out of date: ${content.productPromotion.endDate}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    voucherContainer.innerHTML = html;
+                    attachPopupEvent();
+                } else {
+                    console.error("Không tìm thấy container để hiển thị voucher");
+                }
+            } else {
+                console.error("API không trả về mảng hợp lệ", response);
+            }
+        },
+        error: function() {
+            const voucherContainer = document.querySelector(".js-Voucher");
+            voucherContainer.innerHTML = `
+            <div class="flex-center" style="height: 400px">
+                <img src="https://bizweb.dktcdn.net/100/363/701/themes/735188/assets/empty-cart.png?1715162023244"width="330">
+            </div>
+            `
+        }
+    });
+}
+

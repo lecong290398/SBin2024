@@ -16,7 +16,7 @@
             margin: 0px !important;
         }
         .no-margin > .skeleton {
-            margin-top: 26px !important;
+            margin-top: 28px !important;
         }
         ul, p {
             padding: 0px !important;
@@ -50,7 +50,7 @@
                         @foreach (var brand in (List<DTKH2024.SbinSolution.Brands.Dtos.GetBrandForViewDto>)ViewBag.Brands)
                         {
                             <li class="category__item flex-center">
-                                <input class="category__checker" type="radio" name="voucher">
+                                <input data-index="@(brand.Brand.Id)" class="js-Sorting category__checker" type="radio" name="voucher">
                                 <div class="category__describe flex-center" style="justify-content: flex-start;">
                                     <img class="category__brand" src="/view-resources/Areas/App/Views/Sbin/assets/img/brand/@(brand.Brand.Id).png" />
                                     <p class="category__name" style="margin-left: 5px !important">@brand.Brand.Name</p>

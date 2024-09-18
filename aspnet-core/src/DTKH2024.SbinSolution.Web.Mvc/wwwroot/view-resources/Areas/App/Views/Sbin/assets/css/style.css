@@ -365,7 +365,7 @@ body {
     text-shadow: .5px .5px var(--black-color);
 }
 .category__list {
-    max-height: 465px;
+    max-height: 450.5px;
     overflow-y: auto;
     overflow-x: hidden;
 }

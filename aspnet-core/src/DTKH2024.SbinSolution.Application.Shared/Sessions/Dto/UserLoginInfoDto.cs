@@ -1,4 +1,6 @@
 ﻿using Abp.Application.Services.Dto;
+using Abp.Authorization.Users;
+using System.Collections.Generic;
 
 namespace DTKH2024.SbinSolution.Sessions.Dto
 {
@@ -13,5 +15,10 @@ namespace DTKH2024.SbinSolution.Sessions.Dto
         public string EmailAddress { get; set; }
 
         public string ProfilePictureId { get; set; }
+
+        public int Point { get; set; }
+        public int PositivePoint { get; set; }
+        public  ICollection<UserRole> Roles { get; set; }
+        public string RankName { get; set; }
     }
 }

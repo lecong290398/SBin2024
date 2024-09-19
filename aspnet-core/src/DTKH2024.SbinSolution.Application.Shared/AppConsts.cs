@@ -57,6 +57,7 @@ namespace DTKH2024.SbinSolution
             return epoch;
         }
         public const int UserIdAdmin = 2;
+        public const int RoleIdUser = 3;
 
 
     }

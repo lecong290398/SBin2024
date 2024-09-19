@@ -17,6 +17,10 @@ using DTKH2024.SbinSolution.Authorization.Users;
 using Abp.Domain.Uow;
 using Abp.Localization;
 using DTKH2024.SbinSolution.Features;
+using Abp.Authorization.Users;
+using Abp.Domain.Repositories;
+using PayPalCheckoutSdk.Orders;
+using DTKH2024.SbinSolution.RankLevels;
 
 namespace DTKH2024.SbinSolution.Sessions
 {
@@ -28,13 +32,16 @@ namespace DTKH2024.SbinSolution.Sessions
         private readonly IUnitOfWorkManager _unitOfWorkManager;
         private readonly EditionManager _editionManager;
         private readonly ILocalizationContext _localizationContext;
-        
+        private readonly IRepository<UserRole, long> _userRoleRepository;
+        private readonly IRepository<RankLevel> _rankLevelRepository;
+
         public SessionAppService(
             IUiThemeCustomizerFactory uiThemeCustomizerFactory,
             ISubscriptionPaymentRepository subscriptionPaymentRepository,
             IUserDelegationConfiguration userDelegationConfiguration,
             IUnitOfWorkManager unitOfWorkManager,
-            EditionManager editionManager, ILocalizationContext localizationContext)
+            EditionManager editionManager, ILocalizationContext localizationContext
+            , IRepository<UserRole, long> userRoleRepository, IRepository<RankLevel> rankLevelRepository)
         {
             _uiThemeCustomizerFactory = uiThemeCustomizerFactory;
             _subscriptionPaymentRepository = subscriptionPaymentRepository;
@@ -42,6 +49,8 @@ namespace DTKH2024.SbinSolution.Sessions
             _unitOfWorkManager = unitOfWorkManager;
             _editionManager = editionManager;
             _localizationContext = localizationContext;
+            _userRoleRepository = userRoleRepository;
+            _rankLevelRepository = rankLevelRepository;
         }
 
         [DisableAuditing]
@@ -79,7 +88,34 @@ namespace DTKH2024.SbinSolution.Sessions
 
                 if (AbpSession.UserId.HasValue)
                 {
-                    output.User = ObjectMapper.Map<UserLoginInfoDto>(await GetCurrentUserAsync());
+                    var userDto = await GetCurrentUserAsync();
+                    output.User = ObjectMapper.Map<UserLoginInfoDto>(userDto);
+
+                    try
+                    {
+                        if (userDto.Id != AppConsts.UserIdAdmin)
+                        {
+                            var userRoles = await _userRoleRepository.GetAll()
+                            .Where(userRole => userDto.Id == userRole.UserId)
+                            .Select(userRole => userRole).ToListAsync();
+                            output.User.Roles = ObjectMapper.Map<List<UserRole>>(userRoles);
+                            if (userRoles.Exists(c => c.RoleId == AppConsts.RoleIdUser))
+                            {
+                                var rank = _rankLevelRepository.GetAllList().Where(c => c.MinimumPositiveScore <= output.User.PositivePoint)
+                                           .OrderByDescending(c => c.MinimumPositiveScore)
+                                           .FirstOrDefault();
+                                if (rank != null)
+                                {
+                                    output.User.RankName = rank.Name;
+                                }
+                            }
+                        }
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
                 }
 
                 if (AbpSession.ImpersonatorUserId.HasValue)

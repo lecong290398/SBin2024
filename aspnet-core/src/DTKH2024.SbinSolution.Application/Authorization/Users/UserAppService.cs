@@ -130,7 +130,7 @@ namespace DTKH2024.SbinSolution.Authorization.Users
 
             foreach (var item in userListDtos)
             {
-                if (item.Roles.Exists(c=>c.RoleId == 3))
+                if (item.Roles.Exists(c=>c.RoleId == AppConsts.RoleIdUser))
                 {
                     var rank = _rankLevelRepository.GetAllList().Where(c => c.MinimumPositiveScore <= item.PositivePoint)
                                .OrderByDescending(c => c.MinimumPositiveScore)

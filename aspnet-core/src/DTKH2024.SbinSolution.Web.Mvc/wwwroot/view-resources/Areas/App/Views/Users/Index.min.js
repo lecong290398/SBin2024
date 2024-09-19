@@ -260,7 +260,19 @@
           render: function (creationTime) {
             return moment(creationTime).format('L');
           },
-        },
+          },
+          {
+              targets: 10,
+              data: 'point',
+          },
+          {
+              targets: 11,
+              data: 'positivePoint',
+          },
+          {
+              targets: 12,
+              data: 'rankName',
+          }
       ],
     });
     

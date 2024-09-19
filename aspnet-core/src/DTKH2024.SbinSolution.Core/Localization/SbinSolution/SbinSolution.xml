@@ -1477,7 +1477,8 @@
 		<text name="RedeemGifts">Redeem Gifts</text>
 		<text name="RedeemGiftsHeaderInfo">Redeem rewards with many valuable gifts!</text>
 		<text name="CreateNewTransactionBinAdminDevice">Create new transaction bin admin device</text>
-		<text name="CustomerUpdateTransaction">Customer Update Transaction</text>
+		<text name="PositivePoint">Positive Point</text>
+		<text name="RankName">Rank Name</text>
 
 	</texts>
 </localizationDictionary>

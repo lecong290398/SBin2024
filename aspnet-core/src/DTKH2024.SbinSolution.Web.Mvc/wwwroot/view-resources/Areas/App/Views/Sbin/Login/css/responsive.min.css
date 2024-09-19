@@ -1,0 +1,44 @@
+@media (min-width: 1024px) {
+  .hide-on-pc {
+    display: none;
+  }
+}
+/* PC low resolution */
+/* Mobile & Tablet */
+@media (max-width: 1023px) {
+  .hide-on-tablet-mobile {
+    display: block;
+  }
+}
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+  .hide-on-tablet {
+    display: none;
+  }
+}
+/* Mobile */
+@media (max-width: 739px) {
+  .hide-on-mobile {
+    display: none;
+  }
+  .container {
+    min-height: 100%;
+    border-radius: 0;
+  }
+  .form-container {
+    display: flex;
+  }
+  .form {
+    padding: 25px;
+  }
+  .form-heading {
+    font-size: 25px;
+  }
+  .form-logIn-with button {
+    padding: 7px 0px;
+  }
+  .toggle-container,
+  .container.active .toggle-container {
+    border-radius: 0;
+  }
+}

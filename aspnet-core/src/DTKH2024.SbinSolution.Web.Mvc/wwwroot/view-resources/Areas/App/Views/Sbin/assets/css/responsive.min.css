@@ -1,0 +1,156 @@
+@media (min-width: 1024px) {
+  .hide-on-pc {
+    display: none;
+  }
+}
+/* PC low resolution */
+@media (min-width: 1024px) and (max-width: 1239px) {
+  /* Dashboard*/
+  .logo a {
+    font-size: 16px;
+  }
+  .navbar__link {
+    font-size: 14px;
+  }
+  .navbar__coin-reward__icon,
+  .navbar__coin-reward__total {
+    font-size: 12px;
+  }
+  /* Leaderboard */
+  .ranking__details h5 {
+    max-width: 130px;
+  }
+  .ranking_icon {
+    margin-right: 30px;
+  }
+  .ranking_icon::after {
+    right: -24%;
+  }
+}
+/* Mobile & Tablet */
+@media (max-width: 1023px) {
+  .hide-on-tablet-mobile {
+    display: none;
+  }
+  /* Voucher */
+  .voucher__name {
+    font-size: 16px;
+  }
+  .voucher__img {
+    height: 100px;
+  }
+  .voucher__item {
+    padding: 25px 15px;
+  }
+  .voucher__value {
+    top: 7px;
+  }
+  /* Profile */
+  .profile__chart {
+    margin: 30px 0;
+  }
+}
+/* Tablet */
+@media (min-width: 740px) and (max-width: 1023px) {
+  .hide-on-tablet {
+    display: none;
+  }
+  .js-img {
+    height: 480px !important;
+  }
+}
+/* Mobile */
+@media (max-width: 739px) {
+  .hide-on-mobile {
+    display: none !important;
+  }
+  /* Header */
+  body {
+    padding: 0 20px;
+  }
+  .logo a {
+    font-size: 18px;
+  }
+  .navbar__coin-reward {
+    font-size: 12px;
+  }
+  .navbar__coin-reward__total,
+  .navbar__coin-reward__coin {
+    padding: 5px;
+  }
+  .user__show-more__item a {
+    font-size: 12px;
+  }
+  .user__profile {
+    margin-left: 12px !important;
+  }
+  .history-table .coin {
+    display: none;
+  }
+  .footer__privacy .logo img {
+    height: 25px;
+    width: 25px;
+    margin: 0;
+  }
+  .footer__privacy--item a {
+    font-size: 9.5px;
+    margin: 0 8px;
+  }
+  .paragraph,
+  .bullet {
+    text-align: left !important;
+  }
+  /* Shop */
+  .brand-product__describe {
+    padding: 0 40px;
+  }
+  /* Leaderboard */
+  .top_ranking__item {
+    padding: 15px;
+  }
+  .ranking_icon {
+    margin: 0 5px;
+    height: 60px;
+    width: 60px;
+  }
+  .ranking_icon img {
+    height: 35px;
+    width: 35px;
+  }
+  .ranking__details h6 {
+    font-size: 12px;
+  }
+  .prize h4 {
+    font-size: 16px;
+  }
+  .ranking_user {
+    display: none;
+  }
+  .ranking_icon::after {
+    right: -20%;
+  }
+  .top_list__list--header {
+    font-size: 20px;
+  }
+  .top_ranking__item:nth-child(even) {
+    transform: translateY(0);
+  }
+  .top_list__list {
+    padding: 0px 15px;
+  }
+  .js-img {
+    height: 200px !important;
+  }
+  .popup__modal {
+    padding: 30px !important;
+  }
+  .popup__header {
+    font-size: 24px;
+  }
+  .popup__describe {
+    font-size: 16px !important;
+  }
+  .exchange__voucher--lazyload {
+    width: 306px !important;
+  }
+}

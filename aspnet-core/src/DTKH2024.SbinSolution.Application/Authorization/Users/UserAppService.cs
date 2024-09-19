@@ -38,6 +38,7 @@ using DTKH2024.SbinSolution.Net.Emailing;
 using DTKH2024.SbinSolution.Notifications;
 using DTKH2024.SbinSolution.Url;
 using DTKH2024.SbinSolution.Organizations.Dto;
+using DTKH2024.SbinSolution.RankLevels;
 
 namespace DTKH2024.SbinSolution.Authorization.Users
 {
@@ -65,7 +66,8 @@ namespace DTKH2024.SbinSolution.Authorization.Users
         private readonly IRepository<OrganizationUnitRole, long> _organizationUnitRoleRepository;
         private readonly IOptions<UserOptions> _userOptions;
         private readonly IEmailSettingsChecker _emailSettingsChecker;
-        
+        private readonly IRepository<RankLevel> _rankLevelRepository;
+
         public UserAppService(
             RoleManager roleManager,
             IUserEmailer userEmailer,
@@ -84,7 +86,8 @@ namespace DTKH2024.SbinSolution.Authorization.Users
             UserManager userManager,
             IRepository<UserOrganizationUnit, long> userOrganizationUnitRepository,
             IRepository<OrganizationUnitRole, long> organizationUnitRoleRepository, 
-            IOptions<UserOptions> userOptions, IEmailSettingsChecker emailSettingsChecker)
+            IOptions<UserOptions> userOptions, IEmailSettingsChecker emailSettingsChecker
+            , IRepository<RankLevel> rankLevelRepository)
         {
             _roleManager = roleManager;
             _userEmailer = userEmailer;
@@ -105,7 +108,7 @@ namespace DTKH2024.SbinSolution.Authorization.Users
             _userOptions = userOptions;
             _emailSettingsChecker = emailSettingsChecker;
             _roleRepository = roleRepository;
-
+            _rankLevelRepository = rankLevelRepository;
             AppUrlService = NullAppUrlService.Instance;
         }
 
@@ -122,8 +125,22 @@ namespace DTKH2024.SbinSolution.Authorization.Users
                 .ToListAsync();
 
             var userListDtos = ObjectMapper.Map<List<UserListDto>>(users);
+           
             await FillRoleNames(userListDtos);
 
+            foreach (var item in userListDtos)
+            {
+                if (item.Roles.Exists(c=>c.RoleId == 3))
+                {
+                    var rank = _rankLevelRepository.GetAllList().Where(c => c.MinimumPositiveScore <= item.PositivePoint)
+                               .OrderByDescending(c => c.MinimumPositiveScore)
+                               .FirstOrDefault();
+                    if (rank != null)
+                    {
+                        item.RankName = rank.Name;
+                    }
+                }
+            }
             return new PagedResultDto<UserListDto>(
                 userCount,
                 userListDtos

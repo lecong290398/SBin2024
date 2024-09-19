@@ -30,5 +30,8 @@ namespace DTKH2024.SbinSolution.Authorization.Users.Dto
         public bool IsActive { get; set; }
 
         public DateTime CreationTime { get; set; }
+        public int Point { get; set; }
+        public int PositivePoint { get; set; }
+        public string RankName { get; set; }
     }
 }

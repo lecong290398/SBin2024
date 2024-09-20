@@ -15,9 +15,11 @@
         .no-margin, .no-margin > * {
             margin: 0px !important;
         }
-        .no-margin > .skeleton {
-            margin-top: 28px !important;
-        }
+
+            .no-margin > .skeleton {
+                margin-top: 28px !important;
+            }
+
         ul, p {
             padding: 0px !important;
             margin: 0px !important;
@@ -25,25 +27,19 @@
     </style>
 }
 @section Scripts {
-    <script src="~/view-resources/Areas/App/Views/Sbin/js/constant.js"></script>
-    <script src="~/view-resources/Areas/App/Views/Sbin/js/redeem-gift.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="~/view-resources/areas/app/views/redeemgifts/index.min.js"></script>
+    <script src="~/view-resources/areas/app/views/redeemgifts/index.js"></script>
 }
+
+
+
+
 <div id="redeem-gifts">
     <div class="grid wide">
         <h1 class="heading-section"><i style="color: var(--dark-green); font-size: 22px;" class="fa-solid fa-ticket"></i> @L("RedeemGifts")</h1>
         <h3 style="margin-bottom: 20px" class="heading__h3">@L("RedeemGiftsHeaderInfo")!</h3>
         <div class="redeem-gifts row">
             <div class="col l-3 m-0 c-0">
-                <div class="my-voucher">
-                    <a href="@Url.Action("Index", "WareHouseGifts")">
-                        <div class="flex-center">
-                            <h3 class="my-voucher__heading">My voucher</h3>
-                            <i class="fa-solid fa-gift"></i>
-                        </div>
-                        <p>You don't have any voucher</p>
-                    </a>
-                </div>
                 <div class="category">
                     <h3 class="category__heading">Category</h3>
                     <ul class="category__list">
@@ -64,7 +60,7 @@
             <div class="no-margin col l-9 m-12 c-12">
                 <div class="filter flex-center">
                     <input id="filter__search" class="input-form" type="text" placeholder="Search items by keyword, price, etc">
-                    <i style="color: var(--white-color);" class="search-btn fa-solid fa-search"></i>
+                    <i style="color: var(--white-color);" class="search-btn fa-solid fa-search" onclick="seachVoucher()"></i>
                 </div>
                 <div class="my-voucher hide-on-pc" style="margin: 0; margin-top: 26px !important;">
                     <div class="flex-center">

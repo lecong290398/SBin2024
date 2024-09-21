@@ -2,7 +2,6 @@
 using DTKH2024.SbinSolution.TransactionBins;
 using DTKH2024.SbinSolution.WareHouseGifts;
 using DTKH2024.SbinSolution.HistoryTypes;
-
 using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;

@@ -41,6 +41,7 @@
                                         <p class="voucher__name">${content.brandName}</p>
                                         <p class="voucher__name">${content.productProductName}</p>
                                         <p class="voucher__date">Out of date: ${new Date(content.productPromotion.endDate).toLocaleDateString()}</p>
+                                        <p class="voucher__date">Quantity statistics: ${content.productPromotion.quantityCurrent}/${content.productPromotion.quantityInStock}</p>
                                     </div>
                                 </div>
                             </div>
@@ -93,9 +94,19 @@
     }
 
     // Make exchangeVoucher globally accessible
-    window.exchangeVoucher = function () {
-        // Add logic for voucher exchange
+    window.exchangeVoucher = function (productPromotionId) {
+        abp.services.app.redeemGifts.createRedeemGift(productPromotionId, {
+            success: function () {
+                abp.notify.success('Voucher exchanged successfully.');
+                closePopup();
+                window.location.reload(); // Reload the page
+            },
+            error: function (error) {
+                abp.notify.error(error.message);
+            }
+        });
     };
+
 
     // Fetch and display voucher details
     const getVoucherDetails = {
@@ -129,7 +140,7 @@
                             </div>
                             <div class="flex-center" style="justify-content: space-between;">
                                 <button style="font-size: 13px;" onclick="cancelExchange()" class="_btn">Hủy Chọn</button>
-                                <button style="font-size: 13px;" onclick="exchangeVoucher()" class="_btn">Đổi Ngay</button>
+                                <button style="font-size: 13px;" onclick="exchangeVoucher(${product.id})" class="_btn">Đổi Ngay</button>
                             </div>
                         `;
                     } else {

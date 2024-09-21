@@ -201,7 +201,7 @@ namespace DTKH2024.SbinSolution.TransactionBins
         {
             var transactionBin = ObjectMapper.Map<TransactionBin>(input);
             var epoch = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalSeconds;
-            transactionBin.TransactionCode = AppConsts.getCodeRandom("SB.");
+            transactionBin.TransactionCode = AppConsts.getCodeRandom(AppConsts.keyPerfixTransactionBins);
             await _transactionBinRepository.InsertAsync(transactionBin);
 
         }

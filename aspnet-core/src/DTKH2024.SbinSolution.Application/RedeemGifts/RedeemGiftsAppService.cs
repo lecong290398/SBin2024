@@ -28,12 +28,20 @@ using DTKH2024.SbinSolution.ProductPromotions.Dtos;
 using DTKH2024.SbinSolution.ProductPromotions;
 using DTKH2024.SbinSolution.CategoryPromotions;
 using DTKH2024.SbinSolution.Products.Dtos;
+using AutoMapper.Internal.Mappers;
+using DTKH2024.SbinSolution.OrderHistories.Dtos;
+using DTKH2024.SbinSolution.OrderHistories;
+using Abp.Runtime.Session;
+using DTKH2024.SbinSolution.WareHouseGifts;
+using DTKH2024.SbinSolution.WareHouseGifts.Dtos;
+using DTKH2024.SbinSolution.HistoryTypes;
+using Abp;
 
 namespace DTKH2024.SbinSolution.RedeemGifts
 {
     [AbpAuthorize(AppPermissions.Pages_RedeemGifts)]
 
-    public class RedeemGiftsAppService : IRedeemGiftsAppService
+    public class RedeemGiftsAppService : SbinSolutionAppServiceBase, IRedeemGiftsAppService
     {
         private readonly IRepository<Brand> _brandRepository;
         private readonly IBinaryObjectManager _binaryObjectManager;
@@ -41,9 +49,14 @@ namespace DTKH2024.SbinSolution.RedeemGifts
         private readonly IRepository<ProductPromotion> _productPromotionRepository;
         private readonly IRepository<Product, int> _lookup_productRepository;
         private readonly IRepository<CategoryPromotion, int> _lookup_categoryPromotionRepository;
+        private readonly IAbpSession _abpSession;
+        private readonly IRepository<OrderHistory> _orderHistoryRepository;
+        private readonly IRepository<WareHouseGift> _wareHouseGiftRepository;
+        private readonly IRepository<HistoryType> _historyTypeRepository;
+
         public RedeemGiftsAppService(IRepository<Brand> brandRepository, IRepository<ProductPromotion> productPromotionRepository
             , IRepository<Product> productRepository, IRepository<Product, int> lookup_productRepository, IRepository<CategoryPromotion, int> lookup_categoryPromotionRepository
-            , IBinaryObjectManager binaryObjectManager)
+            , IBinaryObjectManager binaryObjectManager, IAbpSession abpSession, IRepository<OrderHistory> orderHistoryRepository, IRepository<WareHouseGift> wareHouseGiftRepository, IRepository<HistoryType> historyTypeRepository)
         {
             _brandRepository = brandRepository;
             _binaryObjectManager = binaryObjectManager;
@@ -51,6 +64,10 @@ namespace DTKH2024.SbinSolution.RedeemGifts
             _productPromotionRepository = productPromotionRepository;
             _lookup_productRepository = lookup_productRepository;
             _lookup_categoryPromotionRepository = lookup_categoryPromotionRepository;
+            _abpSession = abpSession;
+            _orderHistoryRepository = orderHistoryRepository;
+            _wareHouseGiftRepository = wareHouseGiftRepository;
+            _historyTypeRepository = historyTypeRepository;
         }
 
         public async Task<PagedResultDto<GetBrandForViewDto>> GetAllBrand(GetAllBrandsInput input)
@@ -123,6 +140,7 @@ namespace DTKH2024.SbinSolution.RedeemGifts
                         .Include(e => e.ProductFk)
                         .Include(e => e.ProductFk.BrandFk)
                         .Include(e => e.CategoryPromotionFk)
+                        .Where(e => e.QuantityCurrent < e.QuantityInStock && e.EndDate >= DateTime.Now)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.PromotionCode.Contains(input.Filter) || e.Description.Contains(input.Filter))
                         .WhereIf(input.MinPointFilter != null, e => e.Point >= input.MinPointFilter)
                         .WhereIf(input.MaxPointFilter != null, e => e.Point <= input.MaxPointFilter)
@@ -265,6 +283,73 @@ namespace DTKH2024.SbinSolution.RedeemGifts
             };
 
             return result;
+        }
+
+        public virtual async Task CreateRedeemGift(int productPromotionId)
+        {
+            try
+            {
+                var userId = _abpSession.UserId ?? throw new UserFriendlyException("You are not logged in to the system.");
+                var userCurrent = await UserManager.FindByIdAsync(userId.ToString());
+                if (userCurrent is null)
+                {
+                    throw new UserFriendlyException(L("UserNotFound"));
+                }
+
+                var productPromotion = await _productPromotionRepository.FirstOrDefaultAsync(productPromotionId)
+                    ?? throw new UserFriendlyException("Product promotion not found.");
+
+                if (productPromotion.QuantityCurrent >= productPromotion.QuantityInStock)
+                {
+                    throw new UserFriendlyException("Gift out of stock");
+                }
+                if (productPromotion.EndDate < DateTime.Now)
+                {
+                    throw new UserFriendlyException("Gift expired");
+                }
+
+                var historyType = await _historyTypeRepository.FirstOrDefaultAsync(AppConsts.HistoryType_DoiQua)
+                    ?? throw new UserFriendlyException("An error occurred, please try again later.");
+
+                var wareHouseGift = new WareHouseGift
+                {
+                    ProductPromotionId = productPromotion.Id,
+                    UserId = userId,
+                    Code = AppConsts.getCodeRandom(AppConsts.keyPerfixWareHouseGift)
+                };
+                var wareHouseGiftId = await _wareHouseGiftRepository.InsertAndGetIdAsync(wareHouseGift).ConfigureAwait(false);
+                if (wareHouseGiftId != 0)
+                {
+                    var orderHistory = new OrderHistory
+                    {
+                        Description = historyType.Name,
+                        Point = productPromotion.Point,
+                        UserId = userId,
+                        WareHouseGiftId = wareHouseGiftId,
+                        HistoryTypeId = historyType.Id
+                    };
+                    await _orderHistoryRepository.InsertAsync(orderHistory);
+
+                    productPromotion.QuantityCurrent += 1;
+                    await _productPromotionRepository.UpdateAsync(productPromotion);
+
+                    if (userCurrent.Point >= productPromotion.Point)
+                    {
+                        userCurrent.Point -= productPromotion.Point;
+                        userCurrent.PositivePoint += productPromotion.Point;
+                        await UserManager.UpdateAsync(userCurrent);
+                    }else
+                    {
+                        throw new UserFriendlyException("Not enough points to redeem");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
     }
 }

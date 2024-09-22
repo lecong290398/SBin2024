@@ -54,15 +54,17 @@ namespace DTKH2024.SbinSolution.WareHouseGifts
                         .WhereIf(!string.IsNullOrWhiteSpace(input.UserNameFilter), e => e.UserFk != null && e.UserFk.Name == input.UserNameFilter)
                         .WhereIf(!string.IsNullOrWhiteSpace(input.ProductPromotionPromotionCodeFilter), e => e.ProductPromotionFk != null && e.ProductPromotionFk.PromotionCode == input.ProductPromotionPromotionCodeFilter);
 
-            var pagedAndFilteredWareHouseGifts = filteredWareHouseGifts
-                .OrderBy(input.Sorting ?? "id asc")
-            .PageBy(input);
-
             var userID = _abpSession.GetUserId();
             if (userID != AppConsts.UserIdAdmin)
             {
                 filteredWareHouseGifts = filteredWareHouseGifts.Where(e => e.UserFk != null && e.UserFk.Id == userID);
             }
+
+            var pagedAndFilteredWareHouseGifts = filteredWareHouseGifts
+                .OrderBy(input.Sorting ?? "id asc")
+            .PageBy(input);
+
+          
 
 
             var wareHouseGifts = from o in pagedAndFilteredWareHouseGifts

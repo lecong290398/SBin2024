@@ -4,6 +4,10 @@
 @model DTKH2024.SbinSolution.Web.Areas.App.Models.Layout.UserMenuViewModel
 @inject IUserDelegationConfiguration UserDelegationConfiguration
 
+<style>
+    :root {--white-color: #fff;--light-grey: #eee;--font-weight-bold: 600;}.navbar__coin-reward {border: 1px solid var(--light-grey);border-radius: 20px;overflow: hidden;font-weight: var(--font-weight-bold);font-size: 15px;}.navbar__coin-reward__icon {background: var(--light-grey);color: #27ae60;padding: 10px;}.navbar__coin-reward__total {background: var(--white-color);color: #218c74;padding: 10px;}.flex-center {display: flex;align-items: center;}.coin {height: 20px;padding-left: 5px;}@@media (min-width: 1024px) and (max-width: 1239px) {.navbar__coin-reward__icon, .navbar__coin-reward__total {font-size: 18px !important;}}
+</style>
+
 <div class="d-flex align-items-center ms-1 ms-lg-3">
     @if (Model.RenderOnlyIcon)
     {
@@ -42,7 +46,16 @@
                     </a>
                     @if (Model.LoginInformations.User.Roles.Any(c => c.RoleId == AppConsts.RoleIdUser))
                     {
-                        <h3> @Model.LoginInformations.User.RankName || @Model.LoginInformations.User.Point  / @Model.LoginInformations.User.PositivePoint </h3>
+                        <div style="font-size: 18px !important; margin: 10px 0" class="navbar__coin-reward flex-center">
+                            <div class="navbar__coin-reward__icon flex-center">
+                                <span>@Model.LoginInformations.User.Point</span>
+                                <img class="coin" src="/view-resources/Areas/App/Views/Sbin/assets/img/coin.png">
+                            </div>
+                            <div class="navbar__coin-reward__total">
+                                <span>@Model.LoginInformations.User.PositivePoint RCL</span>
+                            </div>
+                        </div>
+                        <h5>Rank: @Model.LoginInformations.User.RankName</h5>
                     }
                 </div>
             </div>

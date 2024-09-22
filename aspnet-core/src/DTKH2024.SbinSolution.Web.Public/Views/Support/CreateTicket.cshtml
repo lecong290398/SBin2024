@@ -1,0 +1,55 @@
+﻿<div id="support">
+    <div class="grid wide">
+        <h3 class="heading__h3">Support System</h3>
+        <div class="create_ticket-form card">
+            <div class="card-header">
+                <h3 class="heading__h3">Create</h3>
+                <a class="text-warning"  href="@Url.Action("Index", "Support")">Cancel</a>
+            </div>
+            <div class="card-body">
+                <form action="#">
+                    <div class="form-group">
+                        <label for="questionType">What type of question do you have?</label>
+                        <select id="questionType" class="form-control">
+                            <option value="earning">Earning</option>
+                            <option value="withdrawals">Withdrawals</option>
+                            <option value="profile">Profile</option>
+                            <option value="general">General</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="employeeRespond">Employee Respond</label>
+                        <select id="employeeRespond" class="form-control">
+                            <option value="earning">Earning</option>
+                            <option value="withdrawals">Withdrawals</option>
+                            <option value="profile">Profile</option>
+                            <option value="general">General</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="preferredLanguage">What language do you prefer to be answered?</label>
+                        <select id="preferredLanguage" class="form-control">
+                            <option value="english">English</option>
+                            <option value="spanish">Spanish</option>
+                            <option value="french">French</option>
+                            <option value="german">German</option>
+                            <option value="others">Others</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="problemDescription">Please provide a description of the problem you are encountering</label>
+                        <textarea id="problemDescription" rows="5" class="form-control"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn">Create</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+                        <script src="~/Sbin/js/validation.js"></script>

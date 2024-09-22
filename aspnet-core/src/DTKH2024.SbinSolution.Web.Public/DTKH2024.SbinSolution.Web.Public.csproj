@@ -20,6 +20,60 @@
 
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="wwwroot\Sbin\assets\css\base.css" />
+    <None Include="wwwroot\Sbin\assets\css\grid.min.css" />
+    <None Include="wwwroot\Sbin\assets\css\responsive.css" />
+    <None Include="wwwroot\Sbin\assets\css\style.css" />
+    <None Include="wwwroot\Sbin\assets\css\timeline.min.css" />
+    <None Include="wwwroot\Sbin\assets\img\background\banned.png" />
+    <None Include="wwwroot\Sbin\assets\img\background\bg.png" />
+    <None Include="wwwroot\Sbin\assets\img\background\example.png" />
+    <None Include="wwwroot\Sbin\assets\img\background\logo.png" />
+    <None Include="wwwroot\Sbin\assets\img\background\preload.gif" />
+    <None Include="wwwroot\Sbin\assets\img\brand\1.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\10.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\11.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\12.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\13.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\14.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\2.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\3.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\4.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\5.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\6.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\7.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\8.png" />
+    <None Include="wwwroot\Sbin\assets\img\brand\9.png" />
+    <None Include="wwwroot\Sbin\assets\img\coin.png" />
+    <None Include="wwwroot\Sbin\assets\img\coupons.png" />
+    <None Include="wwwroot\Sbin\assets\img\coupons\coupons-blue.png" />
+    <None Include="wwwroot\Sbin\assets\img\coupons\coupons-light-blue.png" />
+    <None Include="wwwroot\Sbin\assets\img\coupons\coupons-orange.png" />
+    <None Include="wwwroot\Sbin\assets\img\coupons\coupons-yellow.png" />
+    <None Include="wwwroot\Sbin\assets\img\gem0.png" />
+    <None Include="wwwroot\Sbin\assets\img\logo.png" />
+    <None Include="wwwroot\Sbin\assets\img\My.jpg" />
+    <None Include="wwwroot\Sbin\assets\img\rank\badge.svg" />
+    <None Include="wwwroot\Sbin\assets\img\rank\bar_chart.svg" />
+    <None Include="wwwroot\Sbin\assets\img\rank\cd-arrow.svg" />
+    <None Include="wwwroot\Sbin\assets\img\rank\crown.svg" />
+    <None Include="wwwroot\Sbin\assets\img\rank\cup.svg" />
+    <None Include="wwwroot\Sbin\assets\img\rank\medal.svg" />
+    <None Include="wwwroot\Sbin\assets\img\rank\star.svg" />
+    <None Include="wwwroot\Sbin\assets\img\social\facebook.svg" />
+    <None Include="wwwroot\Sbin\assets\img\social\instagram.svg" />
+    <None Include="wwwroot\Sbin\assets\img\social\twitter.svg" />
+    <None Include="wwwroot\Sbin\js\about.js" />
+    <None Include="wwwroot\Sbin\js\constant.js" />
+    <None Include="wwwroot\Sbin\js\main.js" />
+    <None Include="wwwroot\Sbin\js\profile.js" />
+    <None Include="wwwroot\Sbin\js\redeem-gift.js" />
+    <None Include="wwwroot\Sbin\js\support.js" />
+    <None Include="wwwroot\Sbin\js\validation.js" />
+    <None Include="wwwroot\Sbin\Login\css\responsive.css" />
+    <None Include="wwwroot\Sbin\Login\css\style.css" />
+    <None Include="wwwroot\Sbin\Login\js\main.js" />
+    <None Include="wwwroot\Sbin\Login\js\validation.js" />
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -48,6 +102,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DTKH2024.SbinSolution.Web.Core\DTKH2024.SbinSolution.Web.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Sbin\Login\particles\css\" />
+    <Folder Include="wwwroot\Sbin\Login\particles\js\lib\" />
   </ItemGroup>
 
 </Project>

@@ -23,5 +23,8 @@ namespace DTKH2024.SbinSolution.Brands
 
         Task RemoveLogoFile(EntityDto input);
 
+        Task<PagedResultDto<GetBrandForViewDto>> GetAllForClient(GetAllBrandsInput input);
+
+
     }
 }

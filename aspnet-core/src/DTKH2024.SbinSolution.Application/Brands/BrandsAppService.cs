@@ -221,5 +221,54 @@ namespace DTKH2024.SbinSolution.Brands
             brand.Logo = null;
         }
 
+        [AbpAllowAnonymous]
+        public virtual async Task<PagedResultDto<GetBrandForViewDto>> GetAllForClient(GetAllBrandsInput input)
+        {
+            var filteredBrands = _brandRepository.GetAll()
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), e => false || e.Name.Contains(input.Filter) || e.Description.Contains(input.Filter))
+                        .WhereIf(!string.IsNullOrWhiteSpace(input.NameFilter), e => e.Name.Contains(input.NameFilter));
+
+            var pagedAndFilteredBrands = filteredBrands
+                .OrderBy(input.Sorting ?? "id asc")
+                .PageBy(input);
+
+            var brands = from o in pagedAndFilteredBrands
+                         select new
+                         {
+
+                             o.Name,
+                             o.Description,
+                             o.Logo,
+                             Id = o.Id
+                         };
+
+            var totalCount = await filteredBrands.CountAsync();
+
+            var dbList = await brands.ToListAsync();
+            var results = new List<GetBrandForViewDto>();
+
+            foreach (var o in dbList)
+            {
+                var res = new GetBrandForViewDto()
+                {
+                    Brand = new BrandDto
+                    {
+
+                        Name = o.Name,
+                        Description = o.Description,
+                        Logo = o.Logo,
+                        Id = o.Id,
+                    }
+                };
+                res.Brand.LogoFileName = await GetBinaryFileName(o.Logo);
+
+                results.Add(res);
+            }
+
+            return new PagedResultDto<GetBrandForViewDto>(
+                totalCount,
+                results
+            );
+        }
     }
 }

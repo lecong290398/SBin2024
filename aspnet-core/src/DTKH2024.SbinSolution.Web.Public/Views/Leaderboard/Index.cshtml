@@ -1,0 +1,141 @@
+﻿<div id="leaderboard">
+    <div class="grid wide">
+        <h3 class="heading__h3">Top coin earners rank!</h3>
+        <div class="row">
+            <div class="col l-6 m-12 c-12">
+                <h1 class="heading-section"><i class="fa-solid fa-trophy"></i> LEADERBOARD</h1>
+            </div>
+            <div class="col l-6 m-12 c-12">
+                <div class="leaderboard_tabs">
+                    <ul class="tabs flex-center" id="myTab" role="tablist">
+                        <li class="tabs-item active">
+                            <a href="#alltime" class="tabs-link">All Time</a>
+                        </li>
+                        <!-- <li class="tabs-item">
+                            <a href="#week" class="tabs-link">Week</a>
+                        </li>
+                        <li class="tabs-item">
+                            <a href="#month" class="tabs-link">Month</a>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col l-6 m-12 c-12">
+                <div class="leaderboard_top_rank js-Top3">
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                <div class="skeleton skeleton-text skeleton-text__large"></div>
+                </div>
+            </div>
+            <div class="col l-6 m-12 c-12">
+                <div class="leaderboard_top_list">
+                    <ul class="top_list__list">
+                        <li class="top_list__list--header flex-center">
+                            <p class="top_list__place">Place</p>
+                            <p class="top_list__user-name">User</p>
+                            <p class="top_list__num-coin">RCL</p>
+                        </li>
+                        <div class="js-Leaderboard">
+                            <div class="skeleton skeleton-text skeleton-text__large"></div>
+                            <div class="skeleton skeleton-text skeleton-text__large"></div>
+                            <div class="skeleton skeleton-text skeleton-text__large"></div>
+                            <div class="skeleton skeleton-text skeleton-text__large"></div>
+                            <div class="skeleton skeleton-text skeleton-text__large"></div>
+                            <div class="skeleton skeleton-text skeleton-text__large"></div>
+                        </div>                       
+                    </ul>
+                    <!-- <a class="top_list__more" href="#">Load more</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Sbin/js/constant.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const appLeaderboard = {
+        api: API_ENDPOINTS.GET_TOP_CUSTOMERS,
+        render() {
+            $.ajax({
+                url: this.api,
+                type: 'GET',
+                success: function(response) {
+                    console.log(response)
+                    if (Array.isArray(response.result.items)) {
+                    let Top3User = "";
+                    let Leaderboard = "";
+
+                    response.result.items.forEach((content, index) => {
+                        const { username, positivePoint } = content.customer;
+                        const userImage = "../Sbin/assets/img/My.jpg";
+                        const coinImage = "../Sbin/assets/img/coin.png";
+
+                        if (index < 3) {
+                            const rankLabels = ["First 1", "Second 2", "Third 3"];
+                            const rankIcons = [
+                                "../Sbin/assets/img/rank/crown.svg",
+                                "../Sbin/assets/img/rank/cup.svg",
+                                "../Sbin/assets/img/rank/medal.svg"
+                            ];
+
+                            const elementNameTop3 = rankLabels[index];
+                            const rankIcon = rankIcons[index];
+
+                            Top3User += `
+                                <div class="flex-center top_ranking__item top-${index + 1}">
+                                    <div class="ranking_icon">
+                                        <img src="${rankIcon}">
+                                    </div>
+                                    <img class="ranking_user" src="${userImage}">
+                                    <div class="ranking__details">
+                                        <h6>${elementNameTop3}</h6>
+                                        <h5>${username}</h5>
+                                        <p>${positivePoint}G</p>
+                                    </div>
+                                    <div class="prize flex-center">
+                                        <h4>${positivePoint}</h4>
+                                        <div class="prize_gem">
+                                            <p>Prize</p>
+                                            <img class="coin" src="${coinImage}">
+                                        </div>
+                                    </div>
+                                </div>`;
+                        } else {
+                            Leaderboard += `
+                                <li class="top_list__item flex-center">
+                                    <p class="top_list__item--place">${index + 1}</p>
+                                    <div class="top_list__item--user-name flex-center">
+                                        <span style="background-image: url('${userImage}');" class="circle"></span>
+                                        <span>${username}</span>
+                                    </div>
+                                    <div class="top_list__item--num-coin flex-center">
+                                        <p>${positivePoint}</p>
+                                        <img class="coin" src="${coinImage}">
+                                    </div>
+                                </li>`;
+                        }
+                    });
+
+                    $('.js-Top3').html(Top3User);
+                    $('.js-Leaderboard').html(Leaderboard);
+                } else {
+                    console.error("Expected an array but got something else", response);
+                }
+
+
+                      $('.js-Top3').html(Top3User);
+                      $('.js-Leaderboard').html(Leaderboard);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Failed to fetch brands:", error);
+                }
+            });
+        },
+        start() {
+            this.render();
+        },
+    };
+    appLeaderboard.start();
+</script>

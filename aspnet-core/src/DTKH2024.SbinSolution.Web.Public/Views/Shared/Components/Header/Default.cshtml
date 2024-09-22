@@ -5,85 +5,37 @@
     var orderedMenuItems = Model.Menu.Items.OrderByCustom().ToList();
 }
 
-<div class="pre-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6 col-sm-6 additional-shop-info">
-                <ul class="list-unstyled list-inline">
-                    <li><i class="fa fa-phone"></i><span>+1 456 6717</span></li>
-                    <li><i class="fa fa-envelope-o"></i><span>info@mydomain.com</span></li>
-                </ul>
-            </div>
-            <div class="col-md-6 col-sm-6 additional-nav">
-                <ul class="list-unstyled list-inline pull-right">
-                    @if (Model.Languages.Count > 1)
-                    {
-                        <li>
-                            <div id="LanguageDropDown" class="btn-group dropdown">
-                                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-delay="1000" data-close-others="true"><i class="@Model.CurrentLanguage.Icon"></i> @Model.CurrentLanguage.DisplayName <i class="fa fa-angle-down"></i></button>
-                                <ul class="dropdown-menu" role="menu">
-                                    @foreach (var languageInfo in Model.Languages)
-                                    {
-                                        if (Model.CurrentLanguage.Name == languageInfo.Name)
-                                        {
-                                            continue;
-                                        }
 
-                                        <li class="language-menu-item">
-                                            <a href="@Url.Action("ChangeCulture", "AbpLocalization", new {
-                                                        area = "",
-                                                        cultureName = languageInfo.Name,
-                                                        returnUrl = Context.Request.Path + Context.Request.QueryString
-                                                    })">
-                                                <i class="@languageInfo.Icon"></i> <span>@languageInfo.DisplayName</span>
-                                            </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </div>
-                        </li>
-                    }
-                    @if (Model.LoginInformations?.User == null && Model.IsMultiTenancyEnabled && Model.TenantRegistrationEnabled && Model.IsInHostView)
-                    {
-                        <li>
-                            <a href="@(string.Format("{0}{1}", Model.AdminWebSiteRootAddress,"?redirect=TenantRegistration&forceNewRegistration=true"))">@L("NewTenant")</a>
-                        </li>
-                    }
-                    <li>
-                        @if (Model.LoginInformations?.User != null)
-                        {
-                            <div id="LanguageDropDown" class="btn-group dropdown">
-                                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" data-delay="1000" data-close-others="true">@Model.GetShownLoginName() <i class="fa fa-angle-down"></i></button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li class="language-menu-item">
-                                        <a href="@Url.Action("Logout", "Account")"><i class="icon-logout"></i> <span>@L("Logout")</span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        }
-                        else
-                        {
-                            <a href="@(string.Format("{0}{1}?ss={2}&returnUrl={3}", Model.AdminWebSiteRootAddress, "account/login", "true", Model.WebSiteRootAddress + "Account/Login"))">@L("LogIn")</a> <!-- TODO: get url from setting or Request. -->
-                        }
-                    </li>
-                </ul>
+<div class="grid wide">
+    <div class="header flex-center">
+        <div class="logo flex-center">
+            <a href="@Url.Action("Index", "Home")"><img src="~/Sbin/assets/img/logo.png"></a><a href="/">SBin</a>
+        </div>
+        <nav class="navbar hide-on-tablet-mobile">
+            <ul class="navbar__list flex-center">
+                <li class="navbar__item"><a class="navbar__link" href="@Url.Action("Index", "Leaderboard")">Leaderboard</a></li>
+                <li class="navbar__item"><a class="navbar__link" href="@Url.Action("Index", "Support")">Support</a></li>
+                <li class="navbar__item"><a class="navbar__link" href="@Url.Action("Index", "About")">About</a></li>
+            </ul>
+        </nav>
+        <div class="user-info flex-center">
+            <div class="navbar__coin-reward__total">
+                <a class="flex-center" href="@(string.Format("{0}{1}?ss={2}&returnUrl={3}", Model.AdminWebSiteRootAddress, "account/login", "true", Model.WebSiteRootAddress + "Account/Login"))"><i class="fa-solid fa-user"></i><span>@L("LogIn")</span></a>
             </div>
         </div>
-    </div>
-</div>
-<div class="header">
-    <div class="container">
-        <a class="site-logo" href="@Url.Action("Index", "Home")">
-            <img src="@Model.GetLogoUrl(ApplicationPath, Model.LogoSkin)" alt="" height="38" />
-        </a>
-        <a href="javascript:void(0);" class="mobi-toggler"><i class="fa fa-bars" aria-label="@L("Toggle")"></i></a>
-        <div class="header-navigation pull-right font-transform-inherit">
+        <label class="menu-mobile__btn hide-on-pc" for="menu-mobile">
+            <i class="fa-solid fa-bars"></i>
+        </label>
+        <input class="menu-input" type="checkbox" hidden id="menu-mobile">
+        <label for="menu-mobile" class="overlay"></label>
+        <div class="menu-mobile">
             <ul>
-                @foreach (var menuItem in orderedMenuItems)
-                {
-                    @await Html.PartialAsync("Components/Header/_HeaderMenuItem", new HeaderMenuItemViewModel(menuItem, 0, Model.CurrentPageName))
-                }
+                <li><a href="@Url.Action("Index", "Leaderboard")">Leaderboard</a></li>
+                <li><a href="@Url.Action("Index", "Support")">Support</a></li>
+                <li><a href="@Url.Action("Index", "About")">About</a></li>
             </ul>
         </div>
     </div>
 </div>
+
+

@@ -1,0 +1,25 @@
+﻿@using Abp.Timing
+<footer id="footer">
+    <div class="grid wide">
+        <div class="footer__privacy flex-center">
+            <div class="logo">
+                <a href="/"><img src="~/Sbin/assets/img/logo.png"></a>
+            </div>
+            <div class="footer__privacy--list flex-center">
+                <span class="footer__privacy--item"><a href="@Url.Action("Index", "About")">About</a></span>
+                <span class="footer__privacy--item"><a href="@Url.Action("PrivacyPolicy", "Home")">Privacy Policy</a></span>
+                <span class="footer__privacy--item"><a href="@Url.Action("TermAndService", "Home")">Term & Service</a></span>
+                <span class="footer__privacy--item"><a href="@Url.Action("BugBunty", "Home")">Bug Bounty</a></span>
+            </div>
+        </div>
+        <div class="footer__social flex-center">
+            <div class="footer__copyright">
+                @Clock.Now.Year © SBinSolution. ALL Rights Reserved.
+            </div>
+            <div class="footer__social-media">
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                <a href="https://www.facebook.com/SBinEcoSmart/"><i class="fa-brands fa-facebook"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>

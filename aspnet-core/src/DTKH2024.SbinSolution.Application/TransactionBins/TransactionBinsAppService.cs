@@ -20,6 +20,7 @@ using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using DTKH2024.SbinSolution.Storage;
 using Abp.Runtime.Session;
+using DTKH2024.SbinSolution.Extension;
 
 namespace DTKH2024.SbinSolution.TransactionBins
 {
@@ -32,8 +33,11 @@ namespace DTKH2024.SbinSolution.TransactionBins
         private readonly IRepository<User, long> _lookup_userRepository;
         private readonly IRepository<TransactionStatus, int> _lookup_transactionStatusRepository;
         private readonly IAbpSession _abpSession;
+        private readonly IRepository<Device> _deviceRepository;
 
-        public TransactionBinsAppService(IRepository<TransactionBin> transactionBinRepository, IAbpSession abpSession, ITransactionBinsExcelExporter transactionBinsExcelExporter, IRepository<Device, int> lookup_deviceRepository, IRepository<User, long> lookup_userRepository, IRepository<TransactionStatus, int> lookup_transactionStatusRepository)
+        public TransactionBinsAppService(IRepository<TransactionBin> transactionBinRepository, IAbpSession abpSession, ITransactionBinsExcelExporter transactionBinsExcelExporter
+            , IRepository<Device, int> lookup_deviceRepository, IRepository<User, long> lookup_userRepository
+            , IRepository<TransactionStatus, int> lookup_transactionStatusRepository, IRepository<Device> deviceRepository)
         {
             _transactionBinRepository = transactionBinRepository;
             _transactionBinsExcelExporter = transactionBinsExcelExporter;
@@ -41,7 +45,7 @@ namespace DTKH2024.SbinSolution.TransactionBins
             _lookup_userRepository = lookup_userRepository;
             _lookup_transactionStatusRepository = lookup_transactionStatusRepository;
             _abpSession = abpSession ?? NullAbpSession.Instance;
-
+            _deviceRepository = deviceRepository;
         }
 
         public virtual async Task<PagedResultDto<GetTransactionBinForViewDto>> GetAll(GetAllTransactionBinsInput input)
@@ -335,6 +339,32 @@ namespace DTKH2024.SbinSolution.TransactionBins
                     DisplayName = transactionStatus == null || transactionStatus.Name == null ? "" : transactionStatus.Name.ToString()
                 }).ToListAsync();
         }
-
+        [AbpAuthorize(AppPermissions.Pages_AdministrationDevice_TransactionBins_Create)]
+        public virtual async Task<string> CreateDevice_TransactionBins(CreateTransactionDeviceBinDto input)
+        {
+            // Check DeviceId
+            var device = await _deviceRepository.GetAsync(input.DeviceId);
+            if (device is null)
+            {
+                throw new UserFriendlyException("Device Not Found !");
+            }
+            // Create transaction bin
+            var inputCreate = new CreateOrEditTransactionBinDto();
+            // Calculate point
+            inputCreate.MetalPoint = input.MetalQuantity * device.MetalPoint;
+            inputCreate.PlastisPoint = input.PlastisQuantity * device.PlastisPoint;
+            inputCreate.ErrorPoint = input.OrtherQuantity * device.ErrorPoint;
+            inputCreate.DeviceId = input.DeviceId;
+            // Set transaction status wait
+            inputCreate.TransactionStatusId = AppConsts.TransactionStatusIdWait;
+            inputCreate.UserId = device.UserId;
+            var transactionBin = ObjectMapper.Map<TransactionBin>(inputCreate);
+            // Create transaction code
+            transactionBin.TransactionCode = AppConsts.getCodeRandom(AppConsts.keyPerfixTransactionBins);
+            var transactionBinID = await _transactionBinRepository.InsertAndGetIdAsync(transactionBin);
+            // Encrypt transaction code
+            var dataQR = StringEncryption.Encrypt(transactionBin.TransactionCode);
+            return dataQR;
+        }
     }
 }

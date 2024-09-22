@@ -28,5 +28,7 @@ namespace DTKH2024.SbinSolution.TransactionBins
 
         Task<List<TransactionBinTransactionStatusLookupTableDto>> GetAllTransactionStatusForTableDropdown();
 
+        Task<string> CreateDevice_TransactionBins(CreateTransactionDeviceBinDto input);
+
     }
 }

@@ -289,37 +289,46 @@ namespace DTKH2024.SbinSolution.RedeemGifts
         {
             try
             {
+                // Check user login
                 var userId = _abpSession.UserId ?? throw new UserFriendlyException("You are not logged in to the system.");
                 var userCurrent = await UserManager.FindByIdAsync(userId.ToString());
                 if (userCurrent is null)
                 {
                     throw new UserFriendlyException(L("UserNotFound"));
                 }
-
+                // Get product promotion
                 var productPromotion = await _productPromotionRepository.FirstOrDefaultAsync(productPromotionId)
                     ?? throw new UserFriendlyException("Product promotion not found.");
 
+                if (!(userCurrent.Point >= productPromotion.Point))
+                {
+                    throw new UserFriendlyException("Not enough points to redeem");
+                }
+                // Check quantity
                 if (productPromotion.QuantityCurrent >= productPromotion.QuantityInStock)
                 {
                     throw new UserFriendlyException("Gift out of stock");
                 }
+                // Check expired
                 if (productPromotion.EndDate < DateTime.Now)
                 {
                     throw new UserFriendlyException("Gift expired");
                 }
-
+                // Get history type
                 var historyType = await _historyTypeRepository.FirstOrDefaultAsync(AppConsts.HistoryType_DoiQua)
                     ?? throw new UserFriendlyException("An error occurred, please try again later.");
-
+                // Create WareHouseGift
                 var wareHouseGift = new WareHouseGift
                 {
                     ProductPromotionId = productPromotion.Id,
                     UserId = userId,
-                    Code = AppConsts.getCodeRandom(AppConsts.keyPerfixWareHouseGift)
+                    Code = AppConsts.getCodeRandom(AppConsts.keyPerfixWareHouseGift) // Generate code
                 };
+                // Insert WareHouseGift
                 var wareHouseGiftId = await _wareHouseGiftRepository.InsertAndGetIdAsync(wareHouseGift).ConfigureAwait(false);
                 if (wareHouseGiftId != 0)
                 {
+                    // Insert OrderHistory
                     var orderHistory = new OrderHistory
                     {
                         Description = historyType.Name,
@@ -329,19 +338,13 @@ namespace DTKH2024.SbinSolution.RedeemGifts
                         HistoryTypeId = historyType.Id
                     };
                     await _orderHistoryRepository.InsertAsync(orderHistory);
-
+                    // Update point
                     productPromotion.QuantityCurrent += 1;
                     await _productPromotionRepository.UpdateAsync(productPromotion);
-
-                    if (userCurrent.Point >= productPromotion.Point)
-                    {
-                        userCurrent.Point -= productPromotion.Point;
-                        userCurrent.PositivePoint += productPromotion.Point;
-                        await UserManager.UpdateAsync(userCurrent);
-                    }else
-                    {
-                        throw new UserFriendlyException("Not enough points to redeem");
-                    }
+                    // Update point
+                    userCurrent.Point -= productPromotion.Point;
+                    userCurrent.PositivePoint += productPromotion.Point;
+                    await UserManager.UpdateAsync(userCurrent);
                 }
             }
             catch (Exception ex)

@@ -62,6 +62,9 @@ namespace DTKH2024.SbinSolution
         public const string keyPerfixWareHouseGift = "WHG.";
         public const string keyPerfixProductPromotion = "PMO_";
         public const string keyPerfixTransactionBins = "SB.";
+        public const int TransactionStatusIdSuccess = 1;
+        public const int TransactionStatusIdFail = 2;
+        public const int TransactionStatusIdWait = 3;
 
 
     }

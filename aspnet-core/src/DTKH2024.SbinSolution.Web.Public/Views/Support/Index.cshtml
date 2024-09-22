@@ -1,0 +1,158 @@
+﻿<div id="support">
+    <div class="grid wide">
+        <h3 class="heading__h3">Support</h3>
+        <div class="flex-center" style="justify-content: space-between; flex-wrap: wrap;">
+            <h1 class="heading-section">Frequently Asked Questions</h1>
+            <a class="btn" href="@Url.Action("CreateTicket", "Support")">Create Ticket</a>
+        </div>
+    </div>
+    <div id="faq" class="grid wide">
+        <div class="wrapper">
+            <button class="toggle">
+                What does your website do?
+                <i class="fas fa-plus icon"></i>
+            </button>
+            <div class="content" onclick="openImgModal(this)">
+                <p>Our website helps users earn reward codes by using coins. Users can earn coins by going to an S-Bin trash can, disposing of trash, and scanning a code that appears afterwards.</p>
+                <img src="~/Sbin/assets/img/background/example.png" alt="User scanning code at S-Bin" class="image">
+            </div>
+        </div>
+    
+        <div class="wrapper">
+            <button class="toggle">
+                How do I earn coins on your website?
+                <i class="fas fa-plus icon"></i>
+            </button>
+            <div class="content" onclick="openImgModal(this)">
+                <p>To earn coins, users need to go to an S-Bin trash can, dispose of trash, and scan the code that appears after disposal. Each successful scan rewards a certain amount of coins.</p>
+                <img src="~/Sbin/assets/img/background/example.png" alt="Coins earned" class="image">
+            </div>
+        </div>
+    
+        <div class="wrapper">
+            <button class="toggle">
+                What can I use coins for?
+                <i class="fas fa-plus icon"></i>
+            </button>
+            <div class="content" onclick="openImgModal(this)">
+                <p>Coins you earn can be used to redeem reward codes on our website. These codes can be for discounts, gifts, or other exciting rewards.</p>
+                <img src="~/Sbin/assets/img/background/example.png" alt="Redeem rewards" class="image">
+            </div>
+        </div>
+    
+        <div class="wrapper">
+            <button class="toggle">
+                What do I need to start using the service?
+                <i class="fas fa-plus icon"></i>
+            </button>
+            <div class="content" onclick="openImgModal(this)">
+                <p>You just need to register an account on our website. Then you can go to the nearest S-Bin trash cans to start earning coins.</p>
+                <img src="~/Sbin/assets/img/background/example.png" alt="User registration" class="image">
+            </div>
+        </div>
+    
+        <div class="wrapper">
+            <button class="toggle">
+                How many coins can I earn per scan?
+                <i class="fas fa-plus icon"></i>
+            </button>
+            <div class="content" onclick="openImgModal(this)">
+                <p>The number of coins you earn per scan may vary depending on the type of trash and our current policies. Details will be updated on the website.</p>
+                <img src="~/Sbin/assets/img/background/example.png" alt="Coins per scan" class="image">
+            </div>
+        </div>
+    
+        <div class="wrapper">
+            <button class="toggle">
+                Can I scan codes from S-Bin trash cans anywhere?
+                <i class="fas fa-plus icon"></i>
+            </button>
+            <div class="content" onclick="openImgModal(this)">
+                <p>You can scan codes from S-Bin trash cans supported by our system. Please check the list of supported locations on our website.</p>
+                <img src="~/Sbin/assets/img/background/example.png" alt="Supported locations" class="image">
+            </div>
+        </div>
+    
+        <div class="wrapper">
+            <button class="toggle">
+                How do I recognize an S-Bin trash can?
+                <i class="fas fa-plus icon"></i>
+            </button>
+            <div class="content" onclick="openImgModal(this)">
+                <p>S-Bin trash cans will have a specific label and instructions on how to scan the code after disposing of trash. You can find detailed information and illustrations on our website.</p>
+                <img src="~/Sbin/assets/img/background/example.png" alt="S-Bin trash can" class="image">
+            </div>
+        </div>
+    
+        <div class="wrapper">
+            <button class="toggle">
+                What should I do if the code scan fails?
+                <i class="fas fa-plus icon"></i>
+            </button>
+            <div class="content" onclick="openImgModal(this)">
+                <p>If you encounter an issue while scanning the code, please check your internet connection and ensure you followed the instructions correctly. If the problem persists, please contact our customer support for assistance.</p>
+                <img src="~/Sbin/assets/img/background/example.png" alt="Scan fail support" class="image">
+            </div>
+        </div>
+    
+        <div class="wrapper">
+            <button class="toggle">
+                Is there a limit on the number of scans per day?
+                <i class="fas fa-plus icon"></i>
+            </button>
+            <div class="content" onclick="openImgModal(this)">
+                <p>There may be a limit on the number of scans per day to ensure fairness and sustainability of the system. Please check our website for more details.</p>
+                <img src="~/Sbin/assets/img/background/example.png" alt="Daily scan limit" class="image">
+            </div>
+        </div>
+    
+        <div class="wrapper">
+            <button class="toggle">
+                How do I redeem rewards with the coins I've earned?
+                <i class="fas fa-plus icon"></i>
+            </button>
+            <div class="content" onclick="openImgModal(this)">
+                <p>Once you've accumulated enough coins, you can go to the "Redeem Rewards" section on our website, select your desired reward, and follow the steps to redeem it.</p>
+                <img src="~/Sbin/assets/img/background/example.png" alt="Redeem process" class="image">
+            </div>
+        </div>
+    </div>
+    <div class="grid wide">
+        <h1 class="heading-section">Support System</h1>
+        
+        <div class="card blank_notification">
+            <div class="card-header">
+                <h3 class="heading__h3">Your Ticket Notification</h3>
+                <a href="#" class="clear_notification text-warning">Clear All Notifications</a>
+            </div>
+            <div class="card-body">
+                <p>Oops, sorry, there are no notifications to show.</p>
+            </div>
+        </div>
+    
+        <div class="card create_ticket">
+            <div class="card-header">
+                <h3 class="heading__h3">Your Ticket</h3>
+            </div>
+            <div class="card-body">
+                <p>You have no tickets yet! Create one by hitting the <a href="@Url.Action("CreateTicket", "Support")" class="text-primary">Create Button</a>.</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal js-ModalImg">
+    <div class="modal__overlay" onclick="closeImgModal()"></div>
+    <div class="modal__body">
+        <div class="img__modal">
+            <img style="height: 600px; transition: .3s;" class="js-img" src="">
+            <div class="zoomable">
+                <button><i class="zoom-tran-left fa-solid fa-angle-left"></i></button>
+                <button><i class="zoom-up fa-solid fa-plus"></i></button>
+                <button><i class="zoom-down fa-solid fa-minus"></i></button>
+                <button><i class="zoom-tran-right fa-solid fa-angle-right"></i></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Sbin/js/support.js"></script>

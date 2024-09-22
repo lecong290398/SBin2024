@@ -1,201 +1,141 @@
-﻿@using System.Threading.Tasks
-@using DTKH2024.SbinSolution.Web.Public.Startup
-@{
-    ViewBag.CurrentPageName = FrontEndPageNames.About;
-}
-<!-- BEGIN SIDEBAR & CONTENT -->
-<div class="row margin-bottom-40">
-    <!-- BEGIN CONTENT -->
-    <div class="col-md-12 col-sm-12">
-        <h1>@L("AboutUs")</h1>
-        <div class="content-page">
-            <div class="row margin-bottom-30">
-                <!-- BEGIN INFO BLOCK -->
-                <div class="col-md-7">
-                    <h2 class="no-top-space">Vero eos et accusamus</h2>
-                    <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi.</p>
-                    <p>Idest laborum et dolorum fuga. Et harum quidem rerum et quas molestias excepturi sint occaecati facilis est et expedita distinctio lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non libero consectetur adipiscing elit magna. Sed et quam lacus.</p>
-                    <!-- BEGIN LISTS -->
-                    <div class="row front-lists-v1">
-                        <div class="col-md-6">
-                            <ul class="list-unstyled margin-bottom-20">
-                                <li><i class="fa fa-check"></i> Officia deserunt molliti</li>
-                                <li><i class="fa fa-check"></i> Consectetur adipiscing </li>
-                                <li><i class="fa fa-check"></i> Deserunt fpicia</li>
-                            </ul>
-                        </div>
-                        <div class="col-md-6">
-                            <ul class="list-unstyled">
-                                <li><i class="fa fa-check"></i> Officia deserunt molliti</li>
-                                <li><i class="fa fa-check"></i> Consectetur adipiscing </li>
-                                <li><i class="fa fa-check"></i> Deserunt fpicia</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <!-- END LISTS -->
-                </div>
-                <!-- END INFO BLOCK -->
-                <!-- BEGIN CAROUSEL -->
-                <div class="col-mb-5 front-carousel">
-                    <div id="myCarousel" class="carousel slide">
-                        <!-- Carousel items -->
-                        <div class="carousel-inner">
-                            <div class="item active">
-                                <img src="~/metronic/assets/frontend/pages/img/pics/img2-medium.jpg" alt="">
-                                <div class="carousel-caption">
-                                    <p>Excepturi sint occaecati cupiditate non provident</p>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <img src="~/metronic/assets/frontend/pages/img/pics/img1-medium.jpg" alt="">
-                                <div class="carousel-caption">
-                                    <p>Ducimus qui blanditiis praesentium voluptatum</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Carousel nav -->
-                        <a class="carousel-control left" href="#myCarousel" data-slide="prev">
-                            <i class="fa fa-angle-left" aria-label="@L("Left")"></i>
-                        </a>
-                        <a class="carousel-control right" href="#myCarousel" data-slide="next">
-                            <i class="fa fa-angle-right" aria-label="@L("Right")"></i>
-                        </a>
-                    </div>
-                </div>
-                <!-- END CAROUSEL -->
-            </div>
-            <div class="row margin-bottom-40">
-                <!-- BEGIN TESTIMONIALS -->
-                <div class="col-md-7 testimonials-v1">
-                    <h2>Clients Testimonials</h2>
-                    <div id="myCarousel1" class="carousel slide">
-                        <!-- Carousel items -->
-                        <div class="carousel-inner">
-                            <div class="active item">
-                                <blockquote><p>Denim you probably haven't heard of. Lorem ipsum dolor met consectetur adipisicing sit amet, consectetur adipisicing elit, of them jean shorts sed magna aliqua. Lorem ipsum dolor met consectetur adipisicing sit amet do eiusmod dolore.</p></blockquote>
-                                <div class="carousel-info">
-                                    <img class="pull-left" src="~/metronic/assets/frontend/pages/img/people/img1-small.jpg" alt="">
-                                    <div class="pull-left">
-                                        <span class="testimonials-name">Lina Mars</span>
-                                        <span class="testimonials-post">Commercial Director</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <blockquote><p>Raw denim you Mustache cliche tempor, williamsburg carles vegan helvetica probably haven't heard of them jean shorts austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.</p></blockquote>
-                                <div class="carousel-info">
-                                    <img class="pull-left" src="~/metronic/assets/frontend/pages/img/people/img5-small.jpg" alt="">
-                                    <div class="pull-left">
-                                        <span class="testimonials-name">Kate Ford</span>
-                                        <span class="testimonials-post">Commercial Director</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="item">
-                                <blockquote><p>Reprehenderit butcher stache cliche tempor, williamsburg carles vegan helvetica.retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid Aliquip placeat salvia cillum iphone.</p></blockquote>
-                                <div class="carousel-info">
-                                    <img class="pull-left" src="~/metronic/assets/frontend/pages/img/people/img2-small.jpg" alt="">
-                                    <div class="pull-left">
-                                        <span class="testimonials-name">Jake Witson</span>
-                                        <span class="testimonials-post">Commercial Director</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Carousel nav -->
-                        <a class="left-btn" href="#myCarousel1" data-slide="prev"></a>
-                        <a class="right-btn" href="#myCarousel1" data-slide="next"></a>
-                    </div>
-                </div>
-                <!-- END TESTIMONIALS -->
-                <!-- BEGIN PROGRESS BAR -->
-                <div class="col-mb-5 front-skills">
-                    <h2 class="block">Our Skills</h2>
-                    <span>UI Design 90%</span>
-                    <div class="progress">
-                        <div role="progressbar" class="progress-bar" style="width: 90%;"></div>
-                    </div>
-                    <span>Wordpress CMS 60%</span>
-                    <div class="progress">
-                        <div role="progressbar" class="progress-bar" style="width: 60%;"></div>
-                    </div>
-                    <span>HTML/CSS &amp; JavaScirp 75%</span>
-                    <div class="progress">
-                        <div role="progressbar" class="progress-bar" style="width: 75%;"></div>
-                    </div>
-                </div>
-                <!-- END PROGRESS BAR -->
-            </div>
-            <div class="row front-team">
-                <ul class="list-unstyled">
-                    <li class="col-md-3">
-                        <div class="thumbnail">
-                            <img alt="" src="~/metronic/assets/frontend/pages/img/people/img1-large.jpg">
-                            <h3>
-                                <strong>Lina Doe</strong>
-                                <small>Chief Executive Officer / CEO</small>
-                            </h3>
-                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem...</p>
-                            <ul class="social-icons social-icons-color">
-                                <li><a class="facebook" data-original-title="Facebook" href="javascript:;"></a></li>
-                                <li><a class="twitter" data-original-title="Twitter" href="javascript:;"></a></li>
-                                <li><a class="googleplus" data-original-title="Goole Plus" href="javascript:;"></a></li>
-                                <li><a class="linkedin" data-original-title="Linkedin" href="javascript:;"></a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="col-md-3">
-                        <div class="thumbnail">
-                            <img alt="" src="~/metronic/assets/frontend/pages/img/people/img4-large.jpg">
-                            <h3>
-                                <strong>Carles Puyol</strong>
-                                <small>Chief Executive Officer / CEO</small>
-                            </h3>
-                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem...</p>
-                            <ul class="social-icons social-icons-color">
-                                <li><a class="facebook" data-original-title="Facebook" href="javascript:;"></a></li>
-                                <li><a class="twitter" data-original-title="Twitter" href="javascript:;"></a></li>
-                                <li><a class="googleplus" data-original-title="Goole Plus" href="javascript:;"></a></li>
-                                <li><a class="linkedin" data-original-title="Linkedin" href="javascript:;"></a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="col-md-3">
-                        <div class="thumbnail">
-                            <img alt="" src="~/metronic/assets/frontend/pages/img/people/img2-large.jpg">
-                            <h3>
-                                <strong>Andres Iniesta</strong>
-                                <small>Chief Executive Officer / CEO</small>
-                            </h3>
-                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem...</p>
-                            <ul class="social-icons social-icons-color">
-                                <li><a class="facebook" data-original-title="Facebook" href="javascript:;"></a></li>
-                                <li><a class="twitter" data-original-title="Twitter" href="javascript:;"></a></li>
-                                <li><a class="googleplus" data-original-title="Goole Plus" href="javascript:;"></a></li>
-                                <li><a class="linkedin" data-original-title="Linkedin" href="javascript:;"></a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li class="col-md-3">
-                        <div class="thumbnail">
-                            <img alt="" src="~/metronic/assets/frontend/pages/img/people/img5-large.jpg">
-                            <h3>
-                                <strong>Jessica Alba</strong>
-                                <small>Chief Executive Officer / CEO</small>
-                            </h3>
-                            <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, justo sit amet risus etiam porta sem...</p>
-                            <ul class="social-icons social-icons-color">
-                                <li><a class="facebook" data-original-title="Facebook" href="javascript:;"></a></li>
-                                <li><a class="twitter" data-original-title="Twitter" href="javascript:;"></a></li>
-                                <li><a class="googleplus" data-original-title="Goole Plus" href="javascript:;"></a></li>
-                                <li><a class="linkedin" data-original-title="Linkedin" href="javascript:;"></a></li>
-                            </ul>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+﻿   
+<link rel="stylesheet" href="~/Sbin/assets/css/timeline.min.css"></link> 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<div id="about">
+    <div class="grid wide">
+        <h2 class="heading__h3">
+            About Us</h3>
+            <h1 class="heading__h1">Who we are</h1>
     </div>
-    <!-- END CONTENT -->
+    <div class="grid wide essay">
+        <h3 class="heading__h3">OUR VISION</h3>
+        <p class="paragraph">At S-Bin, our team of dedicated engineers is the driving force behind our innovative waste sorting and QR code reward system. Our engineers come from diverse backgrounds in environmental science, mechanical engineering, and computer science, bringing a wealth of knowledge and expertise to the table. They are passionate about sustainability and committed to creating cutting-edge technology that simplifies recycling and promotes environmental responsibility. Through rigorous research and development, our engineers have designed the S-Bin to be both user-friendly and highly efficient, ensuring that it meets the highest standards of performance and reliability. Their unwavering dedication to excellence and innovation is what sets S-Bin apart as a leader in waste management solutions. Join us in applauding the brilliant minds behind S-Bin, who are making a significant impact on our journey towards a cleaner, greener future.</p>
+        <h3 class="heading__h3">OUR PRODUCT</h3>
+        <p class="paragraph">Introducing our state-of-the-art electronic waste bin, the S-Bin E-Core, revolutionizing waste management with its cutting-edge features. The S-Bin E-Core is more than just a receptacle; it's a sophisticated system designed to streamline recycling efforts while incentivizing environmentally conscious behavior. Equipped with advanced sensors and sorting technology, the S-Bin E-Core automatically categorizes recyclable materials upon disposal, ensuring efficient waste segregation. What sets the S-Bin E-Core apart is its seamless integration of QR code scanning functionality. Users can simply scan the QR code on the bin using their smartphones to earn reward points for their eco-friendly actions. These points can then be redeemed for a variety of rewards, motivating individuals to actively participate in recycling initiatives. With the S-Bin E-Core, sustainability meets convenience, making it the ultimate solution for modern waste management needs.</p>
+    </div>
+    <div class="grid wide">
+        <section class="cd-horizontal-timeline">
+            <div class="timeline">
+                <div class="events-wrapper">
+                    <div class="events">
+                        <ol>
+                            <li><a href="#0" data-date="16/01/2024" class="selected">16 Jan</a></li>
+                            <li><a href="#0" data-date="28/02/2024">28 Feb</a></li>
+                            <li><a href="#0" data-date="20/04/2024">20 Mar</a></li>
+                            <li><a href="#0" data-date="20/05/2024">20 May</a></li>
+                            <li><a href="#0" data-date="09/07/2024">09 Jul</a></li>
+                            <li><a href="#0" data-date="30/08/2024">30 Aug</a></li>
+                            <li><a href="#0" data-date="15/09/2024">15 Sep</a></li>
+                            <li><a href="#0" data-date="01/11/2024">01 Nov</a></li>
+                            <li><a href="#0" data-date="10/12/2024">10 Dec</a></li>
+                            <li><a href="#0" data-date="19/01/2025">29 Jan</a></li>
+                            <li><a href="#0" data-date="03/03/2025">3 Mar</a></li>
+                        </ol>
+
+                        <span class="filling-line" aria-hidden="true"></span>
+                    </div> <!-- .events -->
+                </div> <!-- .events-wrapper -->
+
+                <ul class="cd-timeline-navigation">
+                    <li><a href="#0" class="prev inactive">Prev</a></li>
+                    <li><a href="#0" class="next">Next</a></li>
+                </ul> <!-- .cd-timeline-navigation -->
+            </div> <!-- .timeline -->
+
+            <div class="events-content">
+                <ol>
+                    <li class="selected" data-date="16/01/2024">
+                        <h2>The Idea</h2>
+                        <em>January 16th, 2024</em>
+                        <p>
+                            This phase began with our recognition of the significant problem of waste management and the adverse effects of unmanaged waste on the environment. From initial rough ideas, we began researching and developing the concept of a smart trash bin.
+                        </p>
+                    </li>
+
+                    <li data-date="28/02/2024">
+                        <h2>Development starts</h2>
+                        <em>February 28th, 2024</em>
+                        <p>
+                            Subsequently, through research and discussion, we identified the necessary features for a smart trash bin, including automatic waste sorting and notification when full. We spent time analyzing modern technologies such as sensors, machine learning, and IoT to apply them to creating an efficient operational system.
+                        </p>
+                    </li>
+
+                    <li data-date="20/04/2024">
+                        <h2>Under Devloperment</h2>
+                        <em>March 20th, 2024</em>
+                        <p>
+                            After outlining the basic concept, we started programming and testing the necessary software and hardware for the smart trash bin. Through iterative testing and refinement, we fine-tuned and perfected the product to ensure the highest stability and performance.
+                        </p>
+                    </li>
+
+                    <li data-date="20/05/2024">
+                        <h2>Website launches</h2>
+                        <em>May 20th, 2024</em>
+                        <p>
+                            Simultaneously, we developed a user-facing website accessible to the public. This platform provided users with information about the smart trash bins, their locations, and guidelines for proper waste disposal. Users could also access real-time data on bin availability and capacity, enabling them to make informed decisions when disposing of their waste.
+                        </p>
+                    </li>
+
+                    <li data-date="09/07/2024">
+                        <h2>The future of S-Bin</h2>
+                        <em>July 9th, 2024</em>
+                        <p>
+                            Finally, with the completed product, we integrated the smart trash bin into the scientific and technical project, aiming to provide practical benefits and solve the waste management problem effectively. Simultaneously, we also set the goal of developing and deploying widespread applications of this product, from urban areas to public spaces and industrial zones, to create a cleaner and more sustainable living environment.
+                        </p>
+                    </li>
+
+                    <li data-date="30/08/2024">
+                        <h2>Coming Soon...</h2>
+                        <em>August 30th, 2024</em>
+                        <p>
+                            In the upcoming period, we intend to implement several updates to our project. These updates will encompass various aspects, including enhancements to the functionality of the smart trash bin system, improvements to the user interfaces, and optimizations for administrative operations.
+                        </p>
+                    </li>
+
+                    <li data-date="15/09/2024">
+                        <h2>Coming Soon...</h2>
+                        <em>September 15th, 2024</em>
+                        <p>
+                            In the upcoming period, we intend to implement several updates to our project. These updates will encompass various aspects, including enhancements to the functionality of the smart trash bin system, improvements to the user interfaces, and optimizations for administrative operations.
+                        </p>
+                    </li>
+
+                    <li data-date="01/11/2024">
+                        <h2>Coming Soon...</h2>
+                        <em>November 1st, 2024</em>
+                        <p>
+                            In the upcoming period, we intend to implement several updates to our project. These updates will encompass various aspects, including enhancements to the functionality of the smart trash bin system, improvements to the user interfaces, and optimizations for administrative operations.
+                        </p>
+                    </li>
+
+                    <li data-date="10/12/2024">
+                        <h2>Coming Soon...</h2>
+                        <em>December 10th, 2024</em>
+                        <p>
+                            In the upcoming period, we intend to implement several updates to our project. These updates will encompass various aspects, including enhancements to the functionality of the smart trash bin system, improvements to the user interfaces, and optimizations for administrative operations.
+                        </p>
+                    </li>
+
+                    <li data-date="19/01/2025">
+                        <h2>Coming Soon...</h2>
+                        <em>January 19th, 2025</em>
+                        <p>
+                            In the upcoming period, we intend to implement several updates to our project. These updates will encompass various aspects, including enhancements to the functionality of the smart trash bin system, improvements to the user interfaces, and optimizations for administrative operations.
+                        </p>
+                    </li>
+
+                    <li data-date="03/03/2025">
+                        <h2>Coming Soon...</h2>
+                        <em>March 3rd, 2025</em>
+                        <p>
+                            In the upcoming period, we intend to implement several updates to our project. These updates will encompass various aspects, including enhancements to the functionality of the smart trash bin system, improvements to the user interfaces, and optimizations for administrative operations.
+                        </p>
+                    </li>
+                </ol>
+            </div> <!-- .events-content -->
+        </section>
+    </div>
 </div>
-<!-- END SIDEBAR & CONTENT -->
+
+<script src="~/Sbin/js/about.js"></script>

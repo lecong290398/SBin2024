@@ -1,0 +1,133 @@
+﻿<div id="shop">
+    <div class="grid wide">
+        <h3 class="heading__h3">Shop</h3>
+        <h1 class="heading-section">Shop Gift Card</h1>
+        <div class="row js-shop">
+            <div class="col l-2-4 m-4 c-6 ">
+                <div class="brand-product">
+                    <div class="brand-product__img">
+                        <div style="padding: 110px 0;"></div>
+                        <a class="btn" href="#"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-2-4 m-4 c-6 ">
+                <div class="brand-product">
+                    <div class="brand-product__img">
+                        <div style="padding: 110px 0;"></div>
+                        <a class="btn" href="#"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-2-4 m-4 c-6 ">
+                <div class="brand-product">
+                    <div class="brand-product__img">
+                        <div style="padding: 110px 0;"></div>
+                        <a class="btn" href="#"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-2-4 m-4 c-6 ">
+                <div class="brand-product">
+                    <div class="brand-product__img">
+                        <div style="padding: 110px 0;"></div>
+                        <a class="btn" href="#"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-2-4 m-4 c-6 ">
+                <div class="brand-product">
+                    <div class="brand-product__img">
+                        <div style="padding: 110px 0;"></div>
+                        <a class="btn" href="#"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-2-4 m-4 c-6 ">
+                <div class="brand-product">
+                    <div class="brand-product__img">
+                        <div style="padding: 110px 0;"></div>
+                        <a class="btn" href="#"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-2-4 m-4 c-6 ">
+                <div class="brand-product">
+                    <div class="brand-product__img">
+                        <div style="padding: 110px 0;"></div>
+                        <a class="btn" href="#"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-2-4 m-4 c-6 ">
+                <div class="brand-product">
+                    <div class="brand-product__img">
+                        <div style="padding: 110px 0;"></div>
+                        <a class="btn" href="#"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-2-4 m-4 c-6 ">
+                <div class="brand-product">
+                    <div class="brand-product__img">
+                        <div style="padding: 110px 0;"></div>
+                        <a class="btn" href="#"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col l-2-4 m-4 c-6 ">
+                <div class="brand-product">
+                    <div class="brand-product__img">
+                        <div style="padding: 110px 0;"></div>
+                        <a class="btn" href="#"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Sbin/js/constant.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const appShop = {
+        api: API_ENDPOINTS.GET_ALL_BRANDS,
+        render() {
+            const jsShop = document.querySelector(".js-shop");
+            $.ajax({
+                url: this.api,
+                type: 'GET',
+                success: function(response) {
+                    console.log(response)
+                    if (Array.isArray(response.result.items)) {
+                        const html = response.result.items.map((content) => {
+                            return `
+                            <div class="col l-2-4 m-4 c-6">
+                                <div class="brand-product">
+                                    <div class="brand-product__img">
+                                        <img src="../Sbin/assets/img/brand/${content.brand.id}.png" alt="${content.brand.name}">
+                                        <p class="brand-product__describe">${content.brand.description} là một trong top 5 dịch vụ lớn nhất toàn cầu và là nhà phát hành lớn nhất Việt Nam.</p>
+                                        <a class="btn" href="#">Select</a>
+                                    </div>
+                                </div>
+                            </div>
+                            `;
+                        });
+                        jsShop.innerHTML = html.join("");
+                    } else {
+                        console.error("Expected an array but got something else", response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Failed to fetch brands:", error);
+                }
+            });
+        },
+        start() {
+            this.render();
+        },
+    };
+    appShop.start();
+</script>
+
+
+

@@ -57,7 +57,7 @@ namespace DTKH2024.SbinSolution.Devices
             var userID = _abpSession.GetUserId();
             if (userID != AppConsts.UserIdAdmin)
             {
-                filteredDevices.Where(e => e.UserFk != null && e.UserFk.Id == userID);
+                filteredDevices = filteredDevices.Where(e => e.UserFk != null && e.UserFk.Id == userID);
             }
 
             var pagedAndFilteredDevices = filteredDevices

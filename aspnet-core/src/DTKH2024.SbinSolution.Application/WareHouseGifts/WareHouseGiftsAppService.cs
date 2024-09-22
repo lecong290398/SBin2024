@@ -18,6 +18,7 @@ using Abp.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Abp.UI;
 using DTKH2024.SbinSolution.Storage;
+using Abp.Runtime.Session;
 
 namespace DTKH2024.SbinSolution.WareHouseGifts
 {
@@ -28,14 +29,17 @@ namespace DTKH2024.SbinSolution.WareHouseGifts
         private readonly IWareHouseGiftsExcelExporter _wareHouseGiftsExcelExporter;
         private readonly IRepository<User, long> _lookup_userRepository;
         private readonly IRepository<ProductPromotion, int> _lookup_productPromotionRepository;
+        private readonly IAbpSession _abpSession;
 
-        public WareHouseGiftsAppService(IRepository<WareHouseGift> wareHouseGiftRepository, IWareHouseGiftsExcelExporter wareHouseGiftsExcelExporter, IRepository<User, long> lookup_userRepository, IRepository<ProductPromotion, int> lookup_productPromotionRepository)
+        public WareHouseGiftsAppService(IRepository<WareHouseGift> wareHouseGiftRepository
+            , IWareHouseGiftsExcelExporter wareHouseGiftsExcelExporter, IRepository<User, long> lookup_userRepository
+            , IRepository<ProductPromotion, int> lookup_productPromotionRepository, IAbpSession abpSession)
         {
             _wareHouseGiftRepository = wareHouseGiftRepository;
             _wareHouseGiftsExcelExporter = wareHouseGiftsExcelExporter;
             _lookup_userRepository = lookup_userRepository;
             _lookup_productPromotionRepository = lookup_productPromotionRepository;
-
+            _abpSession = abpSession;
         }
 
         public virtual async Task<PagedResultDto<GetWareHouseGiftForViewDto>> GetAll(GetAllWareHouseGiftsInput input)
@@ -52,7 +56,14 @@ namespace DTKH2024.SbinSolution.WareHouseGifts
 
             var pagedAndFilteredWareHouseGifts = filteredWareHouseGifts
                 .OrderBy(input.Sorting ?? "id asc")
-                .PageBy(input);
+            .PageBy(input);
+
+            var userID = _abpSession.GetUserId();
+            if (userID != AppConsts.UserIdAdmin)
+            {
+                filteredWareHouseGifts = filteredWareHouseGifts.Where(e => e.UserFk != null && e.UserFk.Id == userID);
+            }
+
 
             var wareHouseGifts = from o in pagedAndFilteredWareHouseGifts
                                  join o1 in _lookup_userRepository.GetAll() on o.UserId equals o1.Id into j1

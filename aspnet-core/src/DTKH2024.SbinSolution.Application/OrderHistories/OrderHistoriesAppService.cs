@@ -61,7 +61,7 @@ namespace DTKH2024.SbinSolution.OrderHistories
             var userID = _abpSession.GetUserId();
             if (userID != AppConsts.UserIdAdmin)
             {
-                filteredOrderHistories.Where(e => e.UserFk != null && e.UserFk.Id == userID);
+                filteredOrderHistories =  filteredOrderHistories.Where(e => e.UserFk != null && e.UserFk.Id == userID);
             }
             var pagedAndFilteredOrderHistories = filteredOrderHistories
                 .OrderBy(input.Sorting ?? "id asc")

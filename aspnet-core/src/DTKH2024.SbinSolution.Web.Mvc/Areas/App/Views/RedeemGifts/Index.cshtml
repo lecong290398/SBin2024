@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/grid.min.css">
     <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/responsive.css">
     <style>
+        #preload {
+            z-index: 99999;
+        }
         .no-margin, .no-margin > * {
             margin: 0px !important;
         }
@@ -32,7 +35,7 @@
 }
 
 
-
+<div id="preload" style="display: none;"></div>
 
 <div id="redeem-gifts">
     <div class="grid wide">
@@ -70,8 +73,6 @@
                     <p>You don't have any voucher</p>
                 </div>
                 <div class="no-margin row js-Voucher">
-                    <div class="skeleton skeleton-text skeleton-text__large"></div>
-                    <div class="skeleton skeleton-text skeleton-text__large"></div>
                     <div class="skeleton skeleton-text skeleton-text__large"></div>
                     <div class="skeleton skeleton-text skeleton-text__large"></div>
                     <div class="skeleton skeleton-text skeleton-text__large"></div>

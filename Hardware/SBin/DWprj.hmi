@@ -6,9 +6,9 @@ ProVersion=647
 SCREENDSIZE=800X480
 SPADDRESS=5000
 [IMG]
-00=00.bmp
-01=01.bmp
-02=02.bmp
-03=03.bmp
-04=04.bmp
-05=05.bmp
+0=00.bmp
+1=01.bmp
+2=02.bmp
+3=03.bmp
+4=04.bmp
+5=05.bmp

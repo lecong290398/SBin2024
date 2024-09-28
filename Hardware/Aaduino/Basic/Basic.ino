@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Dwin2.h>
 #include <WiFi.h>
+#include <HardwareSerial.h>
 
 // Rx Tx ESP gpio connected to DWin Display
 #define RX_PIN 16
@@ -8,11 +9,18 @@
 
 // Class for controlling UI elements of the display
 DWIN2 dwc;
+HardwareSerial mySerialESP_MEGA(1); // Sử dụng Serial1 (RX=21, TX=19 trên ESP32)
 
-// Thông tin mạng WiFi
-const char* ssid = "HomeLCTM";
-const char* password = "1@qweQAZ";
-const char* serverName = "http://example.com/api/endpoint";
+//Status Bin Trash
+int sensorStatusMetal = 0; // 1 FULL || 0 Available || -1 Lỗi
+int sensorStatusPlastic = 0; 
+int sensorStatusOther = 0; 
+
+// count Trash
+int countStatusMetal = 0; 
+int countStatusPlastic = 0; 
+int countStatusOther = 0; 
+
 
 // Callback function to receive a response from the display
 void dwinEchoCallback(DWIN2 &d);
@@ -22,11 +30,6 @@ void setup() {
     while (Serial.available()) {}
     Serial.printf("-------- Start DWIN communication demo --------\n");
     Serial.printf("-----------------------------------------------\n");
-
-    const int delayTime = 1000;
-    delay(delayTime);
-
-    Serial.printf("\n----- Dwin Display Common commands start -----\n");
     // Initialize timers, tasks, serial communication, and other settings
     dwc.begin();
     // Set callback for receiving responses
@@ -35,48 +38,30 @@ void setup() {
     dwc.setEcho(false);
     Serial.printf("\n----- Dwin Display Common commands end -----\n");
 
-    // Kết nối WiFi
-      WiFi.begin(ssid, password);
-      Serial.println("Connecting to WiFi...");
-      
-      while (WiFi.status() != WL_CONNECTED) {
-        delay(1000);
-        Serial.println("Connecting...");
-      }
-      Serial.println("Connected to WiFi");
-    
+    Serial.printf("\n----- mySerialESP_MEGA  commands RUN -----\n");
+    mySerialESP_MEGA.begin(115200, SERIAL_8N1, 16, 17); // Khởi tạo Serial1 (RX=16, TX=17)
+    Serial.printf("\n----- mySerialESP_MEGA  commands end -----\n");
 }
-#pragma region API ROUTER
 
-// Hàm tách biệt để gọi API và trả về phản hồi
-String postDataToServer(String jsonData) {
-  HTTPClient http;
+void loop() {
+    // Get the current page number
+    uint8_t pageNum = dwc.getPage();
+    Serial.printf("Current page: %d\n", pageNum);
+    processPage(pageNum);
+    delay(700);
 
-  // Bắt đầu kết nối với URL API
-  http.begin(serverName);
-  http.addHeader("Content-Type", "application/json");
+ 
+}
 
-  // Gửi yêu cầu POST và nhận mã trạng thái HTTP
-  int httpResponseCode = http.POST(jsonData);
-
-  String payload = "";
-
-  if (httpResponseCode > 0) {
-    // Lấy chuỗi phản hồi từ server
-    payload = http.getString();
-  } else {
-    Serial.print("Error on sending POST: ");
-    Serial.println(httpResponseCode);
-    payload = "Error"; // Trả về chuỗi "Error" khi có lỗi
+// Hàm để đọc giá trị từ pin của Arduino qua Serial
+int readValueFromArduino(int pin) {
+  mySerialESP_MEGA.println(pin); // Gửi yêu cầu đọc pin
+  delay(100); // Đợi một chút để Arduino có thời gian xử lý
+  if (mySerialESP_MEGA.available()) {
+    return mySerialESP_MEGA.parseInt(); // Đọc giá trị từ Arduino
   }
-
-  // Đóng kết nối HTTP
-  http.end();
-
-  return payload; // Trả về chuỗi phản hồi hoặc "Error"
+  return -1; // Trả về -1 nếu không có dữ liệu
 }
-
-#pragma endregion
 
 #pragma region DWIN CONTROL 
 
@@ -96,17 +81,20 @@ void handlePage4or5(uint16_t address1, uint16_t address2 , int idPage , int time
     }
 }
 
-void loop() {
-      delay(700);
-    // Get the current page number
-    uint8_t pageNum = dwc.getPage();
-    Serial.printf("Current page: %d\n", pageNum);
-    processPage(pageNum);
-}
+
 // Function to process different pages
 void processPage(int pageNum) {
     switch(pageNum) {
         case 1:
+            // Read value from Arduino
+            sensorStatusMetal= readValueFromArduino(A0); // Read from pin A0
+            if (sensorStatusMetal != -1) {
+                Serial.print("Received value from pin A0: ");
+                Serial.println(sensorStatusMetal); // Print received value
+            } else {
+                Serial.println("No data received.");
+            }
+
             // Set addresses and send data for page 1
             dwc.setAddress(0x9010, 0x1010);
             dwc.setUiType(ASCII);
@@ -122,6 +110,7 @@ void processPage(int pageNum) {
             dwc.setUiType(ASCII);
             dwc.setColor(0x058E);
             dwc.sendData("Available");
+            
             break;
         case 2:
             // Delay for 5 seconds and set page to 3
@@ -158,6 +147,9 @@ void processPage(int pageNum) {
             break;
         default:
             // Default case does nothing
+            countStatusMetal = 0;
+            countStatusPlastic = 0;
+            countStatusOther = 0; 
             break;
     }
 }

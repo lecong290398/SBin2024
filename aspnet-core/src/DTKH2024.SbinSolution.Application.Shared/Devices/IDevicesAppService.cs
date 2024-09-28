@@ -26,5 +26,8 @@ namespace DTKH2024.SbinSolution.Devices
 
         Task<PagedResultDto<DeviceUserLookupTableDto>> GetAllUserForLookupTable(GetAllForLookupTableInput input);
 
+
+        Task<GetDeviceForViewDto> GetDeviceForViewDemo(int id);
+
     }
 }

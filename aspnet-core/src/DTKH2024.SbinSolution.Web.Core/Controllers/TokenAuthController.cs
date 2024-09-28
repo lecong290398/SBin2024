@@ -847,18 +847,27 @@ namespace DTKH2024.SbinSolution.Web.Controllers
 
         private string CreateToken(IEnumerable<Claim> claims, TimeSpan? expiration = null)
         {
-            var now = DateTime.UtcNow;
+            try
+            {
+                var now = DateTime.UtcNow;
 
-            var jwtSecurityToken = new JwtSecurityToken(
-                issuer: _configuration.Issuer,
-                audience: _configuration.Audience,
-                claims: claims,
-                notBefore: now,
-                signingCredentials: _configuration.SigningCredentials,
-                expires: expiration == null ? (DateTime?) null : now.Add(expiration.Value)
-            );
+                var jwtSecurityToken = new JwtSecurityToken(
+                    issuer: _configuration.Issuer,
+                    audience: _configuration.Audience,
+                    claims: claims,
+                    notBefore: now,
+                    signingCredentials: _configuration.SigningCredentials,
+                    expires: expiration == null ? (DateTime?)null : now.Add(expiration.Value)
+                );
 
-            return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            
         }
 
         private static string GetEncryptedAccessToken(string accessToken)

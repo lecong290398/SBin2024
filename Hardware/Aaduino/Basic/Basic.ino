@@ -1,15 +1,17 @@
 #include <Arduino.h>
 #include <Dwin2.h>
 #include <WiFi.h>
-#include <HardwareSerial.h>
 
 // Rx Tx ESP gpio connected to DWin Display
 #define RX_PIN 16
 #define TX_PIN 17
 
+//Mega 2650
+#define RXD3 19
+#define TXD3 20
+
 // Class for controlling UI elements of the display
 DWIN2 dwc;
-HardwareSerial mySerialESP_MEGA(1); // Sử dụng Serial1 (RX=21, TX=19 trên ESP32)
 
 //Status Bin Trash
 int sensorStatusMetal = 0; // 1 FULL || 0 Available || -1 Lỗi
@@ -21,6 +23,15 @@ int countStatusMetal = 0;
 int countStatusPlastic = 0; 
 int countStatusOther = 0; 
 
+// Lenh HMI gui xuong
+#define Cmd_BatDauQuyTrinh "Cmd_BatDauQuyTrinh"
+#define Cmd_KetThucQuyTrinh "Cmd_KetThucQuyTrinh" // Dung gui len/gui xuong
+
+// Lenh gui HMI
+#define Cmd_CountRac "Cmd_CountRac"
+#define Cmd_DayRacKimLoai "Cmd_DayRacKimLoai"
+#define Cmd_DayRacNhua "Cmd_DayRacNhua"
+#define Cmd_DayRacKhongXacDinh "Cmd_DayRacKhongXacDinh
 
 // Callback function to receive a response from the display
 void dwinEchoCallback(DWIN2 &d);
@@ -38,29 +49,20 @@ void setup() {
     dwc.setEcho(false);
     Serial.printf("\n----- Dwin Display Common commands end -----\n");
 
-    Serial.printf("\n----- mySerialESP_MEGA  commands RUN -----\n");
-    mySerialESP_MEGA.begin(115200, SERIAL_8N1, 16, 17); // Khởi tạo Serial1 (RX=16, TX=17)
     Serial.printf("\n----- mySerialESP_MEGA  commands end -----\n");
+    //MEGA 2560
+    Serial2.begin(9600, SERIAL_8N1, RXD3, TXD3);
+
 }
 
 void loop() {
     // Get the current page number
     uint8_t pageNum = dwc.getPage();
-    Serial.printf("Current page: %d\n", pageNum);
+    //Serial.printf("Current page: %d\n", pageNum);
     processPage(pageNum);
     delay(700);
 
  
-}
-
-// Hàm để đọc giá trị từ pin của Arduino qua Serial
-int readValueFromArduino(int pin) {
-  mySerialESP_MEGA.println(pin); // Gửi yêu cầu đọc pin
-  delay(100); // Đợi một chút để Arduino có thời gian xử lý
-  if (mySerialESP_MEGA.available()) {
-    return mySerialESP_MEGA.parseInt(); // Đọc giá trị từ Arduino
-  }
-  return -1; // Trả về -1 nếu không có dữ liệu
 }
 
 #pragma region DWIN CONTROL 
@@ -80,61 +82,97 @@ void handlePage4or5(uint16_t address1, uint16_t address2 , int idPage , int time
         }
     }
 }
-
-
+  int isPutTrash = 0;
+  String command= "";
 // Function to process different pages
 void processPage(int pageNum) {
     switch(pageNum) {
         case 1:
-            // Read value from Arduino
-            sensorStatusMetal= readValueFromArduino(A0); // Read from pin A0
-            if (sensorStatusMetal != -1) {
-                Serial.print("Received value from pin A0: ");
-                Serial.println(sensorStatusMetal); // Print received value
-            } else {
-                Serial.println("No data received.");
-            }
+              command = Serial2.readStringUntil('\r'); 
+                    Serial.print(command);
 
-            // Set addresses and send data for page 1
-            dwc.setAddress(0x9010, 0x1010);
-            dwc.setUiType(ASCII);
-            dwc.setColor(0xF9C5);
-            dwc.sendData("Full");
+              if (command.startsWith("Cmd_DayRacKimLoai")) {
+                    //Metal
+                    dwc.setAddress(0x9010, 0x1010);
+                    dwc.setUiType(ASCII);
+                    dwc.setColor(0xF9C5);
+                    dwc.sendData("LCONG");                       
+              }
 
-            dwc.setAddress(0x9020, 0x1020);
-            dwc.setUiType(ASCII);
-            dwc.setColor(0x058E);
-            dwc.sendData("Available");
-
-            dwc.setAddress(0x9030, 0x1030);
-            dwc.setUiType(ASCII);
-            dwc.setColor(0x058E);
-            dwc.sendData("Available");
+         
+            // Platic
+//dwc.setAddress(0x9020, 0x1020);
+           // dwc.setUiType(ASCII);
+          //  dwc.setColor(0x058E);
+//dwc.sendData("Available");
+            //Other
+            //dwc.setAddress(0x9030, 0x1030);
+           // dwc.setUiType(ASCII);
+           // dwc.setColor(0x058E);
+           // dwc.sendData("Available");
             
             break;
         case 2:
-            // Delay for 5 seconds and set page to 3
-            delay(5000);
-            dwc.setPage(3);
+        if (isPutTrash == 0)
+        {
+             Serial2.println(Cmd_BatDauQuyTrinh);
+             Serial.println(Cmd_BatDauQuyTrinh);
+             isPutTrash = 1;
+        }
+             command = Serial2.readStringUntil('\r'); 
+            if (command.startsWith("Cmd_CountRac")) {
+                  command.trim(); // Loại bỏ ký tự xuống dòng "\n" ở cuối chuỗi
+
+                  // Chia chuỗi theo dấu ';'
+                  String values[4];  // Mảng lưu các giá trị sau khi chia
+                  int index = 0;
+
+                  // Lặp qua chuỗi và chia bằng ký tự ';'
+                  int startIndex = 0;
+                  int endIndex = command.indexOf(';');
+
+                  while (endIndex != -1) {
+                    values[index++] = command.substring(startIndex, endIndex);
+                    startIndex = endIndex + 1;
+                    endIndex = command.indexOf(';', startIndex);
+                  }
+
+                  // Thêm giá trị cuối cùng sau dấu chấm phẩy
+                  values[index] = command.substring(startIndex);
+
+                  // In kết quả
+                  for (int i = 0; i < 4; i++) {
+                    Serial.print("Value at index ");
+                    Serial.print(i);
+                    Serial.print(": ");
+                    Serial.println(values[i]);
+
+
+                  }
+            }
+            //delay(5000);
+            //dwc.setPage(3);
             break;
         case 3:
             // Set address and send integer data for page 3
-            dwc.setAddress(0x3010, 0x1310);
-            dwc.setUiType(INT);
-            dwc.sendData(7);
-            delay(500);
+           // dwc.setAddress(0x3010, 0x1310);
+           //dwc.setUiType(INT);
+           // dwc.sendData(7);
+           // delay(500);
             // Set address and send integer data for page 3
-            dwc.setAddress(0x3020, 0x1320);
-            dwc.setUiType(INT);
-            dwc.sendData(8);
-            delay(500);
+           // dwc.setAddress(0x3020, 0x1320);
+            //dwc.setUiType(INT);
+           // dwc.sendData(8);
+            //delay(500);
 
            // Set address and send integer data for page 3
-            dwc.setAddress(0x3030, 0x1330);
-            dwc.setUiType(INT);
-            dwc.sendData(0);
+           // dwc.setAddress(0x3030, 0x1330);
+           // dwc.setUiType(INT);
+           // dwc.sendData(0);
+
             break;
         case 4:
+            Serial2.println("Cmd_KetThucQuyTrinh");
             dwc.setAddress(0x9910, 0x1099);
             dwc.setUiType(ASCII);
             dwc.sendData("https://youtu.be/-bwemq005vw?si=Zv0bqV6s0lPpvimZ");
@@ -150,6 +188,7 @@ void processPage(int pageNum) {
             countStatusMetal = 0;
             countStatusPlastic = 0;
             countStatusOther = 0; 
+            isPutTrash = 0;
             break;
     }
 }

@@ -33,9 +33,10 @@ int countStatusOther = 0;
 #define Cmd_DayRacNhua "Cmd_DayRacNhua"
 #define Cmd_DayRacKhongXacDinh "Cmd_DayRacKhongXacDinh"
 
+int isStopProcess = 0;
 int isPutTrash = 0;
 int isEndTrash = 0;
-String command = "";
+String commandMega2560 = "";
 // Callback function to receive a response from the display
 void dwinEchoCallback(DWIN2 &d);
 
@@ -62,11 +63,9 @@ void loop()
   // Get the current page number
   uint8_t pageNum = dwc.getPage();
   // Process the current page
-  handlerStatusBinTrash();
-  // Process the current page
   processPage(pageNum);
   // Delay for a while
-  delay(700);
+  delay(100);
 }
 
 #pragma region DWIN CONTROL
@@ -90,22 +89,74 @@ void handlePage4or5(uint16_t address1, uint16_t address2, int idPage, int time)
 }
 
 // Function to handle status of the trash bin
-void handlerStatusBinTrash()
+void handlerStatusBinTrash(String commandString)
 {
-  // Check if there is any data available to read
-  String commandStatusBinTrash = Serial2.readStringUntil('\r');
   // Check if the command is to empty the trash
-  if (commandStatusBinTrash.startsWith(Cmd_DayRacKimLoai))
+  if (commandString.startsWith(Cmd_DayRacKimLoai))
   {
     sensorStatusBinMetal = 1;
   }
-  else if (commandStatusBinTrash.startsWith(Cmd_DayRacNhua))
+  else if (commandString.startsWith(Cmd_DayRacNhua))
   {
     sensorStatusBinPlastic = 1; // Updated variable name
   }
-  else if (commandStatusBinTrash.startsWith(Cmd_DayRacKhongXacDinh))
+  else if (commandString.startsWith(Cmd_DayRacKhongXacDinh))
   {
     sensorStatusBinOther = 1; // Updated variable name
+  }
+}
+
+// Function to handle count of the trash bin
+void handlerCountBinTrash(String commandString)
+{
+  if (commandString.startsWith(Cmd_CountRac))
+  {
+    commandString.trim(); // Loại bỏ ký tự xuống dòng "\n" ở cuối chuỗi
+    // Chia chuỗi theo dấu ';'
+    String values[4]; // Mảng lưu các giá trị sau khi chia
+    int index = 0;
+    // Lặp qua chuỗi và chia bằng ký tự ';'
+    int startIndex = 0;
+    int endIndex = commandString.indexOf(';');
+    while (endIndex != -1)
+    {
+      values[index++] = commandString.substring(startIndex, endIndex);
+      startIndex = endIndex + 1;
+      endIndex = commandString.indexOf(';', startIndex);
+    }
+    // Thêm giá trị cuối cùng sau dấu chấm phẩy
+    values[index] = commandString.substring(startIndex);
+    // In kết quả
+    for (int i = 0; i < 4; i++)
+    {
+      Serial.print("Value at index ");
+      Serial.print(i);
+      Serial.print(": ");
+      Serial.println(values[i]);
+      // Xử lý giá trị
+      if (i == 1)
+      {
+        dwc.setAddress(0x3010, 0x1310);
+        dwc.setUiType(INT);
+        int countMetal = values[i].toInt();
+        dwc.sendData(countMetal);
+        delay(500);
+      }
+      if (i == 2)
+      {
+        dwc.setAddress(0x3020, 0x1320);
+        dwc.setUiType(INT);
+        int countPlastic = values[i].toInt();
+        dwc.sendData(countPlastic);
+      }
+      if (i == 3)
+      {
+        dwc.setAddress(0x3030, 0x1330);
+        dwc.setUiType(INT);
+        int countOther = values[i].toInt();
+        dwc.sendData(countOther);
+      }
+    }
   }
 }
 
@@ -168,6 +219,8 @@ void setStatusOther()
 // Function to process different pages
 void processPage(int pageNum)
 {
+  // Read the command from the Mega2560
+  commandMega2560 = Serial2.readStringUntil('\r');
   switch (pageNum)
   {
   case 1:
@@ -185,115 +238,39 @@ void processPage(int pageNum)
       // Set the flag to indicate that the trash has been put
       isPutTrash = 1;
     }
-    command = Serial2.readStringUntil('\r');
-    if (command.startsWith(Cmd_CountRac))
+    if (commandMega2560.startsWith(Cmd_CountRac))
     {
-      command.trim(); // Loại bỏ ký tự xuống dòng "\n" ở cuối chuỗi
-      // Chia chuỗi theo dấu ';'
-      String values[4]; // Mảng lưu các giá trị sau khi chia
-      int index = 0;
-      // Lặp qua chuỗi và chia bằng ký tự ';'
-      int startIndex = 0;
-      int endIndex = command.indexOf(';');
-      while (endIndex != -1)
-      {
-        values[index++] = command.substring(startIndex, endIndex);
-        startIndex = endIndex + 1;
-        endIndex = command.indexOf(';', startIndex);
-      }
-      // Thêm giá trị cuối cùng sau dấu chấm phẩy
-      values[index] = command.substring(startIndex);
-      // In kết quả
-      for (int i = 0; i < 4; i++)
-      {
-        Serial.print("Value at index ");
-        Serial.print(i);
-        Serial.print(": ");
-        Serial.println(values[i]);
-        // Xử lý giá trị
-        if (i == 1)
-        {
-          dwc.setAddress(0x3010, 0x1310);
-          dwc.setUiType(INT);
-          dwc.sendData(values[i]);
-          delay(500);
-        }
-        if (i == 2)
-        {
-          dwc.setAddress(0x3020, 0x1320);
-          dwc.setUiType(INT);
-          dwc.sendData(values[i]);
-        }
-        if (i == 3)
-        {
-          dwc.setAddress(0x3030, 0x1330);
-          dwc.setUiType(INT);
-          dwc.sendData(values[i]);
-        }
-      }
-
+      handlerCountBinTrash(commandMega2560);
       // Set address and send integer data for page 3
-      delay(2000);
       dwc.setPage(3);
     }
-
+    else if(commandMega2560.startsWith(Cmd_KetThucQuyTrinh)){
+      dwc.setPage(4);
+      isStopProcess = 1;
+    }
     break;
   case 3:
-    command = Serial2.readStringUntil('\r');
-    if (command.startsWith(Cmd_CountRac))
+    if (commandMega2560.startsWith(Cmd_CountRac))
     {
-      command.trim(); // Loại bỏ ký tự xuống dòng "\n" ở cuối chuỗi
-      // Chia chuỗi theo dấu ';'
-      String values[4]; // Mảng lưu các giá trị sau khi chia
-      int index = 0;
-      // Lặp qua chuỗi và chia bằng ký tự ';'
-      int startIndex = 0;
-      int endIndex = command.indexOf(';');
-      while (endIndex != -1)
-      {
-        values[index++] = command.substring(startIndex, endIndex);
-        startIndex = endIndex + 1;
-        endIndex = command.indexOf(';', startIndex);
-      }
-      // Thêm giá trị cuối cùng sau dấu chấm phẩy
-      values[index] = command.substring(startIndex);
-      // In kết quả
-      for (int i = 0; i < 4; i++)
-      {
-        Serial.print("Value at index ");
-        Serial.print(i);
-        Serial.print(": ");
-        Serial.println(values[i]);
-        // Xử lý giá trị
-        if (i == 1)
-        {
-          dwc.setAddress(0x3010, 0x1310);
-          dwc.setUiType(INT);
-          dwc.sendData(values[i]);
-          delay(500);
-        }
-        if (i == 2)
-        {
-          dwc.setAddress(0x3020, 0x1320);
-          dwc.setUiType(INT);
-          dwc.sendData(values[i]);
-        }
-        if (i == 3)
-        {
-          dwc.setAddress(0x3030, 0x1330);
-          dwc.setUiType(INT);
-          dwc.sendData(values[i]);
-        }
-      }
+      handlerCountBinTrash(commandMega2560);
+    }
+    else if(commandMega2560.startsWith(Cmd_KetThucQuyTrinh)){
+      dwc.setPage(4);
+      isStopProcess = 1;
     }
     break;
   case 4:
     if (isEndTrash == 0)
     {
-      // Send command to end the process
-      Serial2.println(Cmd_KetThucQuyTrinh);
+      if (isStopProcess == 0)
+      {
+        // Send command to end the process
+        Serial2.println(Cmd_KetThucQuyTrinh);
+      }
       // Set the flag to indicate that the trash has been put
       isEndTrash = 1;
+
+      // API Create QR Code and Create Transaction Bin
 
       // Set address and send ASCII data for page 4
       dwc.setAddress(0x9910, 0x1099);
@@ -315,8 +292,11 @@ void processPage(int pageNum)
     countStatusOther = 0;
     isPutTrash = 0;
     isEndTrash = 0;
+    isStopProcess = 0;
     break;
   }
+  // Handle status of the trash bin
+  handlerStatusBinTrash(commandMega2560);
 }
 
 // Callback function for DWIN echo

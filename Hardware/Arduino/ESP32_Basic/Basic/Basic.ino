@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <Dwin2.h>
 #include <WiFi.h>
+#include <string>
 
 // Rx Tx ESP gpio connected to DWin Display
 #define RX_PIN 16
@@ -230,6 +231,8 @@ void processPage(int pageNum)
     setStatusOther();
     break;
   case 2:
+     Serial.println("Page 2");
+
     // Check if the command is to start the process
     if (isPutTrash == 0)
     {
@@ -237,6 +240,7 @@ void processPage(int pageNum)
       Serial2.println(Cmd_BatDauQuyTrinh);
       // Set the flag to indicate that the trash has been put
       isPutTrash = 1;
+       Serial.print("Send Cmd_BatDauQuyTrinh");
     }
     if (commandMega2560.startsWith(Cmd_CountRac))
     {

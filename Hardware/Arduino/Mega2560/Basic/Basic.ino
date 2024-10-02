@@ -492,8 +492,8 @@ void loop() {
     }
 
     // Xử lý khi có rác
-    // Chờ 2 s đe xác định loại rác;
-    delay(2000);
+    // Chờ 500mili s đe xác định loại rác;
+    delay(50);
 
     //+nếu cảm biến phát hiện là kim loại ( pin 48 )
     if (RacKimLoai()) {

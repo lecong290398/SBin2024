@@ -64,7 +64,6 @@ void loop()
     // Process the current page
     processPage(pageNum);
     // Delay for a while
-    delay(100);
 }
 
 #pragma region DWIN CONTROL

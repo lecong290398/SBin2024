@@ -170,7 +170,7 @@ void setStatusMetal()
     // Set address and send ASCII data for page 1
     dwc.setAddress(0x9010, 0x1010);
     dwc.setUiType(ASCII);
-    if (sensorStatusBinPlastic)
+    if (sensorStatusBinMetal)
     { // Updated variable name
         dwc.setColor(0xF9C5);
         dwc.sendData("Full");
@@ -206,7 +206,7 @@ void setStatusOther()
     dwc.setAddress(0x9030, 0x1030);
     dwc.setUiType(ASCII);
     //  Check if the bin is full
-    if (sensorStatusBinPlastic)
+    if (sensorStatusBinOther)
     { // Updated variable name
         dwc.setColor(0xF9C5);
         dwc.sendData("Full");

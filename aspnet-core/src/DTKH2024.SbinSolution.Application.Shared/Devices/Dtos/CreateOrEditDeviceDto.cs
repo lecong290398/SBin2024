@@ -32,4 +32,11 @@ namespace DTKH2024.SbinSolution.Devices.Dtos
         public long? UserId { get; set; }
 
     }
+
+    public class UpdateStatusBinTrashDevice : EntityDto<int?>
+    {
+        public int PercentStatusPlastis { get; set; }
+        public int PercentStatusMetal { get; set; }
+        public int PercentStatusOrther { get; set; }
+    }
 }

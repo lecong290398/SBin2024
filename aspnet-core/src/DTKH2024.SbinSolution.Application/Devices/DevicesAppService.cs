@@ -290,5 +290,13 @@ namespace DTKH2024.SbinSolution.Devices
                 lookupTableDtoList
             );
         }
+
+
+        [AbpAuthorize(AppPermissions.Pages_Administration_Devices_Edit)]
+        public virtual async Task UpdateStatusBinTrashDevice(UpdateStatusBinTrashDevice input)
+        {
+            var device = await _deviceRepository.FirstOrDefaultAsync((int)input.Id);
+            ObjectMapper.Map(input, device);
+        }
     }
 }

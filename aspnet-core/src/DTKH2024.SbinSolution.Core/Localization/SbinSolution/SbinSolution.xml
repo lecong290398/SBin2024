@@ -1,6 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
 	<texts>
+		<text name="FullTrash">Full</text>
+		<text name="FullNotTrash">Available</text>
 		<text name="OrderHistories">Order histories</text>
 		<text name="OrderHistory">Order history</text>
 		<text name="DTKH2024.SbinSolution.OrderHistories.OrderHistory">OrderHistory</text>

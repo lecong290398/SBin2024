@@ -1,6 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="vi">
 	<texts>
+		<text name="FullTrash">Đầy</text>
+		<text name="FullNotTrash">Có sẳn</text>
+
 		<text name="PositivePoint">Điểm hoạt động</text>
 		<text name="RankName">Cấp bật</text>
 		<text name="CreateNewTransactionBinAdminDevice">Thiết bị Insert giao dịch Sbin </text>

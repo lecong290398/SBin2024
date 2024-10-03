@@ -290,28 +290,5 @@ namespace DTKH2024.SbinSolution.Devices
                 lookupTableDtoList
             );
         }
-
-        [AbpAllowAnonymous]
-        public virtual async Task<GetDeviceForViewDto> GetDeviceForViewDemo(int id)
-        {
-            var device = await _deviceRepository.GetAsync(id);
-
-            var output = new GetDeviceForViewDto { Device = ObjectMapper.Map<DeviceDto>(device) };
-
-            if (output.Device.StatusDeviceId != null)
-            {
-                var _lookupStatusDevice = await _lookup_statusDeviceRepository.FirstOrDefaultAsync((int)output.Device.StatusDeviceId);
-                output.StatusDeviceName = _lookupStatusDevice?.Name?.ToString();
-            }
-
-            if (output.Device.UserId != null)
-            {
-                var _lookupUser = await _lookup_userRepository.FirstOrDefaultAsync((long)output.Device.UserId);
-                output.UserName = _lookupUser?.Name?.ToString();
-            }
-
-            return output;
-        }
-
     }
 }

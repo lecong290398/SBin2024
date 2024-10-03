@@ -8,7 +8,7 @@ namespace DTKH2024.SbinSolution.Extension
 {
     public class StringEncryption
     {
-        private static readonly string key = "SbinSolution_8CFB2EC534E14D56"; // Đảm bảo key phải đủ dài, thường là 32 byte
+        private static readonly string key = "SbinSolution2024_8CFB2EC534E14D5"; // Đảm bảo key phải đủ dài, thường là 32 byte
 
         public static string Encrypt(string plainText)
         {

@@ -293,13 +293,14 @@ namespace DTKH2024.SbinSolution.Devices
 
 
         [AbpAuthorize(AppPermissions.Pages_Administration_Devices_Edit)]
-        public virtual async Task UpdateStatusBinTrashDevice(UpdateStatusBinTrashDevice input)
+        public virtual async Task<string> EditStatusBinTrashDevice(UpdateStatusBinTrashDevice input)
         {
             var device = await _deviceRepository.FirstOrDefaultAsync((int)input.Id);
             device.PercentStatusMetal = input.PercentStatusMetal;
             device.PercentStatusPlastis = input.PercentStatusPlastis;
             device.PercentStatusOrther = input.PercentStatusOrther;
             await _deviceRepository.UpdateAsync(device);
+            return device.Name ?? string.Empty;
         }
     }
 }

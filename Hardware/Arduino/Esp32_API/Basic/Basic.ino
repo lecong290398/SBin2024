@@ -4,30 +4,27 @@
 
 #pragma region Config Variables
 // Thông tin WiFi
-const char *ssid = "HomeLCTM";
-const char *password = "1@qweQAZ";
-const char *deviceID = "1"; // ID của thiết bị
+const char *ssid = "HomeLCTM";     // Tên WiFi
+const char *password = "1@qweQAZ"; // Mật khẩu WiFi
+const char *deviceID = "1";        // ID của thiết bị
 // Địa chỉ URL API
-const char *apiUrlTokenAuth = "https://app.sbin.edu.vn/api/TokenAuth/Authenticate";
-const char *apiUrlTransactionBins = "https://app.sbin.edu.vn/api/services/app/TransactionBins/CreateDevice_TransactionBins";
-const char *apiUrlUpdateDeviceForBin = "https://app.sbin.edu.vn/api/services/app/Devices/UpdateDeviceForBin";
+const char *apiUrlTokenAuth = "https://app.sbin.edu.vn/api/TokenAuth/Authenticate";                                          // URL API lấy token
+const char *apiUrlTransactionBins = "https://app.sbin.edu.vn/api/services/app/TransactionBins/CreateDevice_TransactionBins"; // URL API tạo transaction bins
+const char *apiUrlUpdateDeviceForBin = "https://app.sbin.edu.vn/api/services/app/Devices/EditStatusBinTrashDevice";                // URL API cập nhật trạng thái thiết bị
 // Thông tin user
-const char *user = "linhtrungsbin01";
-const char *pass = "123qwe";
-unsigned long previousMillis = 0; // Lưu trữ thời gian lần cuối hàm GetToken được gọi
-unsigned long interval = 0;       // Khoảng thời gian giữa các lần lấy token (tính bằng mili giây)
-
-// Object chứa token
+const char *user = "linhtrungsbin01";       // Tên đăng nhập
+const char *pass = "123qwe";                // Mật khẩu
+unsigned long previousMillis = 0;           // Lưu trữ thời gian lần cuối hàm GetToken được gọi
+unsigned long interval = 0;                 // Khoảng thời gian giữa các lần lấy token (tính bằng mili giây)
+unsigned long CallAPICreateTransaction = 0; // Lưu trữ thời gian lần cuối hàm CreateDeviceTransactionBins được gọi
+// Object chứa token  
 struct TokenData
 {
   String accessToken;
   String refreshToken;
   long expireInSeconds;
 };
-
 TokenData _tokenData; // Default constructor
-int isUpdateStatusDevice = 0;
-
 #pragma endregion
 
 #pragma region Function Prototypes
@@ -51,6 +48,7 @@ void connectWiFi()
   previousMillis = millis();                    // Lưu lại thời điểm token được nhận
 }
 
+// Hàm lấy token từ server
 void HandlerToken()
 {
   unsigned long currentMillis = millis(); // Lấy thời gian hiện tại
@@ -69,7 +67,7 @@ void HandlerToken()
   }
 }
 
-// Hàm khởi tạo token từ JSON
+// Hàm khởi tạo token từ JSON Token
 TokenData createTokenFromJson(const String &jsonString)
 {
   TokenData tokenData;
@@ -88,7 +86,46 @@ TokenData createTokenFromJson(const String &jsonString)
   return tokenData;
 }
 
-void CreateDeviceTransactionBins()
+// Hàm gọi API PUT
+void callUpdateStatusAPI( int percentPlastics, int percentMetal, int percentOther)
+{
+  if (WiFi.status() == WL_CONNECTED)
+  { // Kiểm tra xem đã kết nối WiFi chưa
+    HTTPClient http;
+    http.begin(apiUrlUpdateDeviceForBin);               // URL API
+    String dataToken = "Bearer " + _tokenData.accessToken;
+    http.addHeader("Content-Type", "application/json");
+    http.addHeader("accept", "text/plain");
+    http.addHeader("Authorization", dataToken);
+    // Tạo payload JSON
+    String jsonData = "{";
+    jsonData += "\"id\":\"" + String(deviceID)  + "\",";
+    jsonData += "\"percentStatusPlastis\":" + String(percentPlastics) + ",";
+    jsonData += "\"percentStatusMetal\":" + String(percentMetal) + ",";
+    jsonData += "\"percentStatusOrther\":" + String(percentOther);
+    jsonData += "}";
+    int httpResponseCode = http.POST(jsonData);  // Gửi yêu cầu POST
+    if (httpResponseCode > 0)
+    {
+      // Kiểm tra kết quả trả về
+      String response = http.getString();
+      Serial.println("HTTP Response code: " + String(httpResponseCode));
+      Serial.println("Response: " + response);
+    }
+    else
+    {
+      Serial.println("Error on sending PUT: " + String(httpResponseCode));
+    }
+    http.end(); // Đóng kết nối
+  }
+  else
+  {
+    Serial.println("WiFi not connected");
+  }
+}
+
+// Hàm tạo transaction bins
+void CreateDeviceTransactionBins(int plasticQuantity, int metalQuantity, int otherQuantity, int transactionStatusId = 1)
 {
   if (WiFi.status() == WL_CONNECTED)
   {
@@ -102,7 +139,14 @@ void CreateDeviceTransactionBins()
     http.addHeader("Authorization", dataToken);
 
     // Chuẩn bị dữ liệu JSON
-    String jsonData = "{\"plastisQuantity\":19,\"metalQuantity\":18,\"ortherQuantity\":1,\"deviceId\":1,\"transactionStatusId\":1}";
+    String jsonData = "{";
+    jsonData += "\"plasticQuantity\":" + String(plasticQuantity) + ",";
+    jsonData += "\"metalQuantity\":" + String(metalQuantity) + ",";
+    jsonData += "\"otherQuantity\":" + String(otherQuantity) + ",";
+    jsonData += "\"deviceId\":" + String(deviceID) + ",";
+    jsonData += "\"transactionStatusId\":" + String(transactionStatusId);
+    jsonData += "}";
+
     // Gửi yêu cầu POST
     int httpResponseCode = http.POST(jsonData);
 
@@ -179,23 +223,32 @@ TokenData GetToken()
   }
   return tokenData;
 }
+
 #pragma endregion
 
 void setup()
 {
+  // Khởi tạo Serial
   Serial.begin(115200);
+  // Kết nối WiFi
   connectWiFi();
 }
-int CallON = 0;
+
 void loop()
 {
   // Gọi hàm GetToken
   HandlerToken();
-  if (_tokenData.accessToken != nullptr && CallON == 0)
+
+  // Gọi hàm CreateDeviceTransactionBins
+  if (_tokenData.accessToken != nullptr && CallAPICreateTransaction == 0)
   {
-     Serial.println("CreateDevice Transaction Bins.............");
-      CreateDeviceTransactionBins();
-      CallON = 1;
+    Serial.println("CreateDevice Transaction Bins.............");
+    CreateDeviceTransactionBins(3,2,1);
+    Serial.println("Update Transaction Bins.............");
+    callUpdateStatusAPI(0,1,0);
+    // Gán CallAPICreateTransaction = 1 để không gọi lại hàm CreateDeviceTransactionBins
+    CallAPICreateTransaction = 1;
   }
+
   delay(2000);
 }

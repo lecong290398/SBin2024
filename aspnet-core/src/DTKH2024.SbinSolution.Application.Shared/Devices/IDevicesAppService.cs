@@ -26,6 +26,6 @@ namespace DTKH2024.SbinSolution.Devices
 
         Task<PagedResultDto<DeviceUserLookupTableDto>> GetAllUserForLookupTable(GetAllForLookupTableInput input);
 
-        Task UpdateStatusBinTrashDevice(UpdateStatusBinTrashDevice input);
+        Task<string> EditStatusBinTrashDevice(UpdateStatusBinTrashDevice input);
     }
 }

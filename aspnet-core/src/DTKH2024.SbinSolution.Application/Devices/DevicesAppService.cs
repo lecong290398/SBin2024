@@ -296,7 +296,10 @@ namespace DTKH2024.SbinSolution.Devices
         public virtual async Task UpdateStatusBinTrashDevice(UpdateStatusBinTrashDevice input)
         {
             var device = await _deviceRepository.FirstOrDefaultAsync((int)input.Id);
-            ObjectMapper.Map(input, device);
+            device.PercentStatusMetal = input.PercentStatusMetal;
+            device.PercentStatusPlastis = input.PercentStatusPlastis;
+            device.PercentStatusOrther = input.PercentStatusOrther;
+            await _deviceRepository.UpdateAsync(device);
         }
     }
 }

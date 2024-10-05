@@ -168,9 +168,9 @@
                     name: 'percentStatusPlastis',
                     render: function (percentStatusPlastis) {
                         if (percentStatusPlastis == 1) {
-                            return '<div class="text-center">' + (app.localize('FullTrash') + '</div>';
+                            return '<div class="text-center">' + (app.localize('FullTrash')) + '</div>';
                         }
-                        return '<div class="text-center">' + (app.localize('FullNotTrash') + '</div>';
+                        return '<div class="text-center">' + (app.localize('FullNotTrash')) + '</div>';
                     }
                 },
                 {
@@ -195,9 +195,9 @@
                     name: 'percentStatusMetal',
                     render: function (percentStatusMetal) {
                         if (percentStatusMetal == 1) {
-                            return '<div class="text-center">' + (app.localize('FullTrash') + '</div>';
+                            return '<div class="text-center">' + (app.localize('FullTrash')) + '</div>';
                         }
-                        return '<div class="text-center">' + (app.localize('FullNotTrash') + '</div>';
+                        return '<div class="text-center">' + (app.localize('FullNotTrash')) + '</div>';
                     }
                 },
                 {
@@ -206,9 +206,9 @@
                     name: 'percentStatusOrther',
                     render: function (percentStatusOrther) {
                         if (percentStatusOrther == 1) {
-                            return '<div class="text-center">' + (app.localize('FullTrash') + '</div>';
+                            return '<div class="text-center">' + (app.localize('FullTrash')) + '</div>';
                         }
-                        return '<div class="text-center">' + (app.localize('FullNotTrash') + '</div>';
+                        return '<div class="text-center">' + (app.localize('FullNotTrash')) + '</div>';
                     }
                 },
                 {

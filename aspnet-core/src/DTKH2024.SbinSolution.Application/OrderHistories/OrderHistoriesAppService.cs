@@ -90,7 +90,8 @@ namespace DTKH2024.SbinSolution.OrderHistories
                                      UserName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                                      TransactionBinTransactionCode = s2 == null || s2.TransactionCode == null ? "" : s2.TransactionCode.ToString(),
                                      WareHouseGiftCode = s3 == null || s3.Code == null ? "" : s3.Code.ToString(),
-                                     HistoryTypeName = s4 == null || s4.Name == null ? "" : s4.Name.ToString()
+                                     HistoryTypeName = s4 == null || s4.Name == null ? "" : s4.Name.ToString(),
+                                     o.CreationTime
                                  };
 
             var totalCount = await filteredOrderHistories.CountAsync();
@@ -109,11 +110,12 @@ namespace DTKH2024.SbinSolution.OrderHistories
                         Reason = o.Reason,
                         Point = o.Point,
                         Id = o.Id,
+                        CreationTime = o.CreationTime.ToString("dd/MM/yyyy HH:mm:ss")
                     },
                     UserName = o.UserName,
                     TransactionBinTransactionCode = o.TransactionBinTransactionCode,
                     WareHouseGiftCode = o.WareHouseGiftCode,
-                    HistoryTypeName = o.HistoryTypeName
+                    HistoryTypeName = o.HistoryTypeName,
                 };
 
                 results.Add(res);

@@ -18,6 +18,7 @@ namespace DTKH2024.SbinSolution.OrderHistories.Dtos
         public int? WareHouseGiftId { get; set; }
 
         public int HistoryTypeId { get; set; }
+        public string CreationTime { get; set; }
 
     }
 }

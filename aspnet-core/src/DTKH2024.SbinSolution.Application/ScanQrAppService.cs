@@ -53,27 +53,32 @@ namespace DTKH2024.SbinSolution
             {
                 throw new UserFriendlyException("Transaction not found.");
             }
-            else if (transactionBin.UserId != null && transactionBin.UserId != userCurrent.Id)
+            else if (transactionBin.UserId != null && transactionBin.UserId != userCurrent.Id && transactionBin.TransactionStatusId == AppConsts.TransactionStatusIdSuccess)
             {
                 throw new UserFriendlyException("Error. This QR code has already been used on another account.");
             }
+            else if (transactionBin.TransactionStatusId == AppConsts.TransactionStatusIdSuccess)
+            {
+                throw new UserFriendlyException("Error. This QR code has already been used.");
+
+            }
             // Update transaction bin
             transactionBin.TransactionStatusId = AppConsts.TransactionStatusIdSuccess;
-            transactionBin.UserId = userCurrent.Id;
             await _transactionBinRepository.UpdateAsync(transactionBin);
             // Calculate point
             var point = (int)(transactionBin.PlastisPoint + transactionBin.MetalPoint + transactionBin.ErrorPoint); 
             // Get history type
-            var historyType = await _historyTypeRepository.FirstOrDefaultAsync(AppConsts.HistoryType_DoiQua)
+            var historyType = await _historyTypeRepository.FirstOrDefaultAsync(AppConsts.HistoryType_TichDiem)
                    ?? throw new UserFriendlyException("An error occurred, please try again later.");
             // Create order history
             var orderHistory = new OrderHistory
             {
-                Description = historyType.Name,
+                Description = historyType.Name + " với giao dịch " + transactionBin.TransactionCode,
                 Point = point,
                 UserId = userId,
-                HistoryTypeId = historyType.Id,
-                TransactionBinId = transactionBin.Id
+                HistoryTypeId = historyType.Id, 
+                TransactionBinId = transactionBin.Id,
+                Reason = historyType.Description
             };
             await _orderHistoryRepository.InsertAsync(orderHistory);
             // Update point

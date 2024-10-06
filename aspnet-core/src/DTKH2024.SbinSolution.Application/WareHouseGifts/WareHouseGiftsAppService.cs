@@ -64,7 +64,7 @@ namespace DTKH2024.SbinSolution.WareHouseGifts
                 .OrderBy(input.Sorting ?? "id asc")
             .PageBy(input);
 
-          
+
 
 
             var wareHouseGifts = from o in pagedAndFilteredWareHouseGifts
@@ -81,7 +81,9 @@ namespace DTKH2024.SbinSolution.WareHouseGifts
                                      o.IsUsed,
                                      Id = o.Id,
                                      UserName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
-                                     ProductPromotionPromotionCode = s2 == null || s2.PromotionCode == null ? "" : s2.PromotionCode.ToString()
+                                     ProductPromotionPromotionCode = s2 == null || s2.PromotionCode == null ? "" : s2.PromotionCode.ToString(),
+                                     o.CreationTime,
+                                     o.LastModificationTime
                                  };
 
             var totalCount = await filteredWareHouseGifts.CountAsync();
@@ -99,9 +101,11 @@ namespace DTKH2024.SbinSolution.WareHouseGifts
                         Code = o.Code,
                         IsUsed = o.IsUsed,
                         Id = o.Id,
+                        CreationTime = o.CreationTime.ToString("dd/MM/yyyy HH:mm:ss"),
+                        LastModificationTime = o.LastModificationTime == null ? string.Empty : ((DateTime)o.LastModificationTime).ToString("dd/MM/yyyy HH:mm:ss"),
                     },
                     UserName = o.UserName,
-                    ProductPromotionPromotionCode = o.ProductPromotionPromotionCode
+                    ProductPromotionPromotionCode = o.ProductPromotionPromotionCode,
                 };
 
                 results.Add(res);

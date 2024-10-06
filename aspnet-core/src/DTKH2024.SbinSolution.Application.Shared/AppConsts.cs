@@ -59,6 +59,7 @@ namespace DTKH2024.SbinSolution
         public const int UserIdAdmin = 2;
         public const int RoleIdUser = 3;
         public const int HistoryType_DoiQua = 1;
+        public const int HistoryType_TichDiem = 2;
         public const string keyPerfixWareHouseGift = "WHG.";
         public const string keyPerfixProductPromotion = "PMO_";
         public const string keyPerfixTransactionBins = "SB.";

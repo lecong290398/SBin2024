@@ -21,7 +21,8 @@
 #qr-reader {
     background: #fff;
     border: 1px dashed #20914f !important;
-    width: 100%;
+    width: 800px;
+    height: 480px
     border-radius: 20px;
     overflow: hidden;
     margin: 55px 0;
@@ -43,6 +44,14 @@
 }
 #qr-reader video {
     width: 100%;
+}
+
+/* Mobile & Tablet */
+@@media (max-width: 1023px) {
+    /* QR Scaner*/
+    #qr-reader {
+        width: 100% !important;
+    }
 }
 </style>
 <!-- QR Scanner -->

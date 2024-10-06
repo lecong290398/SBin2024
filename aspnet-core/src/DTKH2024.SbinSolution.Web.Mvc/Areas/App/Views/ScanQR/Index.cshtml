@@ -7,6 +7,12 @@
 <abp-page-subheader title='@L("ScanQR")' description='@L("ScanQRHeaderInfo")'>
 </abp-page-subheader>
 
+    <script src="https://unpkg.com/html5-qrcode"></script>
+@section Scripts {
+        <script src="~/view-resources/areas/app/views/scanqr/index.min.js"></script>
+    <script src="~/view-resources/areas/app/views/scanqr/index.js"></script>
+}
+
 <div class="@(await GetContainerClass())">
     <div id="qr-reader"></div>
     <div id="qr-reader-results"></div>
@@ -41,22 +47,3 @@
 }
 </style>
 <!-- QR Scanner -->
-<script src="https://unpkg.com/html5-qrcode"></script>
-<script>
-// QR Scanner
-var resultContainer = document.getElementById('qr-reader-results');
-var lastResult, countResults = 0;
-function onScanSuccess(decodedText, decodedResult) {
-    if (decodedText !== lastResult) {
-        ++countResults;
-        lastResult = decodedText;
-        // Handle on success condition with the decoded message.
-        console.log(`Scan result ${decodedText}`, decodedResult);
-        window.location.href = `${decodedText}`;
-        resultContainer.innerHTML = `<a style="color: var(--dark-blue);" href="${decodedText}">Your QR Code is: ${decodedText}</a>`
-    }
-}
-var html5QrcodeScanner = new Html5QrcodeScanner(
-    "qr-reader", { fps: 10, qrbox: 250 });
-html5QrcodeScanner.render(onScanSuccess);
-</script>

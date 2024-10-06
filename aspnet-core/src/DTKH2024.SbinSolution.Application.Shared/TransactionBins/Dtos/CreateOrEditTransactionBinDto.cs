@@ -27,13 +27,13 @@ namespace DTKH2024.SbinSolution.TransactionBins.Dtos
 
     }
 
-    public class CreateTransactionDeviceBinDto : EntityDto<int?>
+public class CreateTransactionDeviceBinDto : EntityDto<int?>
     {
-        public int PlastisQuantity { get; set; }
+        public int PlasticQuantity { get; set; }
 
         public int MetalQuantity { get; set; }
 
-        public int OrtherQuantity { get; set; }
+        public int OtherQuantity { get; set; }
 
         public int DeviceId { get; set; }
 

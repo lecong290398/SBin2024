@@ -94,7 +94,8 @@ namespace DTKH2024.SbinSolution.TransactionBins
                                       Id = o.Id,
                                       DeviceName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
                                       UserName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
-                                      TransactionStatusName = s3 == null || s3.Name == null ? "" : s3.Name.ToString()
+                                      TransactionStatusName = s3 == null || s3.Name == null ? "" : s3.Name.ToString(),
+                                      o.CreationTime
                                   };
 
             var totalCount = await filteredTransactionBins.CountAsync();
@@ -117,6 +118,7 @@ namespace DTKH2024.SbinSolution.TransactionBins
                         ErrorPoint = o.ErrorPoint,
                         TransactionCode = o.TransactionCode,
                         Id = o.Id,
+                        CreationTime = o.CreationTime.ToString("dd/MM/yyyy HH:mm:ss")
                     },
                     DeviceName = o.DeviceName,
                     UserName = o.UserName,
@@ -352,8 +354,10 @@ namespace DTKH2024.SbinSolution.TransactionBins
             var inputCreate = new CreateOrEditTransactionBinDto();
             // Calculate point
             inputCreate.MetalPoint = input.MetalQuantity * device.MetalPoint;
-            inputCreate.PlastisPoint = input.PlastisQuantity * device.PlastisPoint;
-            inputCreate.ErrorPoint = input.OrtherQuantity * device.ErrorPoint;
+            inputCreate.MetalQuantity = input.MetalQuantity;
+            inputCreate.PlastisPoint = input.PlasticQuantity * device.PlastisPoint;
+            inputCreate.PlastisQuantity = input.PlasticQuantity;
+            inputCreate.ErrorPoint = input.OtherQuantity * device.ErrorPoint;
             inputCreate.DeviceId = input.DeviceId;
             // Set transaction status wait
             inputCreate.TransactionStatusId = AppConsts.TransactionStatusIdWait;

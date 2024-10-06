@@ -231,6 +231,11 @@
                     data: 'userName',
                     name: 'userFk.name',
                 },
+                {
+                    targets: 14,
+                    data: 'device.lastModificationTime',
+                    name: 'lastModificationTime',
+                },
             ],
         });
 

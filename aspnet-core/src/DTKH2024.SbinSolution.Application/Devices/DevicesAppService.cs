@@ -86,7 +86,9 @@ namespace DTKH2024.SbinSolution.Devices
                               o.Address,
                               Id = o.Id,
                               StatusDeviceName = s1 == null || s1.Name == null ? "" : s1.Name.ToString(),
-                              UserName = s2 == null || s2.Name == null ? "" : s2.Name.ToString()
+                              UserName = s2 == null || s2.Name == null ? "" : s2.Name.ToString(),
+                              o.LastModificationTime,
+                              o.CreationTime
                           };
 
             var totalCount = await filteredDevices.CountAsync();
@@ -112,6 +114,7 @@ namespace DTKH2024.SbinSolution.Devices
                         ErrorPoint = o.ErrorPoint,
                         Address = o.Address,
                         Id = o.Id,
+                        LastModificationTime = o.LastModificationTime == null ? o.CreationTime.ToString("dd/MM/yyyy HH:mm:ss") : ((DateTime)o.LastModificationTime).ToString("dd/MM/yyyy HH:mm:ss")
                     },
                     StatusDeviceName = o.StatusDeviceName,
                     UserName = o.UserName

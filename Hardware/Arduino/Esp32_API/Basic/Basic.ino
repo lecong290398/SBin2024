@@ -1,6 +1,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
+#include <ESPAsyncWebServer.h>
 
 #pragma region Config Variables
 // Thông tin WiFi
@@ -10,14 +11,14 @@ const char *deviceID = "1";        // ID của thiết bị
 // Địa chỉ URL API
 const char *apiUrlTokenAuth = "https://app.sbin.edu.vn/api/TokenAuth/Authenticate";                                          // URL API lấy token
 const char *apiUrlTransactionBins = "https://app.sbin.edu.vn/api/services/app/TransactionBins/CreateDevice_TransactionBins"; // URL API tạo transaction bins
-const char *apiUrlUpdateDeviceForBin = "https://app.sbin.edu.vn/api/services/app/Devices/EditStatusBinTrashDevice";                // URL API cập nhật trạng thái thiết bị
+const char *apiUrlUpdateDeviceForBin = "https://app.sbin.edu.vn/api/services/app/Devices/EditStatusBinTrashDevice";          // URL API cập nhật trạng thái thiết bị
 // Thông tin user
 const char *user = "linhtrungsbin01";       // Tên đăng nhập
 const char *pass = "123qwe";                // Mật khẩu
 unsigned long previousMillis = 0;           // Lưu trữ thời gian lần cuối hàm GetToken được gọi
 unsigned long interval = 0;                 // Khoảng thời gian giữa các lần lấy token (tính bằng mili giây)
 unsigned long CallAPICreateTransaction = 0; // Lưu trữ thời gian lần cuối hàm CreateDeviceTransactionBins được gọi
-// Object chứa token  
+// Object chứa token
 struct TokenData
 {
   String accessToken;
@@ -87,24 +88,24 @@ TokenData createTokenFromJson(const String &jsonString)
 }
 
 // Hàm gọi API PUT
-void callUpdateStatusAPI( int percentPlastics, int percentMetal, int percentOther)
+void callUpdateStatusAPI(int percentPlastics, int percentMetal, int percentOther)
 {
   if (WiFi.status() == WL_CONNECTED)
   { // Kiểm tra xem đã kết nối WiFi chưa
     HTTPClient http;
-    http.begin(apiUrlUpdateDeviceForBin);               // URL API
+    http.begin(apiUrlUpdateDeviceForBin); // URL API
     String dataToken = "Bearer " + _tokenData.accessToken;
     http.addHeader("Content-Type", "application/json");
     http.addHeader("accept", "text/plain");
     http.addHeader("Authorization", dataToken);
     // Tạo payload JSON
     String jsonData = "{";
-    jsonData += "\"id\":\"" + String(deviceID)  + "\",";
+    jsonData += "\"id\":\"" + String(deviceID) + "\",";
     jsonData += "\"percentStatusPlastis\":" + String(percentPlastics) + ",";
     jsonData += "\"percentStatusMetal\":" + String(percentMetal) + ",";
     jsonData += "\"percentStatusOrther\":" + String(percentOther);
     jsonData += "}";
-    int httpResponseCode = http.POST(jsonData);  // Gửi yêu cầu POST
+    int httpResponseCode = http.POST(jsonData); // Gửi yêu cầu POST
     if (httpResponseCode > 0)
     {
       // Kiểm tra kết quả trả về
@@ -226,12 +227,81 @@ TokenData GetToken()
 
 #pragma endregion
 
+#pragma region DEMO RESET
+
+// Biến lưu trữ trạng thái rác
+int percentPlastis = 50;
+int percentMetal = 30;
+int percentOther = 20;
+AsyncWebServer server(80);
+
+// Hàm tạo HTML cho trang web
+String generateHTML()
+{
+  String html = "<html>\
+                  <head>\
+                    <title>ESP32 Reset Values</title>\
+                  </head>\
+                  <body>\
+                    <h2>ESP32 Reset Trash Status</h2>\
+                    <p>Percent Plastis: " +
+                String(percentPlastis) + "%</p>\
+                    <p>Percent Metal: " +
+                String(percentMetal) + "%</p>\
+                    <p>Percent Other: " +
+                String(percentOther) + "%</p>\
+                    <button onclick=\"resetValues()\">Reset Values</button>\
+                    <script>\
+                      function resetValues() {\
+                        fetch('/reset').then(() => {\
+                          window.location.reload();\
+                        });\
+                      }\
+                    </script>\
+                  </body>\
+                </html>";
+  return html;
+}
+
+// Hàm khởi tạo server
+void initServer()
+{
+  // Cung cấp trang HTML khi truy cập root "/"
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
+            {
+    String html = generateHTML();  // Gọi hàm tạo HTML
+    request->send(200, "text/html", html); });
+
+  // Xử lý yêu cầu reset các giá trị về 0
+  server.on("/reset", HTTP_GET, [](AsyncWebServerRequest *request)
+            {
+    resetValues();  // Gọi hàm reset
+    request->send(200, "text/plain", "Values Reset to 0"); });
+
+  // Khởi động server
+  server.begin();
+  Serial.println("HTTP server started");
+}
+
+// Hàm reset các giá trị về 0
+void resetValues()
+{
+  percentPlastis = 0;
+  percentMetal = 0;
+  percentOther = 0;
+  Serial.println("Values have been reset to 0");
+}
+
+#pragma endregion
+
 void setup()
 {
   // Khởi tạo Serial
   Serial.begin(115200);
   // Kết nối WiFi
   connectWiFi();
+  // Khởi tạo server và cung cấp trang web
+  initServer();
 }
 
 void loop()
@@ -243,9 +313,9 @@ void loop()
   if (_tokenData.accessToken != nullptr && CallAPICreateTransaction == 0)
   {
     Serial.println("CreateDevice Transaction Bins.............");
-    CreateDeviceTransactionBins(3,2,1);
+    CreateDeviceTransactionBins(3, 2, 1);
     Serial.println("Update Transaction Bins.............");
-    callUpdateStatusAPI(0,1,0);
+    callUpdateStatusAPI(0, 1, 0);
     // Gán CallAPICreateTransaction = 1 để không gọi lại hàm CreateDeviceTransactionBins
     CallAPICreateTransaction = 1;
   }

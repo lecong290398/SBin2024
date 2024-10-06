@@ -24,6 +24,7 @@ namespace DTKH2024.SbinSolution.TransactionBins.Dtos
         public long? UserId { get; set; }
 
         public int TransactionStatusId { get; set; }
+        public string CreationTime { get; set; }
 
     }
 }

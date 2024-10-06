@@ -189,7 +189,12 @@
           targets: 11,
           data: 'transactionStatusName',
           name: 'transactionStatusFk.name',
-        },
+          },
+          {
+              targets: 12,
+              data: 'transactionBin.creationTime',
+              name: 'creationTime',
+          },
       ],
     });
 

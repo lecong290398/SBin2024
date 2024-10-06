@@ -90,7 +90,9 @@ void setup()
         // Kết nối WiFi
         Serial.printf("-------- Start WIFI RUN --------\n");
         connectWiFi();
-    }else{
+    }
+    else
+    {
         Serial.printf("-------- Start OFFLINE MODE --------\n");
     }
 }
@@ -283,6 +285,13 @@ void processPage(int pageNum)
         setStatusOther();
         break;
     case 2:
+
+        // Function to process different pages
+        if (sensorStatusBinMetal == 1 && sensorStatusBinPlastic == 1 && sensorStatusBinOther == 1)
+        {
+            dwc.setPage(0);
+        }
+
         Serial.println("Page 2");
 
         // Check if the command is to start the process
@@ -305,6 +314,10 @@ void processPage(int pageNum)
             Serial.print("GET Cmd_KetThucQuyTrinh Page ID 2");
             Serial2.println(Cmd_KetThucQuyTrinh);
             if (countMetalTrash == 0 && countPlasticTrash == 0 && countOtherTrash == 0)
+            {
+                dwc.setPage(5);
+            }
+            else if (sensorStatusBinMetal == 1 && sensorStatusBinPlastic == 1 && sensorStatusBinOther == 1)
             {
                 dwc.setPage(5);
             }

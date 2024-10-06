@@ -51,20 +51,21 @@ const char *deviceID = "1";        // ID của thiết bị
 // Địa chỉ URL API
 const char *apiUrlTokenAuth = "https://app.sbin.edu.vn/api/TokenAuth/Authenticate";                                          // URL API lấy token
 const char *apiUrlTransactionBins = "https://app.sbin.edu.vn/api/services/app/TransactionBins/CreateDevice_TransactionBins"; // URL API tạo transaction bins
-const char *apiUrlUpdateDeviceForBin = "https://app.sbin.edu.vn/api/services/app/Devices/EditStatusBinTrashDevice";                // URL API cập nhật trạng thái thiết bị
+const char *apiUrlUpdateDeviceForBin = "https://app.sbin.edu.vn/api/services/app/Devices/EditStatusBinTrashDevice";          // URL API cập nhật trạng thái thiết bị
 // Thông tin user
 const char *user = "linhtrungsbin01";       // Tên đăng nhập
 const char *pass = "123qwe";                // Mật khẩu
 unsigned long previousMillis = 0;           // Lưu trữ thời gian lần cuối hàm GetToken được gọi
 unsigned long interval = 0;                 // Khoảng thời gian giữa các lần lấy token (tính bằng mili giây)
 unsigned long CallAPICreateTransaction = 0; // Lưu trữ thời gian lần cuối hàm CreateDeviceTransactionBins được gọi
-unsigned long transactionStatusId =1;
-// Object chứa token  
+unsigned long transactionStatusId = 1;
+unsigned long isOffline = 0;
+// Object chứa token
 struct TokenData
 {
-  String accessToken;
-  String refreshToken;
-  long expireInSeconds;
+    String accessToken;
+    String refreshToken;
+    long expireInSeconds;
 };
 TokenData _tokenData; // Default constructor
 #pragma endregion
@@ -84,15 +85,23 @@ void setup()
     Serial.printf("-----------------------------------------------\n");
     // Initialize Serial2 for communication with the display broad control MEGA 2650
     Serial2.begin(9600, SERIAL_8N1, RXD3, TXD3);
-    // Kết nối WiFi
-    Serial.printf("-------- Start WIFI RUN --------\n");
-    connectWiFi();
+    if (isOffline == 0)
+    {
+        // Kết nối WiFi
+        Serial.printf("-------- Start WIFI RUN --------\n");
+        connectWiFi();
+    }else{
+        Serial.printf("-------- Start OFFLINE MODE --------\n");
+    }
 }
 
 void loop()
 {
-    // Gọi hàm GetToken
-    HandlerToken();
+    if (isOffline == 0)
+    {
+        // Gọi hàm GetToken
+        HandlerToken();
+    }
     // Get the current page number
     uint8_t pageNum = dwc.getPage();
     // Process the current page
@@ -293,7 +302,7 @@ void processPage(int pageNum)
         }
         else if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
         {
-            Serial.print("GET Cmd_KetThucQuyTrinh 22222");
+            Serial.print("GET Cmd_KetThucQuyTrinh Page ID 2");
             Serial2.println(Cmd_KetThucQuyTrinh);
             if (countMetalTrash == 0 && countPlasticTrash == 0 && countOtherTrash == 0)
             {
@@ -312,7 +321,7 @@ void processPage(int pageNum)
         }
         else if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
         {
-            Serial.print("GET Cmd_KetThucQuyTrinh 33333");
+            Serial.print("GET Cmd_KetThucQuyTrinh Page ID 3");
             dwc.setPage(4);
         }
         break;
@@ -416,7 +425,7 @@ TokenData createTokenFromJson(const String &jsonString)
 // Hàm gọi API PUT
 void callUpdateStatusAPI(int percentPlastics, int percentMetal, int percentOther)
 {
-    if (WiFi.status() == WL_CONNECTED)
+    if (WiFi.status() == WL_CONNECTED && isOffline == 0)
     { // Kiểm tra xem đã kết nối WiFi chưa
         HTTPClient http;
         http.begin(apiUrlUpdateDeviceForBin); // URL API
@@ -447,14 +456,21 @@ void callUpdateStatusAPI(int percentPlastics, int percentMetal, int percentOther
     }
     else
     {
-        Serial.println("WiFi not connected");
+        if (isOffline == 1)
+        {
+            Serial.println("Bạn đang ở mode Offline ~ callUpdateStatusAPI");
+        }
+        else
+        {
+            Serial.println("WiFi not connected");
+        }
     }
 }
 
 // Hàm tạo transaction bins
-void CreateDeviceTransactionBins(int plasticQuantity, int metalQuantity, int otherQuantity )
+void CreateDeviceTransactionBins(int plasticQuantity, int metalQuantity, int otherQuantity)
 {
-    if (WiFi.status() == WL_CONNECTED)
+    if (WiFi.status() == WL_CONNECTED && isOffline == 0)
     {
         HTTPClient http;
         // Chuẩn bị kết nối tới server
@@ -523,7 +539,14 @@ void CreateDeviceTransactionBins(int plasticQuantity, int metalQuantity, int oth
     }
     else
     {
-        Serial.println("Không kết nối được tới WiFi");
+        if (isOffline == 1)
+        {
+            Serial.println("Bạn đang ở mode Offline ~ CreateDeviceTransactionBins");
+        }
+        else
+        {
+            Serial.println("Không kết nối được tới WiFi");
+        }
     }
 }
 

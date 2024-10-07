@@ -138,7 +138,6 @@ static void RcServoTangGoc()
 #define DenCoNguoi_On HIGH
 #define DenCoNguoi_Off LOW
 //- khi cảm biến có người (pin 46)  thì bật đèn lên (A8)
-const unsigned long delayThoiGian = 10000; // 10 giây (10,000ms)
 bool denDangBat = false;                   // Trạng thái hiện tại của đèn
 static void CoNguoiBatDen()
 {
@@ -179,7 +178,7 @@ static bool RacKimLoai()
     {
         return true;
     }
-    return false
+    return false;
 }
 
 #define CamBienNhua buttonPin

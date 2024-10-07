@@ -59,7 +59,7 @@ unsigned long previousMillis = 0;           // Lưu trữ thời gian lần cu�
 unsigned long interval = 0;                 // Khoảng thời gian giữa các lần lấy token (tính bằng mili giây)
 unsigned long CallAPICreateTransaction = 0; // Lưu trữ thời gian lần cuối hàm CreateDeviceTransactionBins được gọi
 unsigned long transactionStatusId = 1;
-unsigned long isOffline = 0;
+unsigned long isOffline = 1;
 // Object chứa token
 struct TokenData
 {
@@ -555,6 +555,11 @@ void CreateDeviceTransactionBins(int plasticQuantity, int metalQuantity, int oth
         if (isOffline == 1)
         {
             Serial.println("Bạn đang ở mode Offline ~ CreateDeviceTransactionBins");
+            dwc.setAddress(0x9910, 0x1099);
+            dwc.setUiType(ASCII);
+            dwc.sendData("999");
+            handlePage4or5(0x4010, 0x1410, 5, 10);
+
         }
         else
         {

@@ -1,5 +1,5 @@
-#define dirPin 30 // STEP 1 DÙNG CHO BĂNG TẢI
-#define stepPin 31
+#define dirPin 7 // STEP 1 DÙNG CHO BĂNG TẢI
+#define stepPin 29
 
 #define dirPin2 5 // STEP 2 DÙNG CHO TAY GẠT RÁC KIM LOẠI
 #define stepPin2 23

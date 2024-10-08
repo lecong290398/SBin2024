@@ -2,163 +2,121 @@
 <link rel="stylesheet" href="~/Sbin/assets/css/timeline.min.css"></link> 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
-  
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<div id="about">
-    <div class="grid wide">
-        <h2 class="heading__h3">
-            About Us</h3>
-            <h1 class="heading__h1">Who we are</h1>
-    </div>
-    <div class="grid wide essay">
-        <h3 class="heading__h3">OUR VISION</h3>
-        <p class="paragraph">At S-Bin, our team of dedicated engineers is the driving force behind our innovative waste sorting and QR code reward system. Our engineers come from diverse backgrounds in environmental science, mechanical engineering, and computer science, bringing a wealth of knowledge and expertise to the table. They are passionate about sustainability and committed to creating cutting-edge technology that simplifies recycling and promotes environmental responsibility. Through rigorous research and development, our engineers have designed the S-Bin to be both user-friendly and highly efficient, ensuring that it meets the highest standards of performance and reliability. Their unwavering dedication to excellence and innovation is what sets S-Bin apart as a leader in waste management solutions. Join us in applauding the brilliant minds behind S-Bin, who are making a significant impact on our journey towards a cleaner, greener future.</p>
-        <h3 class="heading__h3">OUR PRODUCT</h3>
-        <p class="paragraph">Introducing our state-of-the-art electronic waste bin, the S-Bin E-Core, revolutionizing waste management with its cutting-edge features. The S-Bin E-Core is more than just a receptacle; it's a sophisticated system designed to streamline recycling efforts while incentivizing environmentally conscious behavior. Equipped with advanced sensors and sorting technology, the S-Bin E-Core automatically categorizes recyclable materials upon disposal, ensuring efficient waste segregation. What sets the S-Bin E-Core apart is its seamless integration of QR code scanning functionality. Users can simply scan the QR code on the bin using their smartphones to earn reward points for their eco-friendly actions. These points can then be redeemed for a variety of rewards, motivating individuals to actively participate in recycling initiatives. With the S-Bin E-Core, sustainability meets convenience, making it the ultimate solution for modern waste management needs.</p>
-    </div>
-    <div class="grid wide essay">
-            <!-- Slider main container -->
-            <div class="swiper">
-                <!-- Additional required wrapper -->
-                <div class="swiper-wrapper">
-                    <!-- Slides -->
-                    <div class="swiper-slide">
-                        <img src="~/Sbin/assets/img/background/example.png" alt="">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/Sbin/assets/img/background/example.png" alt="">
-                    </div>
-                    <div class="swiper-slide">
-                        <img src="~/Sbin/assets/img/background/example.png" alt="">
-                    </div>
-                </div>
-                <div class="swiper-pagination"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-button-next"></div>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<main id="main">
+        <div id="slider">
+            <div class="slider-overlay"></div>
+            <div class="text-content">
+                <h2 data-aos="fade-down" data-aos-duration="2000" class="text-heading">THÙNG RÁC THÔNG MINH - SBIN - PHÂN LOẠI RÁC THẢI TẠI NGUỒN, TÍCH HỢP HỆ THỐNG QUẢN LÝ TÍCH ĐIỂM</h2>
+                <p data-aos="fade-down" data-aos-duration="1000" class="text-description">SAVE EARTH SAVE US</p>
             </div>
         </div>
-    <div class="grid wide">
-        <section class="cd-horizontal-timeline">
-            <div class="timeline">
-                <div class="events-wrapper">
-                    <div class="events">
-                        <ol>
-                            <li><a href="#0" data-date="16/01/2024" class="selected">16 Jan</a></li>
-                            <li><a href="#0" data-date="28/02/2024">28 Feb</a></li>
-                            <li><a href="#0" data-date="20/04/2024">20 Mar</a></li>
-                            <li><a href="#0" data-date="20/05/2024">20 May</a></li>
-                            <li><a href="#0" data-date="09/07/2024">09 Jul</a></li>
-                            <li><a href="#0" data-date="30/08/2024">30 Aug</a></li>
-                            <li><a href="#0" data-date="15/09/2024">15 Sep</a></li>
-                            <li><a href="#0" data-date="01/11/2024">01 Nov</a></li>
-                            <li><a href="#0" data-date="10/12/2024">10 Dec</a></li>
-                            <li><a href="#0" data-date="19/01/2025">29 Jan</a></li>
-                            <li><a href="#0" data-date="03/03/2025">3 Mar</a></li>
-                        </ol>
-
-                        <span class="filling-line" aria-hidden="true"></span>
-                    </div> <!-- .events -->
-                </div> <!-- .events-wrapper -->
-
-                <ul class="cd-timeline-navigation">
-                    <li><a href="#0" class="prev inactive">Prev</a></li>
-                    <li><a href="#0" class="next">Next</a></li>
-                </ul> <!-- .cd-timeline-navigation -->
-            </div> <!-- .timeline -->
-
-            <div class="events-content">
-                <ol>
-                    <li class="selected" data-date="16/01/2024">
-                        <h2>The Idea</h2>
-                        <em>January 16th, 2024</em>
-                        <p>
-                            This phase began with our recognition of the significant problem of waste management and the adverse effects of unmanaged waste on the environment. From initial rough ideas, we began researching and developing the concept of a smart trash bin.
-                        </p>
+        <div class="grid wide">
+            <div class="content-section">
+                <div class="row flex-center">
+                    <div data-aos="fade-right" class="col l-6 m-6 c-12">
+                        <img class="section__img" src="~/Sbin/assets/img/about/Picture1.jpg">
+                    </div>
+                    <div data-aos="fade-left" class="col l-6 m-6 c-12">
+                        <h1 class="section__heading black">Thực trạng rác thải</h1>
+                        <div class="section__text">
+                            <p class="paragraph">Hiện nay, Việt Nam đang thải ra môi trường khoảng 60.000 tấn rác sinh hoạt một ngày, trong đó khoảng 60% là rác thải sinh hoạt đô thị. Tại thành phố Hồ Chí Minh, mỗi ngày phát sinh khoảng 10.000 tấn rác thải sinh hoạt đô thị. Thành phố đã kêu gọi được nhiều nhà đầu tư xử lý rác thải hàng chục năm trước nhưng chủ yếu là dùng phương pháp chôn lấp. Hiện nay hầu hết các bãi rác này đã sắp quá tải và đang hàng ngày gây ô nhiễm môi trường nghiêm trọng như bãi rác Đa Phước hay khu xử lý Tây Bắc thuộc huyện Củ Chi. Rác thải hiện nay đang là một vấn đề nan giải của xã hội và môi trường. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-section">
+                <div class="row flex-center">
+                    <div class="col l-6 m-6 c-12">
+                        <h1 class="section__heading">Phân Loại Rác Thải</h1>
+                        <div class="section__text">
+                            <p class="paragraph">Phân loại rác thải tại nguồn là một trong những hành động cơ bản nhất, đơn giản nhất để bước đầu giải bài toán bảo vệ môi trường. Rác thải nếu chỉ chôn lấp thông thường sẽ gây rất nhiều lãng phí như: tốn diện tích lớn cho việc xây dựng, chi phí vận hành các bãi chôn lấp; nguy cơ gây ô nhiễm môi trường... Ngoài ra, các nguồn nguyên liệu có thể tái chế như: giấy, nhựa, kim loại… cũng bị vùi chôn trong đất mà theo tính toán phải mất hàng trăm năm sau mới có thể phân hủy. Phân loại rác thải tại nguồn nếu được thực hiện tốt sẽ làm giảm chi phí, tạo thuận lợi hơn cho quá trình xử lý, tái chế và làm giảm tác động tới môi trường. </p>
+                            <p class="paragraph">Việc ứng dụng khoa học kỹ thuật vào phân loại rác thải tại nguồn trở thành tất yếu trong bối cảnh hiện nay.</p>
+                        </div>
+                    </div>
+                    <div class="col l-6 m-6 c-12">
+                        <img class="section__img" src="~/Sbin/assets/img/about/Picture4.png">
+                    </div>
+                </div>
+            </div>
+            <div class="content-section">
+                <div class="text-center">
+                    <div class="about_us">
+                        <h2 class="section__heading">Về chúng tôi</h2>
+                        <h1 class="section__heading">Tầm nhìn và sứ mệnh</h1>
+                    </div>
+                </div>
+                <div class="row flex-center">
+                    <div class="col l-6 m-6 c-12">
+                        <img class="section__img" src="~/Sbin/assets/img/about/Picture5.png">
+                    </div>
+                    <div class="col l-6 m-6 c-12 about_us__content">
+                        <h1 class="section__heading">Tầm nhìn</h1>
+                        <div class="section__text">
+                            <p class="paragraph">Chúng tôi hướng tới mục tiêu Việt Nam trở thành quốc gia đi đầu trong việc bảo vệ môi trường, bắt đầu từ việc phân loại rác thải tại nguồn. Chúng tôi mong muốn rằng với giải pháp Thùng rác thông minh – SBIN – tự động phân loại rác thải sẽ tạo ra một làn sóng mới lan rộng khắp cả nước cũng như trên toàn thế giới về ý thức bảo vệ môi trường. Khát vọng của chúng tôi hướng tới một hành tinh xanh, sạch, đẹp, không còn những bãi chôn lấp rác quá tải, không còn những đại dương ngập tràn rác nhựa.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row flex-center" style="margin-top: 40px;">
+                    <div class="col l-6 m-6 c-12">
+                        <div class="text-center section__img--overlay">
+                            <img class="section__img sbin" src="~/Sbin/assets/img/about/Picture7.png">
+                        </div>
+                    </div>
+                    <div class="col l-6 m-6 c-12 about_us__content">
+                        <h1 class="section__heading">Sứ mệnh</h1>
+                        <div class="section__text">
+                            <p class="paragraph">Chúng tôi hướng tới phát triển SBIN trở thành một sản phẩm quen thuộc với người dân Thành phố Hồ Chí Minh và trên khắp đất nước Việt Nam. Sản phẩm có chức năng tự động phân loại rác kim loại, rác nhựa (hoặc giấy), rác khác. Từ đó, góp phần giảm tải khối lượng công việc của đơn vị thu gom rác, tiết kiệm chi phí thu gom, vận chuyển, xử lý.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content-section">
+                <h1 class="section__heading">Quá trình thực hiện dự án</h1>
+                <img class="section__img" src="~/Sbin/assets/img/about/Quy-trinh.png">
+                <ul class="bullet section-list">
+                    <li>
+                        <span class="sharp">Lập kế hoạch nghiên cứu:</span> Chúng tôi lập ra bản kế hoạch chi tiết về mục tiêu, vấn đề nghiên cứu, giả thuyết khoa học, phương án thiết kế sản phẩm.
+                    </li>
+                    <li>
+                        <span class="sharp">Tiến hành nghiên cứu:</span> Thực hiện thiết kế, chế tạo và thử nghiệm sản phẩm
+                    </li>
+                    <li>
+                        <span class="sharp">Kết quả:</span> Thành công chế tạo Thùng rác thông minh – SBIN – phân loại rác thải tại nguồn tích hợp hệ thống quản lý, tích điểm. 
                     </li>
 
-                    <li data-date="28/02/2024">
-                        <h2>Development starts</h2>
-                        <em>February 28th, 2024</em>
-                        <p>
-                            Subsequently, through research and discussion, we identified the necessary features for a smart trash bin, including automatic waste sorting and notification when full. We spent time analyzing modern technologies such as sensors, machine learning, and IoT to apply them to creating an efficient operational system.
-                        </p>
+                </ul>
+            </div>
+            <div class="content-section">
+            <h1 class="section__heading">BẠN SẼ NHẬN ĐƯỢC GÌ KHI SỬ DỤNG SBIN?</h1>
+            <img class="section__img" src="~/Sbin/assets/img/about/Xep-hang.png">
+                <ul class="bullet section-list">
+                    <li>
+                        <span class="sharp">Voucher, quà tặng, phần thưởng:</span> Mỗi lần bạn bỏ rác có khả năng tái chế vào SBIN thì sẽ được tích điểm. Số điểm thưởng này được dùng để đổi voucher, quà tặng, phần thưởng.
                     </li>
-
-                    <li data-date="20/04/2024">
-                        <h2>Under Devloperment</h2>
-                        <em>March 20th, 2024</em>
-                        <p>
-                            After outlining the basic concept, we started programming and testing the necessary software and hardware for the smart trash bin. Through iterative testing and refinement, we fine-tuned and perfected the product to ensure the highest stability and performance.
-                        </p>
+                    <li>
+                        <span class="sharp">Vinh danh:</span>Nếu bạn lọt top 10 người có thành tích cao nhất, bạn sẽ được vinh danh trên bảng xếp hạng đi kèm nhiều quyền lợi hấp dẫn.
                     </li>
-
-                    <li data-date="20/05/2024">
-                        <h2>Website launches</h2>
-                        <em>May 20th, 2024</em>
-                        <p>
-                            Simultaneously, we developed a user-facing website accessible to the public. This platform provided users with information about the smart trash bins, their locations, and guidelines for proper waste disposal. Users could also access real-time data on bin availability and capacity, enabling them to make informed decisions when disposing of their waste.
-                        </p>
-                    </li>
-
-                    <li data-date="09/07/2024">
-                        <h2>The future of S-Bin</h2>
-                        <em>July 9th, 2024</em>
-                        <p>
-                            Finally, with the completed product, we integrated the smart trash bin into the scientific and technical project, aiming to provide practical benefits and solve the waste management problem effectively. Simultaneously, we also set the goal of developing and deploying widespread applications of this product, from urban areas to public spaces and industrial zones, to create a cleaner and more sustainable living environment.
-                        </p>
-                    </li>
-
-                    <li data-date="30/08/2024">
-                        <h2>Coming Soon...</h2>
-                        <em>August 30th, 2024</em>
-                        <p>
-                            In the upcoming period, we intend to implement several updates to our project. These updates will encompass various aspects, including enhancements to the functionality of the smart trash bin system, improvements to the user interfaces, and optimizations for administrative operations.
-                        </p>
-                    </li>
-
-                    <li data-date="15/09/2024">
-                        <h2>Coming Soon...</h2>
-                        <em>September 15th, 2024</em>
-                        <p>
-                            In the upcoming period, we intend to implement several updates to our project. These updates will encompass various aspects, including enhancements to the functionality of the smart trash bin system, improvements to the user interfaces, and optimizations for administrative operations.
-                        </p>
-                    </li>
-
-                    <li data-date="01/11/2024">
-                        <h2>Coming Soon...</h2>
-                        <em>November 1st, 2024</em>
-                        <p>
-                            In the upcoming period, we intend to implement several updates to our project. These updates will encompass various aspects, including enhancements to the functionality of the smart trash bin system, improvements to the user interfaces, and optimizations for administrative operations.
-                        </p>
-                    </li>
-
-                    <li data-date="10/12/2024">
-                        <h2>Coming Soon...</h2>
-                        <em>December 10th, 2024</em>
-                        <p>
-                            In the upcoming period, we intend to implement several updates to our project. These updates will encompass various aspects, including enhancements to the functionality of the smart trash bin system, improvements to the user interfaces, and optimizations for administrative operations.
-                        </p>
-                    </li>
-
-                    <li data-date="19/01/2025">
-                        <h2>Coming Soon...</h2>
-                        <em>January 19th, 2025</em>
-                        <p>
-                            In the upcoming period, we intend to implement several updates to our project. These updates will encompass various aspects, including enhancements to the functionality of the smart trash bin system, improvements to the user interfaces, and optimizations for administrative operations.
-                        </p>
-                    </li>
-
-                    <li data-date="03/03/2025">
-                        <h2>Coming Soon...</h2>
-                        <em>March 3rd, 2025</em>
-                        <p>
-                            In the upcoming period, we intend to implement several updates to our project. These updates will encompass various aspects, including enhancements to the functionality of the smart trash bin system, improvements to the user interfaces, and optimizations for administrative operations.
-                        </p>
-                    </li>
-                </ol>
-            </div> <!-- .events-content -->
-        </section>
-    </div>
-</div>
+                    <li>Góp phần bảo vệ môi trường, vì một trái đất xanh – sạch – đẹp.</li>
+                    <li>Góp phần giảm thiểu chi phí thu gom, xử lí rác thải.</li>
+                    <li>Tiết kiệm tài nguyên thiên nhiên.</li>
+                </ul>
+            </div>
+            <iframe style="border-radius: 24px;" width="100%" height="600px" src="https://www.youtube.com/embed/cYzLD6oxoes?si=TWrQ5eokD-_edJ1r" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            <div class="content-section">
+                <h1 class="section__heading">Tác giả dự án</h1>
+                <ul class="bullet section-list">
+                    <li><span class="sharp">Giáo viên hướng dẫn:</span>Lê Thanh Mai</li>
+                    <li><span class="sharp">Học sinh thực hiện: </span>Phạm Tùng Quân</li>
+                    <li><span class="sharp">Học sinh thực hiện: </span>Lê Đình Đức Mạnh</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+        AOS.init();
+    </script>
 
 <script src="~/Sbin/js/about.js"></script>

@@ -1060,3 +1060,129 @@ textarea.form-control {
 .text-center {
     text-align: center;
 }
+/* ABOUT */
+#slider {
+    padding-top: 50%;
+    background-image: url(../img/about/green-earth-image-1-scaled.jpg);
+    background-position: top, center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    margin-top: -100px;
+    position: relative;
+}
+
+.slider-overlay {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: transparent;
+    background-image: linear-gradient(259deg, #6AB43E 95%, #6AB43E 98%);
+    opacity: 0.76;
+}
+
+#slider .text-content {
+    position: absolute;
+    bottom: 42%;
+    width: 100%;
+    color: var(--white-color);
+    text-align: center;
+}
+
+#slider .text-heading {
+    font-size: 60px;
+    padding: 0 180px;
+}
+
+#slider .text-description {
+    font-size: 40px;
+    margin-top: 20PX;
+}
+
+.content-section {
+    padding: 64px 16px;
+}
+
+.elementor-divider {
+    position: relative;
+}
+
+.elementor-divider__icon {
+    color: var(--green-color);
+    font-size: 24px;
+}
+
+.elementor-divider-separator::after {
+    position: absolute;
+    height: 1px;
+    width: 38px;
+    background-color: #20914f;
+    content: "";
+    left: -50px;
+    top: 50%;
+}
+
+.elementor-divider-separator::before {
+    position: absolute;
+    height: 1px;
+    width: 38px;
+    background-color: #20914f;
+    content: "";
+    left: 37px;
+    top: 50%;
+}
+
+.section__heading {
+    text-transform: uppercase;
+    color: var(--dark-green);
+}
+
+    .section__heading.black {
+        color: var(--black-color);
+    }
+
+.section__img {
+    border-radius: 24px;
+    width: 100%;
+}
+
+.section__text {
+    font-size: 18px;
+    padding: 0 25px;
+}
+
+.about_us h2 {
+    color: var(--dark-blue);
+    margin-bottom: 10px;
+    font-style: italic;
+    opacity: .8;
+    font-size: 20px;
+}
+
+.about_us h1 {
+    border-bottom: 3px solid var(--dark-green);
+    line-height: 50px;
+    margin-bottom: 50px;
+}
+
+.about_us__content h1 {
+    font-size: 23px;
+}
+
+.sbin {
+    width: 300px;
+}
+
+.section__img--overlay {
+    background-image: url('../img/about/brush.png');
+}
+
+.section-list {
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+    .section-list li {
+        line-height: 30px;
+    }

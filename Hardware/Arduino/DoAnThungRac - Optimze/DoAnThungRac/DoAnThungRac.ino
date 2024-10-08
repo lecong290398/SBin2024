@@ -161,8 +161,6 @@ static void CoNguoiBatDen()
 
     // Đọc giá trị từ cảm biến
     bool coNguoi = digitalRead(CamBienNguoi) == CamBienNguoi_On;
-      Serial.println("CoNguoiBatDen");
-      Serial.println(coNguoi);
 
     if (coNguoi)
     {

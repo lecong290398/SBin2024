@@ -337,7 +337,6 @@ static bool RacKhongXacDinhDay()
     }
 }
 
-
 #define LenhHmi_NoOp 0                      // Trạng thái không có lệnh gì
 #define LenhHmi_Run 1                       // HMI báo chuyển trạng thái mở nắp
 #define LenhHmi_Run_MaxTimeKhongCoRac 10000 // Thời gian tối đa liên tục không có rác
@@ -513,7 +512,6 @@ void setup()
 
 void loop()
 {
-
     //- khi cảm biến có người (pin 46)  thì bật đèn lên (A8)
     CoNguoiBatDen();
 
@@ -537,31 +535,36 @@ void loop()
 
     // Xử lý khi có rác
     // Chờ 2 s đe xác định loại rác;
-    delay(50);
+    delay(100);
+
+    // Check rac đầy và xử lý
+    //- khi cảm biến(pin A0 A1 A3) xác định rác đầy thì báo về server
+    // và không cho RC servo(pin 51) mở ra và báo trên màn hình loại rác này đã đầy.
+    if (RacKimLoaiDay())
+    {
+        GuiCmdDayRacKimLoai();
+        RcServoVeGocMin();
+    }
+    //- khi cảm biến(pin A0 A1 A3) xác định rác đầy thì báo về server
+    // và không cho RC servo(pin 51) mở ra và báo trên màn hình loại rác này đã đầy.
+    if (RacNhuaDay())
+    {
+        GuiCmdDayRacNhua();
+        RcServoVeGocMin();
+    }
+    //- khi cảm biến(pin A0 A1 A3) xác định rác đầy thì báo về server
+    // và không cho RC servo(pin 51) mở ra và báo trên màn hình loại rác này đã đầy.
+    if (RacKhongXacDinhDay())
+    {
+        GuiCmdDayRacKhongXacDinh();
+        RcServoVeGocMin();
+    }
 
     //+nếu cảm biến phát hiện là kim loại ( pin 48 )
-
-    //Check rac đầy và xử lý
-    
-   if (RacKimLoaiDay())
-        {
-            GuiCmdDayRacKimLoai();
-            RcServoVeGocMin();
-        }
-
-
-    if (RacKimLoai() && RacNhua())
+    if (RacKimLoai() && RacNhua() && !RacKimLoaiDay())
     {
         Serial.println("Rac kim loai");
-
-        //- khi cảm biến(pin A0 A1 A3) xác định rác đầy thì báo về server
-        // và không cho RC servo(pin 51) mở ra và báo trên màn hình loại rác này đã đầy.
-        if (RacKimLoaiDay())
-        {
-            GuiCmdDayRacKimLoai();
-            RcServoVeGocMin();
-        }
-        else if (CoRac())
+        if (CoRac())
         {
 
             // RC servo chuyển thành góc lớn dần ( bé hơn 180 độ)
@@ -589,16 +592,9 @@ void loop()
         }
     }
     //+ tương tự cảm biến rác thải nhựa ( pin 49)
-    else if (RacNhua())
+    else if (RacNhua() && RacNhuaDay() && !RacKimLoai())
     {
-        //- khi cảm biến(pin A0 A1 A3) xác định rác đầy thì báo về server
-        // và không cho RC servo(pin 51) mở ra và báo trên màn hình loại rác này đã đầy.
-        if (RacNhuaDay())
-        {
-            GuiCmdDayRacNhua();
-            RcServoVeGocMin();
-        }
-        else if (CoRac())
+        if (CoRac())
         {
             // RC servo chuyển thành góc lớn dần ( bé hơn 180 độ)
             // đến khi nào cảm biến ( pin A4) xác nhận rác đã rơi ra ngoài
@@ -622,16 +618,9 @@ void loop()
         }
     }
     //+ nếu cả 2 không xác định được loại rác nhưng cảm biến ( pin A4) xác nhận có rác
-    else
+    else if (!RacKimLoai() && !RacNhua() && !RacKhongXacDinhDay())
     {
-        //- khi cảm biến(pin A0 A1 A3) xác định rác đầy thì báo về server
-        // và không cho RC servo(pin 51) mở ra và báo trên màn hình loại rác này đã đầy.
-        if (RacKhongXacDinhDay())
-        {
-            GuiCmdDayRacKhongXacDinh();
-            RcServoVeGocMin();
-        }
-        else if (CoRac())
+        if (CoRac())
         {
             // RC servo chuyển thành góc lớn dần ( bé hơn 180 độ)
             // đến khi nào cảm biến ( pin A4) xác nhận rác đã rơi ra ngoài

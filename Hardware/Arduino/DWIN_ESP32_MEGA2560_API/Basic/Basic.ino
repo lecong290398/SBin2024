@@ -285,15 +285,12 @@ void processPage(int pageNum)
         setStatusOther();
         break;
     case 2:
-
         // Function to process different pages
         if (sensorStatusBinMetal == 1 && sensorStatusBinPlastic == 1 && sensorStatusBinOther == 1)
         {
+            Serial.print("Page ID :2 - FULL ALL TRASH BIN");
             dwc.setPage(0);
         }
-
-        Serial.println("Page 2");
-
         // Check if the command is to start the process
         if (isPutTrash == 0)
         {
@@ -303,38 +300,50 @@ void processPage(int pageNum)
             isPutTrash = 1;
             Serial.print("Send Cmd_BatDauQuyTrinh");
         }
+        // Check if the command is to count the trash
         if (commandMega2560.startsWith(Cmd_CountRac))
         {
             handlerCountBinTrash(commandMega2560);
+            Serial.println("Page ID :2  - handlerCountBinTrash to Mega2560");
+            Serial.println(countMetalTrash);
+            Serial.println(countPlasticTrash);
+            Serial.println(countOtherTrash);
             // Set address and send integer data for page 3
             dwc.setPage(3);
         }
         else if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
         {
-            Serial.print("GET Cmd_KetThucQuyTrinh Page ID 2");
+            Serial.print("Page ID :2  - Get and Send Cmd_KetThucQuyTrinh to Mega2560");
             Serial2.println(Cmd_KetThucQuyTrinh);
             if (countMetalTrash == 0 && countPlasticTrash == 0 && countOtherTrash == 0)
             {
+                Serial.println("Page ID :2  - NO TRASH IN BIN");
                 dwc.setPage(5);
             }
             else if (sensorStatusBinMetal == 1 && sensorStatusBinPlastic == 1 && sensorStatusBinOther == 1)
             {
+                Serial.println("Page ID :2 - FULL ALL TRASH BIN");
                 dwc.setPage(5);
             }
             else
             {
                 dwc.setPage(4);
             }
+            Serial.println("Page ID :2  - Completed to to page ID");
         }
         break;
     case 3:
         if (commandMega2560.startsWith(Cmd_CountRac))
         {
             handlerCountBinTrash(commandMega2560);
+            Serial.println("Page ID :3  - handlerCountBinTrash to Mega2560");
+            Serial.println(countMetalTrash);
+            Serial.println(countPlasticTrash);
+            Serial.println(countOtherTrash);
         }
         else if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
         {
-            Serial.print("GET Cmd_KetThucQuyTrinh Page ID 3");
+            Serial.print("Page ID :3 - Timeout GET Cmd_KetThucQuyTrinh to Mega2560");
             dwc.setPage(4);
         }
         break;
@@ -343,7 +352,7 @@ void processPage(int pageNum)
         {
             // Send command to end the process
             Serial2.println(Cmd_KetThucQuyTrinh);
-            Serial.print("Send Cmd_KetThucQuyTrinh");
+            Serial.print("Page ID :4  - Send Cmd_KetThucQuyTrinh to Mega2560");
             // Set the flag to indicate that the trash has been put
             CreateDeviceTransactionBins(countPlasticTrash, countMetalTrash, countOtherTrash);
             isEndTrash = 1;
@@ -559,7 +568,6 @@ void CreateDeviceTransactionBins(int plasticQuantity, int metalQuantity, int oth
             dwc.setUiType(ASCII);
             dwc.sendData("999");
             handlePage4or5(0x4010, 0x1410, 5, 10);
-
         }
         else
         {

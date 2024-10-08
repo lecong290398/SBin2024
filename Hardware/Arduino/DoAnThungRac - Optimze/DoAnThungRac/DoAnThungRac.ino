@@ -13,7 +13,7 @@ int pos = 0;
 const int buttonPin = 49; // CẢM BIẾN RÁC THẢI NHỰA
 const int S_KIMLOAI = 48; // CẢM BIẾN RÁC THẢI KIM LOẠI
 const int HOME = 47;      // CẢM BIẾN GỐC CỦA SERVO 1
-const int HUMAN = 46;     // CẢM BIẾN NGƯỜI ĐỂ BẬT ĐÈN
+const int HUMAN = 21;     // CẢM BIẾN NGƯỜI ĐỂ BẬT ĐÈN
 const int RAC1 = A0;      // CẢM BIẾN ĐẦY THÙNG RÁC 1
 const int RAC2 = A1;      // CẢM BIẾN ĐẦY THÙNG RÁC 2
 const int RAC3 = A3;      // CẢM BIẾN ĐẦY THÙNG RÁC 3
@@ -158,8 +158,11 @@ const unsigned long delayThoiGian = 10000; // 10 giây (10,000ms)
 
 static void CoNguoiBatDen()
 {
+
     // Đọc giá trị từ cảm biến
     bool coNguoi = digitalRead(CamBienNguoi) == CamBienNguoi_On;
+      Serial.println("CoNguoiBatDen");
+      Serial.println(coNguoi);
 
     if (coNguoi)
     {
@@ -517,7 +520,8 @@ void setup()
 
     // Đặt hệ thống về trạng thái ban đầu
     TayGatVeGoc();                 // Đưa tay gạt về vị trí gốc
-    RcServoTangGoc(); // Đưa servo về góc 180 độ
+       myservo.write(RcServo_GocMax);
+ // Đưa servo về góc 180 độ
 
     // Reset các trạng thái ban đầu
     ResetCountRac();

@@ -97,10 +97,10 @@ static void BangTaiHuongThungRacKhongXacDinh()
 #pragma region RC SERVO
 
 #define RcServo_Pin 51
-#define RcServo_GocMin 0
-#define RcServo_GocMax 180
+#define RcServo_GocMin 125
+#define RcServo_GocMax 170
 #define RcServo_Step 1
-#define RcServo_Delay 10
+#define RcServo_Delay 55
 
 // Hàm chung để điều chỉnh góc servo theo hướng (tăng hoặc giảm)
 static void RcServoDieuChinhGoc(int gocMucTieu, bool tangGoc)
@@ -517,7 +517,7 @@ void setup()
 
     // Đặt hệ thống về trạng thái ban đầu
     TayGatVeGoc();                 // Đưa tay gạt về vị trí gốc
-    myservo.write(RcServo_GocMin); // Đưa servo về góc 0 độ
+    RcServoTangGoc(); // Đưa servo về góc 180 độ
 
     // Reset các trạng thái ban đầu
     ResetCountRac();
@@ -584,22 +584,32 @@ void loop()
         return;
     }
 
-    delay(100); // Chờ ngắn để xác định loại rác
+    delay(200); // Chờ ngắn để xác định loại rác
                 // Kiểm tra các loại rác đầy và xử lý chung
-    if (KiemTraVaXuLyRacDay())
-        return;
+
+    KiemTraVaXuLyRacDay(); // Kiểm tra và xử lý rác đầy
+
     // Xử lý rác cụ thể
-    if (RacKimLoai() && !RacKimLoaiDay())
+    if (RacKimLoai() && RacNhua())
     {
-        XuLyRacKimLoai();
+        if (!RacKimLoaiDay())
+        {
+            XuLyRacKimLoai();
+        }
     }
-    else if (RacNhua() && !RacNhuaDay() && !RacKimLoai())
+    else if (RacNhua() && !RacNhuaDay())
     {
-        XuLyRacNhua();
+        if (!RacKimLoai())
+        {
+            XuLyRacNhua();
+        }
     }
-    else if (!RacKimLoai() && !RacNhua() && !RacKhongXacDinhDay())
+    else if (!RacKimLoai() && !RacNhua())
     {
-        XuLyRacKhongXacDinh();
+        if (!RacKhongXacDinhDay())
+        {
+            XuLyRacKhongXacDinh();
+        }
     }
 }
 
@@ -611,19 +621,19 @@ bool KiemTraVaXuLyRacDay()
     if (RacKimLoaiDay())
     {
         GuiCmdDayRacKimLoai();
-        RcServoVeGocMin();
+        RcServoTangGoc();
         return true;
     }
     if (RacNhuaDay())
     {
         GuiCmdDayRacNhua();
-        RcServoVeGocMin();
+        RcServoTangGoc();
         return true;
     }
     if (RacKhongXacDinhDay())
     {
         GuiCmdDayRacKhongXacDinh();
-        RcServoVeGocMin();
+        RcServoTangGoc();
         return true;
     }
     return false;
@@ -649,6 +659,7 @@ void XuLyRacKimLoai()
 // Hàm xử lý rác nhựa
 void XuLyRacNhua()
 {
+    Serial.println("Rac nhưa");
     if (CoRac())
     {
         XuLyServoRac();            // Xử lý servo cho rác rơi ra ngoài
@@ -662,6 +673,8 @@ void XuLyRacNhua()
 // Hàm xử lý rác không xác định
 void XuLyRacKhongXacDinh()
 {
+    Serial.println("Rac khong xac dinh");
+
     if (CoRac())
     {
         XuLyServoRac();                     // Xử lý servo cho rác rơi ra ngoài
@@ -680,8 +693,8 @@ void XuLyServoRac()
 {
     do
     {
-        RcServoTangGoc();
+        RcServoVeGocMin(); // Đưa servo về góc 180 độ
     } while (CoRac()); // Lặp đến khi rác rơi ra ngoài
-    RcServoVeGocMin();
+    RcServoTangGoc();
 }
 #pragma endregion

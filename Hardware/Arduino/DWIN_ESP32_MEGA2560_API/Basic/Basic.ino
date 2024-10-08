@@ -311,7 +311,7 @@ void processPage(int pageNum)
             // Set address and send integer data for page 3
             dwc.setPage(3);
         }
-        else if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
+        if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
         {
             Serial.print("Page ID :2  - Get and Send Cmd_KetThucQuyTrinh to Mega2560");
             Serial2.println(Cmd_KetThucQuyTrinh);
@@ -341,7 +341,7 @@ void processPage(int pageNum)
             Serial.println(countPlasticTrash);
             Serial.println(countOtherTrash);
         }
-        else if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
+        if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
         {
             Serial.print("Page ID :3 - Timeout GET Cmd_KetThucQuyTrinh to Mega2560");
             dwc.setPage(4);
@@ -556,7 +556,7 @@ void CreateDeviceTransactionBins(int plasticQuantity, int metalQuantity, int oth
         dwc.setUiType(ASCII);
         // SET QR CODE
         dwc.sendData(dataQR);
-        handlePage4or5(0x4010, 0x1410, 5, 10);
+        handlePage4or5(0x4010, 0x1410, 5, 3);
         http.end();
     }
     else

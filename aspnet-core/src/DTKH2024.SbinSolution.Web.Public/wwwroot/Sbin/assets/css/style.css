@@ -1175,7 +1175,7 @@ textarea.form-control {
 }
 
 .section__img--overlay {
-    background-image: url('../img/about/brush.png');
+    background: center / contain no-repeat url('../img/about/brush.png');
 }
 
 .section-list {

@@ -1,5 +1,5 @@
-#define dirPin 30 // STEP 1 DÙNG CHO BĂNG TẢI
-#define stepPin 31
+#define dirPin 7 // STEP 1 DÙNG CHO BĂNG TẢI
+#define stepPin 29
 
 #define dirPin2 5 // STEP 2 DÙNG CHO TAY GẠT RÁC KIM LOẠI
 #define stepPin2 23
@@ -23,9 +23,6 @@ const int ledPin = A8;    // ĐÈN KHI CÓ NGƯỜI
 
 // variables will change:
 int buttonState = 0; // variable for reading the pushbutton status
-
-unsigned long thoiGianBatDen = 0;          // Biến lưu thời gian khi đèn được bật
-const unsigned long delayThoiGian = 10000; // 10 giây (10,000ms)
 
 // Phan config các hàm con chuẩn
 
@@ -52,6 +49,7 @@ static void TayGatVeGoc()
         {
             break;
         }
+
         digitalWrite(TayGat_Step, HIGH);
         delayMicroseconds(TayGat_Delay);
         digitalWrite(TayGat_Step, LOW);
@@ -95,6 +93,8 @@ static void BangTaiHuongThungRacKhongXacDinh()
     digitalWrite(BangTai_Dir, BangTai_Dir_RacKhongXacDinh);
 }
 
+#pragma region RC SERVO
+
 #define RcServo_Pin 51
 #define RcServo_GocMin 0
 #define RcServo_GocMax 180
@@ -132,13 +132,20 @@ static void RcServoTangGoc()
     delay(RcServo_Delay);
 }
 
+#pragma endregion
+
+#pragma region HUMAN
+
 #define CamBienNguoi HUMAN
 #define CamBienNguoi_On HIGH
 #define DenCoNguoi ledPin
 #define DenCoNguoi_On HIGH
 #define DenCoNguoi_Off LOW
 //- khi cảm biến có người (pin 46)  thì bật đèn lên (A8)
-bool denDangBat = false;  // Trạng thái hiện tại của đèn
+bool denDangBat = false;                   // Trạng thái hiện tại của đèn
+unsigned long thoiGianBatDen = 0;          // Biến lưu thời gian khi đèn được bật
+const unsigned long delayThoiGian = 10000; // 10 giây (10,000ms)
+
 static void CoNguoiBatDen()
 {
     // Đọc giá trị từ cảm biến
@@ -161,6 +168,7 @@ static void CoNguoiBatDen()
         denDangBat = false;
     }
 }
+#pragma endregion
 
 #define CamBienRac VT_RAC1
 #define CamBienRac_On LOW
@@ -173,12 +181,7 @@ static bool CoRac()
 #define CamBienKimLoai_On LOW
 static bool RacKimLoai()
 {
-    bool coRacKimLoai = digitalRead(CamBienKimLoai) == CamBienKimLoai_On;
-    if (coRacKimLoai && RacNhua())
-    {
-       return true;
-    }
-    return false;
+    return digitalRead(CamBienKimLoai) == CamBienKimLoai_On;
 }
 
 #define CamBienNhua buttonPin
@@ -333,6 +336,7 @@ static bool RacKhongXacDinhDay()
         return false;
     }
 }
+
 
 #define LenhHmi_NoOp 0                      // Trạng thái không có lệnh gì
 #define LenhHmi_Run 1                       // HMI báo chuyển trạng thái mở nắp
@@ -532,11 +536,20 @@ void loop()
     }
 
     // Xử lý khi có rác
-    // Chờ 500mili s đe xác định loại rác;
+    // Chờ 2 s đe xác định loại rác;
     delay(50);
 
     //+nếu cảm biến phát hiện là kim loại ( pin 48 )
-    if (RacKimLoai())
+
+    //Check rac đầy và xử lý
+   if (RacKimLoaiDay())
+        {
+            GuiCmdDayRacKimLoai();
+            RcServoVeGocMin();
+        }
+
+
+    if (RacKimLoai() && RacNhua())
     {
         Serial.println("Rac kim loai");
 

@@ -542,6 +542,7 @@ void loop()
     //+nếu cảm biến phát hiện là kim loại ( pin 48 )
 
     //Check rac đầy và xử lý
+    
    if (RacKimLoaiDay())
         {
             GuiCmdDayRacKimLoai();

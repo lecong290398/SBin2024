@@ -3,15 +3,17 @@
         display: none;
     }
 }
-/* PC low resolution */ 
+/* PC low resolution */
 @media (min-width: 1024px) and (max-width: 1239px) {
     /* Dashboard*/
     .logo a {
         font-size: 16px;
     }
+
     .navbar__link {
         font-size: 14px;
     }
+
     .navbar__coin-reward__icon, .navbar__coin-reward__total {
         font-size: 12px;
     }
@@ -19,13 +21,28 @@
     .ranking__details h5 {
         max-width: 130px;
     }
+
     .ranking_icon {
         margin-right: 30px;
     }
-    .ranking_icon::after {
-        right: -24%;
+
+        .ranking_icon::after {
+            right: -24%;
+        }
+    /* About */
+    .slider-heading {
+        font-size: 50px !important;
+        padding: 0 100px !important;
     }
 
+    .slider-description {
+        font-size: 30px !important;
+    }
+
+    .benefit h1 {
+        margin-bottom: 20px;
+        font-size: 35px !important;
+    }
 }
 /* Mobile & Tablet */
 @media (max-width: 1023px) {
@@ -36,13 +53,15 @@
     .voucher__name {
         font-size: 16px;
     }
-    
+
     .voucher__img {
         height: 100px;
     }
+
     .voucher__item {
         padding: 25px 15px;
     }
+
     .voucher__value {
         top: 7px;
     }
@@ -50,43 +69,50 @@
     .profile__chart {
         margin: 30px 0;
     }
-    /* ABOUT */
-    #slider .text-content {
-        bottom: 15% !important;
+    /* About */
+    .slider-heading {
+        font-size: 40px !important;
+        padding: 0 100px !important;
     }
 
-    #slider .text-heading {
-        padding: 0 !important;
-        font-size: 18px !important;
+    .slider-description {
+        font-size: 20px !important;
     }
 
-    #slider .text-description {
-        font-size: 16px !important;
-        margin-top: 20px !important;
-    }
-
-    .section__heading {
+    .flip_card__intro h1 {
         font-size: 20px;
-        margin-top: 30px;
     }
 
-    .section__img {
-        margin-top: 30px;
+    .flip_card__intro p {
+        font-size: 12.7px;
     }
 
-    .content-section {
-        padding: 25px 16px !important;
+    .vision h1, .mission h1, .process h1 {
+        font-size: 35px !important;
+    }
+
+    .vision p, .mission p, .benefit .bullet {
+        font-size: 16px !important;
+    }
+
+    .benefit h1 {
+        line-height: 40px !important;
+        font-size: 25px !important;
+    }
+
+    .mission {
+        padding: 50px 0;
     }
 }
-/* Tablet */ 
+/* Tablet */
 @media (min-width: 740px) and (max-width: 1023px) {
     .hide-on-tablet {
         display: none;
     }
+
     .js-img {
         height: 480px !important;
     }
-    
 }
 /* Mobile */
 @media (max-width: 739px) {
@@ -97,33 +123,42 @@
     body {
         padding: 0 20px;
     }
+
     .logo a {
         font-size: 18px;
     }
+
     .navbar__coin-reward {
         font-size: 12px;
     }
+
     .navbar__coin-reward__total, .navbar__coin-reward__coin {
         padding: 5px;
     }
+
     .user__show-more__item a {
         font-size: 12px;
     }
+
     .user__profile {
         margin-left: 12px !important;
     }
-    .history-table .coin  { 
+
+    .history-table .coin {
         display: none;
     }
+
     .footer__privacy .logo img {
         height: 25px;
         width: 25px;
         margin: 0;
     }
+
     .footer__privacy--item a {
         font-size: 9.5px;
         margin: 0 8px;
     }
+
     .paragraph, .bullet {
         text-align: left !important;
     }
@@ -135,47 +170,121 @@
     .top_ranking__item {
         padding: 15px;
     }
+
     .ranking_icon {
         margin: 0 5px;
         height: 60px;
         width: 60px;
     }
-    .ranking_icon img {
-        height: 35px;
-        width: 35px;
-    }
+
+        .ranking_icon img {
+            height: 35px;
+            width: 35px;
+        }
+
     .ranking__details h6 {
         font-size: 12px;
     }
+
     .prize h4 {
         font-size: 16px;
     }
+
     .ranking_user {
         display: none;
     }
+
     .ranking_icon::after {
         right: -20%;
     }
+
     .top_list__list--header {
         font-size: 20px;
     }
+
     .top_ranking__item:nth-child(even) {
         transform: translateY(0);
     }
+
     .top_list__list {
         padding: 0px 15px;
     }
+
     .js-img {
         height: 200px !important;
     }
+
     .popup__modal {
         padding: 10px !important;
     }
+
     .popup__header {
         font-size: 24px;
     }
+
     .popup__describe {
         width: 320px !important;
         font-size: 16px !important;
+    }
+    /* About */
+    #slider {
+        margin: 0 -20px !important;
+    }
+
+    .slider-heading {
+        font-size: 20px !important;
+        padding: 0 20px !important;
+    }
+
+    .slider-description {
+        font-size: 15px !important;
+    }
+
+    .flip_card__intro h1 {
+        font-size: 20px;
+    }
+
+    .flip_card__intro p {
+        font-size: 12px;
+    }
+
+    .vision h1, .mission h1, .process h1 {
+        font-size: 22px !important;
+    }
+
+    .vision p, .mission p, .benefit .bullet {
+        font-size: 14px !important;
+        padding: 0 20px;
+    }
+
+    .benefit h1 {
+        line-height: 40px !important;
+        font-size: 20px !important;
+        margin-top: 10px;
+    }
+
+    .mission {
+        padding: 50px 0;
+    }
+
+    .process {
+        padding: 0 20px;
+    }
+
+        .process img {
+            margin: 20px 0;
+        }
+
+    .section.h-100 {
+        height: 80vh !important;
+        margin: 0 -20px !important;
+    }
+
+    .section {
+        margin: 0 -20px !important;
+    }
+
+    .iframe-yt {
+        height: 40vh !important;
     }
 }

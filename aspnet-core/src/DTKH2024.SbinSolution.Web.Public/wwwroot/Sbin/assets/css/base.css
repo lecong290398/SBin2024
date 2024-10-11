@@ -321,3 +321,238 @@ html::-webkit-scrollbar-thumb {
 .skeleton-text__small {
     width: 30%;
 }
+/* ABOUT */
+#slider {
+    height: 100vh;
+    background-image: url(../img/about/green-earth-image-1-scaled.jpg);
+    background-position: top, center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: relative;
+}
+
+.slider-overlay {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: absolute;
+    background-color: transparent;
+    background-image: linear-gradient(259deg, #6AB43E 95%, #6AB43E 98%);
+    opacity: 0.76;
+}
+
+.slider-text-box {
+    position: absolute;
+    bottom: 42%;
+    width: 100%;
+    color: var(--white-color);
+    text-align: center;
+}
+
+.slider-heading {
+    font-size: 60px;
+    padding: 0 180px;
+}
+
+.slider-description {
+    font-size: 40px;
+    margin-top: 20PX;
+}
+
+.scroll-down {
+    bottom: -20vh;
+    position: absolute;
+    color: var(--white-color);
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    animation: scrollDown 2s infinite ease;
+}
+
+@keyframes scrollDown {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    50% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Flip card */
+.flip_card {
+    overflow: hidden;
+    height: auto;
+    box-shadow: var(--sharp-box-shadow);
+    margin: 30px 0;
+    position: relative;
+    border-radius: 24px;
+}
+
+    .flip_card img {
+        width: 100%;
+        transition: .2s;
+    }
+
+.flip_card__intro {
+    position: absolute;
+    box-sizing: border-box;
+    padding: 6px;
+    width: 100%;
+    text-align: justify;
+    background-color: rgba(27, 27, 27, .7);
+    color: var(--white-color);
+    bottom: 0;
+    max-height: 70px;
+    transition: max-height 1s ease;
+    overflow: hidden;
+}
+
+    .flip_card__intro h1 {
+        padding: 10px 20px;
+    }
+
+    .flip_card__intro p {
+        padding: 10px 15px;
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+
+.flip_card:hover .flip_card__intro {
+    max-height: 500px;
+}
+
+    .flip_card:hover .flip_card__intro p {
+        opacity: 1;
+    }
+
+.flip_card:hover img {
+    transform: scale(1.1) rotate(-3deg);
+}
+
+.section {
+    height: 50vh;
+    background-color: #E9F3D9;
+    text-align: center;
+    justify-content: center;
+}
+
+    .section.h-100 {
+        height: 100vh;
+    }
+
+.vision h1, .process h1 {
+    margin-bottom: 20px;
+    font-size: 50px;
+    color: var(--orange-color);
+}
+
+.vision p {
+    max-width: 700px;
+    font-size: 20px;
+    font-style: italic;
+    opacity: .8;
+}
+
+.mission h1, .benefit h1 {
+    font-size: 45px;
+    color: var(--dark-green);
+    border-bottom: 1px solid var(--dark-green);
+    line-height: 70px;
+}
+
+.mission p {
+    font-size: 20px;
+    padding: 20px;
+    text-align: justify;
+}
+
+.mission__img {
+    width: 70%;
+}
+
+.mission__overlay {
+    background: center / contain no-repeat url('../img/about/brush.png')
+}
+
+.eco-fr {
+    width: 90px;
+    float: right;
+}
+
+.process h1 {
+    color: var(--blue-color);
+}
+
+.process img, .benefit img {
+    width: 100%;
+    border-radius: 24px;
+}
+
+.benefit {
+    margin: 50px 0;
+}
+
+    .benefit h1 {
+        margin-bottom: 20px;
+    }
+
+    .benefit ul {
+        padding: 0 40px;
+        font-size: 18px;
+    }
+
+.artist {
+    margin-top: 80px;
+}
+
+    .artist h1 {
+        margin: 20px 0;
+        color: var(--dark-green);
+        padding-top: 20px;
+    }
+
+    .artist .bullet {
+        margin-top: 40px;
+    }
+
+.swiper {
+    width: 100%;
+    height: 100%;
+    cursor: grab;
+}
+
+    .swiper:active {
+        cursor: grabbing;
+    }
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .swiper-slide img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+.iframe-yt {
+    border-radius: 24px;
+    width: 100%;
+    height: 80vh;
+}

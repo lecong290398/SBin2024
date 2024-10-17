@@ -232,14 +232,16 @@
     }
 
     .slider-heading {
-        font-size: 20px !important;
+        font-size: 24px !important;
         padding: 0 20px !important;
     }
 
     .slider-description {
         font-size: 15px !important;
     }
-
+    .slider-text-box {
+        bottom: 45% !important;
+    }
     .flip_card__intro h1 {
         font-size: 20px;
     }
@@ -286,5 +288,6 @@
 
     .iframe-yt {
         height: 40vh !important;
+        padding: 0 20px;
     }
 }

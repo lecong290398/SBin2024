@@ -22,51 +22,21 @@ const app = {
     },
     preLoader() {
         // Handle preload
+        document.documentElement.style.overflow = 'hidden';
         const preLoadingPage = document.getElementById('preload')
         window.addEventListener('load', () => {
             preLoadingPage.style.opacity = 0;
             preLoadingPage.style.visibility = 'hidden';
+            document.documentElement.style.overflow = 'auto';
             setTimeout(() => {
                 preLoadingPage.remove()
             }, 1000)
         });
 
     },
-    blinkUserImg() {
-        const userImg = document.querySelector('.user__profile');
-
-        if (userImg) {
-            let isVisible = false;
-
-            userImg.onclick = () => {
-                const showMore = userImg.querySelector('.user__show-more');
-                if (showMore) {
-                    if (isVisible) {
-                        showMore.style.visibility = 'hidden';
-                        showMore.style.transform = 'scale(0)';
-                        showMore.style.opacity = '0';
-                    } else {
-                        showMore.style.visibility = 'visible';
-                        showMore.style.transform = 'scale(1)';
-                        showMore.style.opacity = '1';
-                    }
-                    isVisible = !isVisible;  // Toggle the state
-                } else {
-                    console.log('Show more element not found');
-                }
-            };
-        } else {
-            console.log('User profile image not found');
-        }
-
-    },
-    onrender() {
-    },
     start() {
         this.titlePageChange()
         this.preLoader()
-        this.blinkUserImg()
-        // this.onrender()
     }
 }
 app.start()

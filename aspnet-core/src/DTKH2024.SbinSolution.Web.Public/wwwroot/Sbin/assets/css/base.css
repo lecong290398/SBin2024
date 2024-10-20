@@ -21,6 +21,11 @@
     --light-box-shadow: 0 36px 48px rgba(31, 66, 135, .04);
     --sharp-box-shadow: 2px 2px 4px 3px rgba(0, 0, 0, 0.1);
 }
+.vs {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+}
 * {
     text-decoration: none;
     user-select: none;
@@ -52,7 +57,10 @@ html::-webkit-scrollbar-thumb {
     padding-left: 5px;
 }
 #main {
-    padding: 150px 0;
+    padding: 50px 0;
+}
+.pad-100 {
+    padding: 100px 0 !important;
 }
 /* Default Display Flex */
 .flex-center {

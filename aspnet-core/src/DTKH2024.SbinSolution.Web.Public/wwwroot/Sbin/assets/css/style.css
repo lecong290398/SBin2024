@@ -954,12 +954,12 @@ body {
 /* Q&A */
 .wrapper{
     background: var(--white-color);
-    margin: 50px 0;
+    margin: 25px 0;
     padding: 15px 40px;
     border-radius: 5px;
     box-shadow: var(--sharp-box-shadow);
 }
-.toggle{
+.toggle {
     width: 100%;
     background-color: transparent;
     display: flex;
@@ -972,6 +972,7 @@ body {
     cursor: pointer;
     padding: 15px 0;
     font-weight: var(--font-weight-bold);
+    text-align: left;
 }
 .content{
     position: relative;

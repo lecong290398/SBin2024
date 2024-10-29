@@ -100,8 +100,9 @@
         preload.style.display = "block"
         abp.services.app.redeemGifts.createRedeemGift(productPromotionId, {
             success: function () {
+                closePopup();
+                preload.style.display = "none"
                 abp.notify.success('Voucher exchanged successfully.');
-                window.location.reload(); // Reload the page
             },
             error: function (error) {
                 closePopup();

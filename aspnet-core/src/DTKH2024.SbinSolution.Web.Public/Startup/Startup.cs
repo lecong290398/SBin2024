@@ -90,8 +90,8 @@ namespace DTKH2024.SbinSolution.Web.Public.Startup
             {
                 endpoints.MapHub<AbpCommonHub>("/signalr");
 
-                endpoints.MapControllerRoute("defaultWithArea", "{area}/{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("defaultWithArea", "{area}/{controller=About}/{action=Index}/{id?}");
+                endpoints.MapControllerRoute("default", "{controller=About}/{action=Index}/{id?}");
 
                 app.ApplicationServices.GetRequiredService<IAbpAspNetCoreConfiguration>().EndpointConfiguration.ConfigureAllEndpoints(endpoints);
             });

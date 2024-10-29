@@ -23,7 +23,17 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                     )
                 )
 
-                 .AddItem(new MenuItemDefinition(
+
+                      .AddItem(new MenuItemDefinition(
+                        AppPageNames.Tenant.Dashboard,
+                        L("Dashboard"),
+                        url: "App/TenantDashboard",
+                        icon: "flaticon-line-graph",
+                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Tenant_Dashboard)
+                    )
+                )
+
+                .AddItem(new MenuItemDefinition(
                          AppPageNames.Common.RedeemGifts,
                          L("RedeemGifts"),
                          url: "App/RedeemGifts",
@@ -41,6 +51,8 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                     )
                 )
 
+             
+
                 .AddItem(new MenuItemDefinition(
                         AppPageNames.Common.OrderHistories,
                         L("OrderHistories"),
@@ -49,6 +61,7 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_OrderHistories)
                     )
                 )
+
                 .AddItem(new MenuItemDefinition(
                         AppPageNames.Common.WareHouseGifts,
                         L("WareHouseGifts"),
@@ -56,28 +69,27 @@ namespace DTKH2024.SbinSolution.Web.Areas.App.Startup
                         icon: "fa-solid fa-gifts",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_WareHouseGifts)
                     )
-                ).AddItem(new MenuItemDefinition(
+                )
+
+                .AddItem(new MenuItemDefinition(
                         AppPageNames.Host.Tenants,
                         L("Tenants"),
                         url: "App/Tenants",
                         icon: "flaticon-list-3",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Tenants)
                     )
-                ).AddItem(new MenuItemDefinition(
+                )
+
+                .AddItem(new MenuItemDefinition(
                         AppPageNames.Host.Editions,
                         L("Editions"),
                         url: "App/Editions",
                         icon: "flaticon-app",
                         permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Editions)
                     )
-                ).AddItem(new MenuItemDefinition(
-                        AppPageNames.Tenant.Dashboard,
-                        L("Dashboard"),
-                        url: "App/TenantDashboard",
-                        icon: "flaticon-line-graph",
-                        permissionDependency: new SimplePermissionDependency(AppPermissions.Pages_Tenant_Dashboard)
-                    )
-                ).AddItem(new MenuItemDefinition(
+                )
+              
+                .AddItem(new MenuItemDefinition(
                         AppPageNames.Common.Administration,
                         L("Administration"),
                         icon: "flaticon-interface-8"

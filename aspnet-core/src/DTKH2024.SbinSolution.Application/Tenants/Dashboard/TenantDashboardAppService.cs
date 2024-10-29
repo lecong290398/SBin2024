@@ -1,7 +1,13 @@
 ﻿using Abp.Auditing;
 using Abp.Authorization;
+using Abp.Domain.Repositories;
 using DTKH2024.SbinSolution.Authorization;
+using DTKH2024.SbinSolution.Authorization.Users;
+using DTKH2024.SbinSolution.OrderHistories;
+using DTKH2024.SbinSolution.ProductPromotions;
 using DTKH2024.SbinSolution.Tenants.Dashboard.Dto;
+using DTKH2024.SbinSolution.TransactionBins;
+using System;
 
 namespace DTKH2024.SbinSolution.Tenants.Dashboard
 {
@@ -9,6 +15,21 @@ namespace DTKH2024.SbinSolution.Tenants.Dashboard
     [AbpAuthorize(AppPermissions.Pages_Tenant_Dashboard)]
     public class TenantDashboardAppService : SbinSolutionAppServiceBase, ITenantDashboardAppService
     {
+        private readonly IRepository<User, long> _userRepository;
+        private readonly IRepository<OrderHistory> _orderHistoryRepository;
+        private readonly IRepository<ProductPromotion> _productPromotionRepository;
+        private readonly IRepository<TransactionBin> _transactionBinRepository;
+
+        public TenantDashboardAppService(IRepository<User, long> userRepository,
+            IRepository<OrderHistory> orderHistoryRepository
+            , IRepository<ProductPromotion> productPromotionRepository
+            , IRepository<TransactionBin> transactionBinRepository)
+        {
+            _orderHistoryRepository = orderHistoryRepository;
+            _userRepository = userRepository;
+            _productPromotionRepository = productPromotionRepository;
+            _transactionBinRepository = transactionBinRepository;
+        }
         public GetMemberActivityOutput GetMemberActivity()
         {
             return new GetMemberActivityOutput
@@ -42,12 +63,32 @@ namespace DTKH2024.SbinSolution.Tenants.Dashboard
 
         public GetTopStatsOutput GetTopStats()
         {
+            var firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+            var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+            var newUsersCount = _userRepository.Count(user => user.CreationTime >= firstDayOfMonth && user.CreationTime <= lastDayOfMonth);
+            
+            var newOrders =  _orderHistoryRepository.Count(oh =>
+              oh.HistoryTypeId == AppConsts.HistoryType_DoiQua &&
+              oh.CreationTime >= firstDayOfMonth &&
+              oh.CreationTime <= lastDayOfMonth
+            );
+
+            var newFeedbacks =  _productPromotionRepository.Count(pp =>
+               pp.CreationTime >= firstDayOfMonth &&
+              pp.CreationTime <= lastDayOfMonth
+            );
+
+            var totalProfit = _transactionBinRepository.Count(pp =>
+               pp.CreationTime >= firstDayOfMonth &&
+              pp.CreationTime <= lastDayOfMonth
+            );
+
             return new GetTopStatsOutput
             {
-                TotalProfit = DashboardRandomDataGenerator.GetRandomInt(5000, 9000),
-                NewFeedbacks = DashboardRandomDataGenerator.GetRandomInt(1000, 5000),
-                NewOrders = DashboardRandomDataGenerator.GetRandomInt(100, 900),
-                NewUsers = DashboardRandomDataGenerator.GetRandomInt(50, 500)
+                TotalProfit = totalProfit,
+                NewFeedbacks = newFeedbacks,
+                NewOrders = newOrders,
+                NewUsers = newUsersCount
             };
         }
 

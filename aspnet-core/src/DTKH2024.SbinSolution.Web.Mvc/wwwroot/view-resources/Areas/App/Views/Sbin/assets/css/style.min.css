@@ -8,9 +8,6 @@
 }
 body {
   font-family: 'Rubik', sans-serif;
-  background: url('/assets/img/background/bg.png');
-  background-size: cover;
-  background-repeat: repeat;
   height: 100vh;
   overflow-x: hidden;
 }

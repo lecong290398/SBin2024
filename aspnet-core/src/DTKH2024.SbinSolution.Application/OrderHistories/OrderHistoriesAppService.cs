@@ -64,7 +64,7 @@ namespace DTKH2024.SbinSolution.OrderHistories
                 filteredOrderHistories =  filteredOrderHistories.Where(e => e.UserFk != null && e.UserFk.Id == userID);
             }
             var pagedAndFilteredOrderHistories = filteredOrderHistories
-                .OrderBy(input.Sorting ?? "id asc")
+                .OrderBy(input.Sorting ?? "CreationTime desc")
                 .PageBy(input);
 
             var orderHistories = from o in pagedAndFilteredOrderHistories

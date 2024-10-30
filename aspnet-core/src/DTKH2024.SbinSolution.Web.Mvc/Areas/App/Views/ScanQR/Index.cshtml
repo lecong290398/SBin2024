@@ -12,6 +12,31 @@
     <script src="~/view-resources/areas/app/views/scanqr/index.js"></script>
 }
 
+@section Styles {
+    <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/style.css">
+    <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/base.css">
+    <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/grid.min.css">
+    <link rel="stylesheet" href="~/view-resources/Areas/App/Views/Sbin/assets/css/responsive.css">
+    <style>
+        #preload {
+            z-index: 99999;
+        }
+        .no-margin, .no-margin > * {
+            margin: 0px !important;
+        }
+
+            .no-margin > .skeleton {
+                margin-top: 28px !important;
+            }
+
+        ul, p {
+            padding: 0px !important;
+            margin: 0px !important;
+        }
+    </style>
+}
+<div id="preload" style="display: none;"></div>
+
 <div class="@(await GetContainerClass())">
     <div id="qr-reader"></div>
     <div id="qr-reader-results"></div>

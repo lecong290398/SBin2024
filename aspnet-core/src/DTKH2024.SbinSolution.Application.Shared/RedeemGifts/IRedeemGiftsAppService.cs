@@ -15,6 +15,6 @@ namespace DTKH2024.SbinSolution.RedeemGifts
         Task<PagedResultDto<GetProductPromotionForViewDto>> GetAllProduct(GetAllProductPromotionsInputForCustomer input);
         Task<GetProductPromotionForCustomerDto> GetProductPromotionDetail(GetProductPromotionsInputForCustomer input);
 
-        Task CreateRedeemGift(int productPromotionId);
+        Task<int> CreateRedeemGift(int productPromotionId);
     }
 }

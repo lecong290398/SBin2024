@@ -96,21 +96,27 @@
     // Make exchangeVoucher globally accessible
     window.exchangeVoucher = function (productPromotionId) {
         closePopup();
-        const preload = document.getElementById("preload")
-        preload.style.display = "block"
-        abp.services.app.redeemGifts.createRedeemGift(productPromotionId, {
-            success: function () {
+        const preload = document.getElementById("preload");
+        preload.style.display = "block";
+
+        abp.services.app.redeemGifts.createRedeemGift(productPromotionId)
+            .done(function (points) {
                 closePopup();
-                preload.style.display = "none"
-                abp.notify.success('Voucher exchanged successfully.');
-            },
-            error: function (error) {
+                preload.style.display = "none";
+                abp.message.success("You have used " + points + " points to redeem gifts", "Reward redemption successful").done(function () {
+                    window.location.reload();
+                });
+                abp.notify.success('Reward redemption successful');
+            })
+            .fail(function (error) {
                 closePopup();
-                preload.style.display = "none"
-                // abp.notify.error(error.message);
-            }
-        });
+                preload.style.display = "none";
+                abp.message.error(error.message);
+                console.log(error.message);
+                abp.notify.error("Redemption failed");
+            });
     };
+
 
 
     // Fetch and display voucher details

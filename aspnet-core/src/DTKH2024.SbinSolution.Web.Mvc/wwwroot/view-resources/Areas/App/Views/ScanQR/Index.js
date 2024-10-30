@@ -18,15 +18,22 @@
             debounceTimeout = setTimeout(() => {
                 // Handle on success condition with the decoded message.
                 console.log(`Scan result: ${decodedText}`, decodedResult);
+                const preload = document.getElementById("preload");
+                preload.style.display = "block";
 
                 // Call the API
                 _scanQR.handleScanQR({ TransactionCode: decodedText })
-                    .done(function () {
-                        abp.notify.success('QR code processed successfully.');
-                        resultContainer.innerHTML = `<a style="color: var(--dark-blue);" href="${decodedText}">Your QR Code is: ${decodedText}</a>`;
+                    .done(function (points) {
+                        preload.style.display = "none";
+                        abp.message.success("You are awarded " + points + " points for this transaction", "Points accumulated successfully").done(function () {
+                            window.location.reload();
+                        });;
+                        abp.notify.success('Points accumulated successfully.');
                     })
                     .fail(function (error) {
-                        abp.notify.error('Failed to process QR code: ' + error.message);
+                        preload.style.display = "none";
+                        abp.message.error(error.message);
+                        abp.notify.error("QR code scanning failed");
                     });
             }, 300); // Adjust the debounce delay as needed
         }

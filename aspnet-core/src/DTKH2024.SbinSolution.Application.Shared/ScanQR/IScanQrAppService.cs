@@ -9,6 +9,6 @@ namespace DTKH2024.SbinSolution.ScanQR
 {
     public interface IScanQrAppService: IApplicationService
     {
-        Task HandleScanQR(CreateOrEditScanQRDto input);
+        Task<int> HandleScanQR(CreateOrEditScanQRDto input);
     }
 }

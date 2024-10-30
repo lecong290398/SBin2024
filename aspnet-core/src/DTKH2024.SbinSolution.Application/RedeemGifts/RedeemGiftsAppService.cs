@@ -285,7 +285,7 @@ namespace DTKH2024.SbinSolution.RedeemGifts
             return result;
         }
 
-        public virtual async Task CreateRedeemGift(int productPromotionId)
+        public virtual async Task<int> CreateRedeemGift(int productPromotionId)
         {
             try
             {
@@ -346,13 +346,13 @@ namespace DTKH2024.SbinSolution.RedeemGifts
                     userCurrent.PositivePoint += productPromotion.Point;
                     await UserManager.UpdateAsync(userCurrent);
                 }
+                return productPromotion.Point;
             }
             catch (Exception ex)
             {
+                throw new UserFriendlyException(ex.Message);
 
-                throw;
             }
-
         }
     }
 }

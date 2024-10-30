@@ -36,7 +36,7 @@ namespace DTKH2024.SbinSolution
             _orderHistoryRepository = orderHistoryRepository;
         }
 
-        public virtual async Task HandleScanQR(CreateOrEditScanQRDto input)
+        public virtual async Task<int> HandleScanQR(CreateOrEditScanQRDto input)
         {
             // Check user login
             var userId = _abpSession.UserId ?? throw new UserFriendlyException("You are not logged in to the system.");
@@ -85,6 +85,7 @@ namespace DTKH2024.SbinSolution
             userCurrent.Point += point;
             userCurrent.PositivePoint += point;
             await UserManager.UpdateAsync(userCurrent);
+            return point;
         }
     }
 }

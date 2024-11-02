@@ -45,8 +45,8 @@ void dwinEchoCallback(DWIN2 &d);
 
 #pragma region Constants API
 // Thông tin WiFi
-const char *ssid = "HomeLCTM";     // Tên WiFi
-const char *password = "1@qweQAZ"; // Mật khẩu WiFi
+const char *ssid = "LeCong";     // Tên WiFi
+const char *password = "123123123"; // Mật khẩu WiFi
 const char *deviceID = "1";        // ID của thiết bị
 // Địa chỉ URL API
 const char *apiUrlTokenAuth = "https://app.sbin.edu.vn/api/TokenAuth/Authenticate";                                          // URL API lấy token
@@ -59,7 +59,7 @@ unsigned long previousMillis = 0;           // Lưu trữ thời gian lần cu�
 unsigned long interval = 0;                 // Khoảng thời gian giữa các lần lấy token (tính bằng mili giây)
 unsigned long CallAPICreateTransaction = 0; // Lưu trữ thời gian lần cuối hàm CreateDeviceTransactionBins được gọi
 unsigned long transactionStatusId = 1;
-unsigned long isOffline = 1;
+unsigned long isOffline = 0;
 // Object chứa token
 struct TokenData
 {
@@ -556,7 +556,7 @@ void CreateDeviceTransactionBins(int plasticQuantity, int metalQuantity, int oth
         dwc.setUiType(ASCII);
         // SET QR CODE
         dwc.sendData(dataQR);
-        handlePage4or5(0x4010, 0x1410, 5, 3);
+        handlePage4or5(0x4010, 0x1410, 5, 15);
         http.end();
     }
     else

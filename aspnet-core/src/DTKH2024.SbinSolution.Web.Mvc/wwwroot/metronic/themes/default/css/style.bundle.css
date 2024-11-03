@@ -8939,7 +8939,8 @@ textarea.form-control-lg {
 }
 
 .align-items-center {
-  align-items: center !important;
+    align-items: center !important;
+    overflow-x: auto;
 }
 
 .align-items-baseline {

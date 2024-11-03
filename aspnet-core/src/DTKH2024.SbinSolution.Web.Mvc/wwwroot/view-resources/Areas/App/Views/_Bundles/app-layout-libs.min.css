@@ -2693,6 +2693,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^=col-]:last-
 }
 div.dataTables_wrapper {
   position: relative;
+  min-width: 1000px;
 }
 div.dt-buttons {
   position: initial;

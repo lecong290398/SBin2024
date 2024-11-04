@@ -2,25 +2,35 @@
 #define dirPin 7 // STEP 1 DÙNG CHO BĂNG TẢI
 #define stepPin 29
 
-#define dirPin2 5 // STEP 2 DÙNG CHO TAY GẠT RÁC KIM LOẠI
+#define dirPin2 5 // STEP 2 DÙNG CHO TAY GẠT RÁC NHỰA
 #define stepPin2 23
 
 #include <Servo.h>
-Servo myservo;
-int pos = 0;
+Servo myservo;          // Servo cho RcServo_Pin
+Servo myservo_barriers; // Servo cho RcServo_Barriers_Pin
+int pos = 0;            // Biến vị trí cho myservo
+int pos_barriers = 0;   // Biến vị trí cho myservo_barriers
 
 // constants won't change. They're used here to set pin numbers:
-const int buttonPin = 49; // CẢM BIẾN RÁC THẢI NHỰA
-const int S_KIMLOAI = 48; // CẢM BIẾN RÁC THẢI KIM LOẠI
-const int HOME = 47;      // CẢM BIẾN GỐC CỦA SERVO 1
-const int HUMAN = 21;     // CẢM BIẾN NGƯỜI ĐỂ BẬT ĐÈN
-const int RAC1 = A0;      // CẢM BIẾN ĐẦY THÙNG RÁC 1
-const int RAC2 = A1;      // CẢM BIẾN ĐẦY THÙNG RÁC 2
-const int RAC3 = A3;      // CẢM BIẾN ĐẦY THÙNG RÁC 3
-const int VT_RAC1 = A4;   // CẢM BIẾN RÁC ĐÃ RƠI VÀO THÙNG RÁC 1
-const int VT_RAC2 = A6;   // CẢM BIẾN RÁC ĐÃ RƠI VÀO THÙNG RÁC 2
-const int VT_RAC3 = A7;   // CẢM BIẾN RÁC ĐÃ RƠI VÀO THÙNG RÁC 3
-const int ledPin = A8;    // ĐÈN KHI CÓ NGƯỜI
+
+const int HOME = 47;    // CẢM BIẾN GỐC CỦA SERVO 1
+const int HUMAN = 21;   // CẢM BIẾN NGƯỜI ĐỂ BẬT ĐÈN
+const int RAC1 = A0;    // CẢM BIẾN ĐẦY THÙNG RÁC 1
+const int RAC2 = A1;    // CẢM BIẾN ĐẦY THÙNG RÁC 2
+const int RAC3 = A3;    // CẢM BIẾN ĐẦY THÙNG RÁC 3
+const int VT_RAC1 = A4; // CẢM BIẾN RÁC ĐÃ RƠI VÀO THÙNG RÁC 1
+const int VT_RAC2 = A6; // CẢM BIẾN RÁC ĐÃ RƠI VÀO THÙNG RÁC 2
+const int VT_RAC3 = A7; // CẢM BIẾN RÁC ĐÃ RƠI VÀO THÙNG RÁC 3
+const int ledPin = A8;  // ĐÈN KHI CÓ NGƯỜI
+
+// PIN Extent
+// Zone A
+const int S_NHUA_ZoneA = 49;    // CẢM BIẾN RÁC THẢI NHỰA
+const int S_KIMLOAI_ZoneA = 48; // CẢM BIẾN RÁC THẢI KIM LOẠI
+
+// Zone B
+const int S_NHUA_ZoneB = 44;    // CẢM BIẾN RÁC THẢI NHỰA
+const int S_KIMLOAI_ZoneB = 43; // CẢM BIẾN RÁC THẢI KIM LOẠI
 
 // variables will change:
 int buttonState = 0; // variable for reading the pushbutton status
@@ -45,6 +55,7 @@ static void TayGatVeGoc()
     // Di chuyển tay gạt về gốc
     while (true)
     {
+        CoNguoiBatDen();
         // Check đụng cảm biến thì dừng
         if (digitalRead(TayGat_Goc) == TayGat_ChamGoc)
         {
@@ -64,6 +75,7 @@ static void TayGatDayRac()
 
     for (int i = 0; i < TayGat_MaxXung; i++)
     {
+        CoNguoiBatDen();
         digitalWrite(TayGat_Step, HIGH);
         delayMicroseconds(TayGat_Delay);
         digitalWrite(TayGat_Step, LOW);
@@ -96,11 +108,14 @@ static void BangTaiHuongThungRacKhongXacDinh()
 
 #pragma region RC SERVO
 
+#define RcServo_Barriers_Pin 25
+
 #define RcServo_Pin 51
 #define RcServo_GocMin 125
 #define RcServo_GocMax 170
 #define RcServo_Step 1
-#define RcServo_Delay 55
+#define RcServo_Delay 100
+#define RcServo_Delay_TangGoc 10
 
 // Hàm chung để điều chỉnh góc servo theo hướng (tăng hoặc giảm)
 static void RcServoDieuChinhGoc(int gocMucTieu, bool tangGoc)
@@ -127,7 +142,14 @@ static void RcServoDieuChinhGoc(int gocMucTieu, bool tangGoc)
         myservo.write(gocRcServo);
 
         // Sử dụng hệ thống timer thay vì delay() nếu cần tối ưu hơn
-        delay(RcServo_Delay);
+        if (tangGoc)
+        {
+            delay(RcServo_Delay_TangGoc);
+        }
+        else
+        {
+            delay(RcServo_Delay);
+        }
     }
 }
 // Hàm điều chỉnh về góc tối thiểu
@@ -152,9 +174,9 @@ static void RcServoTangGoc()
 #define DenCoNguoi_On HIGH
 #define DenCoNguoi_Off LOW
 //- khi cảm biến có người (pin 46)  thì bật đèn lên (A8)
-bool denDangBat = false;                   // Trạng thái hiện tại của đèn
-unsigned long thoiGianBatDen = 0;          // Biến lưu thời gian khi đèn được bật
-const unsigned long delayThoiGian = 10000; // 10 giây (10,000ms)
+bool denDangBat = false;                  // Trạng thái hiện tại của đèn
+unsigned long thoiGianBatDen = 0;         // Biến lưu thời gian khi đèn được bật
+const unsigned long delayThoiGian = 5000; // 10 giây (10,000ms)
 
 static void CoNguoiBatDen()
 {
@@ -188,18 +210,20 @@ static bool CoRac()
     return digitalRead(CamBienRac) == CamBienRac_On;
 }
 
-#define CamBienKimLoai S_KIMLOAI
+#define CamBienKimLoai_ZoneA S_KIMLOAI_ZoneA
+#define CamBienKimLoai_ZoneB S_KIMLOAI_ZoneB
 #define CamBienKimLoai_On LOW
 static bool RacKimLoai()
 {
-    return digitalRead(CamBienKimLoai) == CamBienKimLoai_On;
+    return digitalRead(CamBienKimLoai_ZoneA) == CamBienKimLoai_On || digitalRead(CamBienKimLoai_ZoneB) == CamBienKimLoai_On;
 }
 
-#define CamBienNhua buttonPin
+#define CamBienNhua_ZoneA S_NHUA_ZoneA
+#define CamBienNhua_ZoneB S_NHUA_ZoneB
 #define CamBienNhua_On LOW
 static bool RacNhua()
 {
-    return digitalRead(CamBienNhua) == CamBienNhua_On;
+    return digitalRead(CamBienNhua_ZoneA) == CamBienNhua_On || digitalRead(CamBienNhua_ZoneB) == CamBienNhua_On;
 }
 
 int countRacKimLoai = 0;
@@ -230,10 +254,13 @@ static void Cong1RacKhongXacDinh()
 
 #define CamBienThungRacKimLoai VT_RAC2
 #define CamBienThungRacKimLoai_Off HIGH
+#define CamBienThungRacKimLoai_On LOW
 int prevCamBienThungRacKimLoai = CamBienThungRacKimLoai_Off;
 int currCamBienThungRacKimLoai;
+unsigned long thoiGianCoRacKimLoai = 0;
+unsigned long delayThoiGianCoRacKimLoai = 2000;
 
-static bool ThungRacKimLoaiCoRac()
+static bool ThungRacKimLoaiCoRac_bak()
 {
     currCamBienThungRacKimLoai = digitalRead(CamBienThungRacKimLoai);
     // Cảm biến off
@@ -260,13 +287,36 @@ static bool ThungRacKimLoaiCoRac()
 
     return false;
 }
+static bool ThungRacKimLoaiCoRac()
+{
+    currCamBienThungRacKimLoai = digitalRead(CamBienThungRacKimLoai);
+    // Cảm biến on co rac
+    if (currCamBienThungRacKimLoai == CamBienThungRacKimLoai_On)
+    {
+        thoiGianCoRacKimLoai = millis();
+        return true;
+    }
+    // Cảm biên on => ghi nhơ trạng thái
+    else
+    {
+        if (abs(millis() - thoiGianCoRacKimLoai) > delayThoiGianCoRacKimLoai)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
 
 #define CamBienThungRacKhongXacDinh VT_RAC3
 #define CamBienThungRacKhongXacDinh_Off HIGH
+#define CamBienThungRacKhongXacDinh_On LOW
 int prevCamBienThungRacKhongXacDinh = CamBienThungRacKhongXacDinh_Off;
 int currCamBienThungRacKhongXacDinh;
+unsigned long thoiGianCoRacKhongXacDinh = 0;
+unsigned long delayThoiGianCoRacKhongXacDinh = 2000;
 
-static bool ThungRacKhongXacDinhCoRac()
+static bool ThungRacKhongXacDinhCoRac_Bak()
 {
     currCamBienThungRacKhongXacDinh = digitalRead(CamBienThungRacKhongXacDinh);
     // Cảm biến off
@@ -291,6 +341,26 @@ static bool ThungRacKhongXacDinhCoRac()
     }
 
     return false;
+}
+static bool ThungRacKhongXacDinhCoRac()
+{
+    currCamBienThungRacKhongXacDinh = digitalRead(CamBienThungRacKhongXacDinh);
+    // Cảm biến on co rac
+    if (currCamBienThungRacKhongXacDinh == CamBienThungRacKhongXacDinh_On)
+    {
+        thoiGianCoRacKhongXacDinh = millis();
+        return true;
+    }
+    // Cảm biên on => ghi nhơ trạng thái
+    else
+    {
+        if (abs(millis() - thoiGianCoRacKhongXacDinh) > delayThoiGianCoRacKhongXacDinh)
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 bool daGuiDayRacKimLoai = false;
@@ -343,9 +413,9 @@ static bool RacKhongXacDinhDay()
     }
 }
 
-#define LenhHmi_NoOp 0                      // Trạng thái không có lệnh gì
-#define LenhHmi_Run 1                       // HMI báo chuyển trạng thái mở nắp
-#define LenhHmi_Run_MaxTimeKhongCoRac 10000 // Thời gian tối đa liên tục không có rác
+#define LenhHmi_NoOp 0                            // Trạng thái không có lệnh gì
+#define LenhHmi_Run 1                             // HMI báo chuyển trạng thái mở nắp
+#define LenhHmi_Run_MaxTimeKhongCoRac 10000 * 100 // Thời gian tối đa liên tục không có rác
 int lenhHmi = LenhHmi_NoOp;
 unsigned long gioBatDauNhanLenhMoNap = 0;
 
@@ -402,7 +472,7 @@ static void EchoReceivedCommand(const String &text)
 {
     String echo = String("Rcv:") + text + String(":hihi") + String(text.length());
     Serial.println(echo);
-    Serial3.println(echo);
+    // Serial3.println(echo);
 }
 
 static void ProcessStartCommand()
@@ -517,14 +587,19 @@ void setup()
     KhoiTaoStepper();
 
     // Đặt hệ thống về trạng thái ban đầu
-    TayGatVeGoc();                 // Đưa tay gạt về vị trí gốc
-       myservo.write(RcServo_GocMax);
- // Đưa servo về góc 180 độ
+    TayGatVeGoc(); // Đưa tay gạt về vị trí gốc
+    myservo.write(RcServo_GocMax); // Đóng nắp thùng rác
+    // Đưa servo về góc 180 độ
+
+    // Đưa servo về góc 0 độ
+    myservo_barriers.write(0);
 
     // Reset các trạng thái ban đầu
     ResetCountRac();
     ResetDaGui();
     ResetThoiGianKhongCoRac();
+
+    thoiGianCoRacKhongXacDinh = millis();
 }
 
 #pragma region Setup Function
@@ -532,20 +607,23 @@ void setup()
 // Hàm khởi tạo servo
 void KhoiTaoServo()
 {
-    myservo.attach(RcServo_Pin); // Gắn chân điều khiển servo
+    myservo.attach(RcServo_Pin);                   // Gắn chân điều khiển servo
+    myservo_barriers.attach(RcServo_Barriers_Pin); // Gắn chân điều khiển cho servo 2 (barriers)
 }
 
 // Hàm khởi tạo đèn LED và nút bấm
 void KhoiTaoDenVaNut()
 {
     pinMode(ledPin, OUTPUT);
-    pinMode(buttonPin, INPUT);
+    pinMode(S_NHUA_ZoneA, INPUT);
+    pinMode(S_NHUA_ZoneB, INPUT);
 }
 
 // Hàm khởi tạo các cảm biến
 void KhoiTaoCamBien()
 {
-    pinMode(S_KIMLOAI, INPUT);
+    pinMode(S_KIMLOAI_ZoneA, INPUT);
+    pinMode(S_KIMLOAI_ZoneB, INPUT);
     pinMode(HOME, INPUT);
     pinMode(HUMAN, INPUT);
     pinMode(RAC1, INPUT);
@@ -570,12 +648,15 @@ void KhoiTaoStepper()
 }
 
 #pragma endregion
-
+int counter = 0;
 void loop()
 {
     CoNguoiBatDen(); // Kiểm tra cảm biến có người
 
+    counter++;
     CheckHmiCmd(); // Kiểm tra lệnh từ HMI
+    Serial.print("Sau khi check HMI: ");
+    Serial.println(counter);
 
     if (!KiemTraTrangThaiChay())
         return; // Nếu không có lệnh HMI, kết thúc sớm
@@ -599,9 +680,9 @@ void loop()
             XuLyRacKimLoai();
         }
     }
-    else if (RacNhua() && !RacNhuaDay())
+    else if (RacNhua())
     {
-        if (!RacKimLoai())
+        if (!RacNhuaDay())
         {
             XuLyRacNhua();
         }
@@ -612,6 +693,10 @@ void loop()
         {
             XuLyRacKhongXacDinh();
         }
+    }
+    else
+    {
+        Serial.println("Ko co rac gi ca");
     }
 }
 
@@ -651,8 +736,14 @@ void XuLyRacKimLoai()
         BangTaiHuongThungRacKimLoai(); // Di chuyển băng tải
         do
         {
+            CoNguoiBatDen();
             BangTaiChay();
         } while (!ThungRacKimLoaiCoRac()); // Chờ cho rác rơi vào thùng
+        do
+        {
+            CoNguoiBatDen();
+            BangTaiChay();
+        } while (ThungRacKimLoaiCoRac());
         Cong1RacKimLoai();         // Cập nhật số lượng rác
         ResetThoiGianKhongCoRac(); // Đặt lại thời gian không có rác
     }
@@ -665,6 +756,8 @@ void XuLyRacNhua()
     if (CoRac())
     {
         XuLyServoRac();            // Xử lý servo cho rác rơi ra ngoài
+        // Đưa servo về góc 0 độ
+        myservo_barriers.write(180);
         TayGatDayRac();            // Di chuyển tay gạt rác nhựa
         Cong1RacNhua();            // Cập nhật số lượng rác
         TayGatVeGoc();             // Đưa tay gạt về góc ban đầu
@@ -683,8 +776,14 @@ void XuLyRacKhongXacDinh()
         BangTaiHuongThungRacKhongXacDinh(); // Di chuyển băng tải về hướng thùng không xác định
         do
         {
+            CoNguoiBatDen();
             BangTaiChay();
         } while (!ThungRacKhongXacDinhCoRac()); // Chờ cho rác rơi vào thùng
+        do
+        {
+            CoNguoiBatDen();
+            BangTaiChay();
+        } while (ThungRacKhongXacDinhCoRac());
         Cong1RacKhongXacDinh();    // Cập nhật số lượng rác
         ResetThoiGianKhongCoRac(); // Đặt lại thời gian không có rác
     }
@@ -695,6 +794,7 @@ void XuLyServoRac()
 {
     do
     {
+        CoNguoiBatDen();
         RcServoVeGocMin(); // Đưa servo về góc 180 độ
     } while (CoRac()); // Lặp đến khi rác rơi ra ngoài
     RcServoTangGoc();

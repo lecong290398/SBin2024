@@ -592,6 +592,7 @@ void setup()
     // Đưa servo về góc 180 độ
 
     // Đưa servo về góc 0 độ
+    digitalWrite(3, HIGH);
     myservo_barriers.write(0);
 
     // Reset các trạng thái ban đầu

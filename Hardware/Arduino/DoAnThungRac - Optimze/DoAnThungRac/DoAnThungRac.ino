@@ -6,10 +6,11 @@
 #define stepPin2 23
 
 #include <Servo.h>
-Servo myservo;          // Servo cho RcServo_Pin
-Servo myservo_barriers; // Servo cho RcServo_Barriers_Pin
-int pos = 0;            // Biến vị trí cho myservo
-int pos_barriers = 0;   // Biến vị trí cho myservo_barriers
+Servo myservo;            // Servo cho RcServo_Pin
+Servo myservo_barriers;   // Servo cho RcServo_Barriers_Pin
+int pos = 0;              // Biến vị trí cho myservo
+int pos_barriersMin = 0;  // Biến vị trí cho myservo_barriers
+int pos_barriersMax = 90; // Biến vị trí cho myservo_barriers
 
 // constants won't change. They're used here to set pin numbers:
 
@@ -60,7 +61,6 @@ static void TayGatVeGoc()
         if (digitalRead(TayGat_Goc) == TayGat_ChamGoc)
         {
             // Đưa servo về góc 0 độ
-            myservo_barriers.write(0);
             break;
         }
 
@@ -225,7 +225,9 @@ static bool RacKimLoai()
 #define CamBienNhua_On LOW
 static bool RacNhua()
 {
-    return digitalRead(CamBienNhua_ZoneA) == CamBienNhua_On || digitalRead(CamBienNhua_ZoneB) == CamBienNhua_On;
+    // return digitalRead(CamBienNhua_ZoneA) == CamBienNhua_On || digitalRead(CamBienNhua_ZoneB) == CamBienNhua_On;
+
+    return  digitalRead(CamBienNhua_ZoneB) == CamBienNhua_On;
 }
 
 int countRacKimLoai = 0;
@@ -246,6 +248,7 @@ static void Cong1RacKimLoai()
 static void Cong1RacNhua()
 {
     countRacNhua++;
+
     GuiCmdCountRac();
 }
 static void Cong1RacKhongXacDinh()
@@ -592,9 +595,6 @@ void setup()
     TayGatVeGoc();                 // Đưa tay gạt về vị trí gốc
     myservo.write(RcServo_GocMax); // Đóng nắp thùng rác
     // Đưa servo về góc 180 độ
-
-    // Đưa servo về góc 0 độ
-    myservo_barriers.write(0);
     // Reset các trạng thái ban đầu
     ResetCountRac();
     ResetDaGui();
@@ -610,9 +610,8 @@ void KhoiTaoServo()
 {
     myservo.attach(RcServo_Pin); // Gắn chân điều khiển servo
     // myservo.write(0); // Đóng nắp thùng rác
-    digitalWrite(3, HIGH);
     myservo_barriers.attach(RcServo_Barriers_Pin); // Gắn chân điều khiển cho servo 2 (barriers)
-    myservo_barriers.write(90);                    // Di chuyển servo đến vị trí 90 độ
+    myservo_barriers.write(pos_barriersMin);
     Serial.println("Servo myservo_barriers đã được khởi động.");
 }
 
@@ -660,8 +659,8 @@ void loop()
 
     counter++;
     CheckHmiCmd(); // Kiểm tra lệnh từ HMI
-    Serial.print("Sau khi check HMI: ");
-    Serial.println(counter);
+                   // Serial.print("Sau khi check HMI: ");
+    // Serial.println(counter);
 
     if (!KiemTraTrangThaiChay())
         return; // Nếu không có lệnh HMI, kết thúc sớm
@@ -685,23 +684,19 @@ void loop()
             XuLyRacKimLoai();
         }
     }
-    else if (RacNhua())
+    else if (RacNhua() && !RacKimLoai())
     {
         if (!RacNhuaDay())
         {
             XuLyRacNhua();
         }
     }
-    else if (!RacKimLoai() && !RacNhua())
+    else
     {
         if (!RacKhongXacDinhDay())
         {
             XuLyRacKhongXacDinh();
         }
-    }
-    else
-    {
-        Serial.println("Ko co rac gi ca");
     }
 }
 
@@ -761,11 +756,15 @@ void XuLyRacNhua()
     if (CoRac())
     {
         XuLyServoRac(); // Xử lý servo cho rác rơi ra ngoài
-        // Đưa servo về góc 0 độ
-        myservo_barriers.write(170);
-        TayGatDayRac();            // Di chuyển tay gạt rác nhựa
-        Cong1RacNhua();            // Cập nhật số lượng rác
-        TayGatVeGoc();             // Đưa tay gạt về góc ban đầu
+        Serial.println("Đưa servo về góc 90 độ - Mở nắp thùng rác");
+        myservo_barriers.write(pos_barriersMax); //  Mở gạt rác nhựa
+        delay(15);
+        TayGatDayRac(); // Di chuyển tay gạt rác nhựa
+        Cong1RacNhua(); // Cập nhật số lượng rác
+        TayGatVeGoc();  // Đưa tay gạt về góc ban đầu
+        Serial.println("Đưa servo về góc 0 độ - Đóng nắp thùng rác");
+        myservo_barriers.write(pos_barriersMin); // Đưa servo về góc 0 độ
+        delay(15);
         ResetThoiGianKhongCoRac(); // Đặt lại thời gian không có rác
     }
 }

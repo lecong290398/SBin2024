@@ -45,9 +45,9 @@ void dwinEchoCallback(DWIN2 &d);
 
 #pragma region Constants API
 // Thông tin WiFi
-const char *ssid = "LeCong";     // Tên WiFi
+const char *ssid = "LeCong";        // Tên WiFi
 const char *password = "123123123"; // Mật khẩu WiFi
-const char *deviceID = "1";        // ID của thiết bị
+const char *deviceID = "1";         // ID của thiết bị
 // Địa chỉ URL API
 const char *apiUrlTokenAuth = "https://app.sbin.edu.vn/api/TokenAuth/Authenticate";                                          // URL API lấy token
 const char *apiUrlTransactionBins = "https://app.sbin.edu.vn/api/services/app/TransactionBins/CreateDevice_TransactionBins"; // URL API tạo transaction bins
@@ -85,16 +85,8 @@ void setup()
     Serial.printf("-----------------------------------------------\n");
     // Initialize Serial2 for communication with the display broad control MEGA 2650
     Serial2.begin(9600, SERIAL_8N1, RXD3, TXD3);
-    if (isOffline == 0)
-    {
-        // Kết nối WiFi
-        Serial.printf("-------- Start WIFI RUN --------\n");
-        connectWiFi();
-    }
-    else
-    {
-        Serial.printf("-------- Start OFFLINE MODE --------\n");
-    }
+    // Connect to Wi-Fi and set mode to offline if failed and get token from server if connected to Wi-Fi successfully
+    connectWiFi();
 }
 
 void loop()
@@ -386,24 +378,37 @@ void dwinEchoCallback(DWIN2 &d)
 
 #pragma region API CONTROL
 
+unsigned long timeoutWifi = 10000; // 10 seconds timeout
 // Hàm kết nối WiFi
 void connectWiFi()
 {
     Serial.print("Connecting to WiFi...");
     WiFi.begin(ssid, password);
-    while (WiFi.status() != WL_CONNECTED)
+    unsigned long startAttemptTime = millis();
+
+    // Attempt to connect to Wi-Fi
+    while (WiFi.status() != WL_CONNECTED && millis() - startAttemptTime < timeoutWifi)
     {
         delay(500);
         Serial.print(".");
     }
-    Serial.println("Connected to WiFi.");
+    // Check if connected
+    if (WiFi.status() != WL_CONNECTED)
+    {
+        Serial.println("Failed to connect to Wi-Fi. Running in offline mode.");
+        isOffline = 1;
+    }
+    else
+    {
+        Serial.println("Connected to Wi-Fi.");
 
-    Serial.println("Fetching new token...");
-    // Get token
-    //  Gọi hàm GetToken lần đầu tiên để lấy token ban đầu
-    _tokenData = GetToken();
-    interval = _tokenData.expireInSeconds * 1000; // Chuyển expireInSeconds sang mili giây
-    previousMillis = millis();                    // Lưu lại thời điểm token được nhận
+        Serial.println("Fetching new token...");
+        // Get token
+        //  Gọi hàm GetToken lần đầu tiên để lấy token ban đầu
+        _tokenData = GetToken();
+        interval = _tokenData.expireInSeconds * 1000; // Chuyển expireInSeconds sang mili giây
+        previousMillis = millis();                    // Lưu lại thời điểm token được nhận
+    }
 }
 
 // Hàm lấy token từ server

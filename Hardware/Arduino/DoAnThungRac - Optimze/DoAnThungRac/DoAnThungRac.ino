@@ -114,7 +114,7 @@ static void BangTaiHuongThungRacKhongXacDinh()
 
 #define RcServo_Pin 51
 #define RcServo_GocMin 125
-#define RcServo_GocMax 170
+#define RcServo_GocMax 180
 #define RcServo_Step 1
 #define RcServo_Delay 100
 #define RcServo_Delay_TangGoc 10
@@ -655,6 +655,13 @@ void KhoiTaoStepper()
 int counter = 0;
 void loop()
 {
+
+   // Serial.println("N_B");
+    //Serial.println(digitalRead(CamBienNhua_ZoneB));
+   //Serial.println("K_B");
+   // Serial.println( digitalRead(CamBienKimLoai_ZoneB));
+   //delay(300);
+
     CoNguoiBatDen(); // Kiểm tra cảm biến có người
 
     counter++;

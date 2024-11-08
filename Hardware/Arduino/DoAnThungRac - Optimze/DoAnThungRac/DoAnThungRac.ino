@@ -59,6 +59,8 @@ static void TayGatVeGoc()
         // Check đụng cảm biến thì dừng
         if (digitalRead(TayGat_Goc) == TayGat_ChamGoc)
         {
+            // Đưa servo về góc 0 độ
+            myservo_barriers.write(0);
             break;
         }
 
@@ -587,14 +589,12 @@ void setup()
     KhoiTaoStepper();
 
     // Đặt hệ thống về trạng thái ban đầu
-    TayGatVeGoc(); // Đưa tay gạt về vị trí gốc
+    TayGatVeGoc();                 // Đưa tay gạt về vị trí gốc
     myservo.write(RcServo_GocMax); // Đóng nắp thùng rác
     // Đưa servo về góc 180 độ
 
     // Đưa servo về góc 0 độ
-    digitalWrite(3, HIGH);
     myservo_barriers.write(0);
-
     // Reset các trạng thái ban đầu
     ResetCountRac();
     ResetDaGui();
@@ -608,8 +608,12 @@ void setup()
 // Hàm khởi tạo servo
 void KhoiTaoServo()
 {
-    myservo.attach(RcServo_Pin);                   // Gắn chân điều khiển servo
+    myservo.attach(RcServo_Pin); // Gắn chân điều khiển servo
+    // myservo.write(0); // Đóng nắp thùng rác
+    digitalWrite(3, HIGH);
     myservo_barriers.attach(RcServo_Barriers_Pin); // Gắn chân điều khiển cho servo 2 (barriers)
+    myservo_barriers.write(90);                    // Di chuyển servo đến vị trí 90 độ
+    Serial.println("Servo myservo_barriers đã được khởi động.");
 }
 
 // Hàm khởi tạo đèn LED và nút bấm
@@ -756,9 +760,9 @@ void XuLyRacNhua()
     Serial.println("Rac nhưa");
     if (CoRac())
     {
-        XuLyServoRac();            // Xử lý servo cho rác rơi ra ngoài
+        XuLyServoRac(); // Xử lý servo cho rác rơi ra ngoài
         // Đưa servo về góc 0 độ
-        myservo_barriers.write(180);
+        myservo_barriers.write(170);
         TayGatDayRac();            // Di chuyển tay gạt rác nhựa
         Cong1RacNhua();            // Cập nhật số lượng rác
         TayGatVeGoc();             // Đưa tay gạt về góc ban đầu

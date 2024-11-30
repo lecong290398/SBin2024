@@ -37,8 +37,8 @@ int countOtherTrash = 0;
 #define Cmd_DayRacNhua "Cmd_DayRacNhua"
 #define Cmd_DayRacKhongXacDinh "Cmd_DayRacKhongXacDinh"
 
-int isPutTrash = 0;
-int isEndTrash = 0;
+int isPutTrash = false;
+int isEndTrash = false;
 // Callback function to receive a response from the display
 void dwinEchoCallback(DWIN2 &d);
 
@@ -103,6 +103,8 @@ void loop()
     // Delay for a while
     delay(200);
 }
+
+// -------------------------------------------------------------------------------------------------------------------
 
 #pragma region DWIN CONTROL
 // Function to handle common operations for pages 4 and 5
@@ -206,166 +208,230 @@ void handlerCountBinTrash(String commandString)
         }
     }
 }
+#pragma endregion
 
-#pragma region PAGE
-// Function to set status for metal bin
+// -------------------------------------------------------------------------------------------------------------------
+
+#pragma region Status
+const uint16_t COLOR_FULL = 0xF9C5;
+const uint16_t COLOR_AVAILABLE = 0x058E;
+const uint16_t ADDRESS_METAL_BIN = 0x9010;
+const uint16_t ADDRESS_PLASTIC_BIN = 0x9020;
+const uint16_t ADDRESS_OTHER_BIN = 0x9030;
+
+void setStatus(uint16_t address, bool isFull)
+{
+    dwc.setAddress(address, address + 0x1000); // Assuming a pattern in address calculation
+    dwc.setUiType(ASCII);
+    if (isFull)
+    {
+        dwc.setColor(COLOR_FULL);
+        dwc.sendData("Full");
+    }
+    else
+    {
+        dwc.setColor(COLOR_AVAILABLE);
+        dwc.sendData("Available");
+    }
+}
+
 void setStatusMetal()
 {
-    // Set address and send ASCII data for page 1
-    dwc.setAddress(0x9010, 0x1010);
-    dwc.setUiType(ASCII);
-    if (sensorStatusBinMetal)
-    { // Updated variable name
-        dwc.setColor(0xF9C5);
-        dwc.sendData("Full");
-    }
-    else
-    {
-        dwc.setColor(0x058E);
-        dwc.sendData("Available");
-    }
+    setStatus(ADDRESS_METAL_BIN, sensorStatusBinMetal);
 }
-// Function to set status for plastic bin
+
 void setStatusPlastic()
 {
-    // Set address and send ASCII data for page 1
-    dwc.setAddress(0x9020, 0x1020);
-    dwc.setUiType(ASCII);
-    //  Check if the bin is full
-    if (sensorStatusBinPlastic)
-    {
-        dwc.setColor(0xF9C5);
-        dwc.sendData("Full");
-    }
-    else
-    {
-        dwc.setColor(0x058E);
-        dwc.sendData("Available");
-    }
+    setStatus(ADDRESS_PLASTIC_BIN, sensorStatusBinPlastic);
 }
-// Function to set status for other bin
+
 void setStatusOther()
 {
-    // Set address and send ASCII data for page 1
-    dwc.setAddress(0x9030, 0x1030);
-    dwc.setUiType(ASCII);
-    //  Check if the bin is full
-    if (sensorStatusBinOther)
-    { // Updated variable name
-        dwc.setColor(0xF9C5);
-        dwc.sendData("Full");
-    }
-    else
-    {
-        dwc.setColor(0x058E);
-        dwc.sendData("Available");
-    }
+    setStatus(ADDRESS_OTHER_BIN, sensorStatusBinOther);
 }
 
 #pragma endregion
+
+// -------------------------------------------------------------------------------------------------------------------
+
+#pragma region PAGE
 // Function to process different pages
 void processPage(int pageNum)
 {
-    // Read the command from the Mega2560
-    String commandMega2560 = Serial2.readStringUntil('\r');
-    // Handle status of the trash bin
-    handlerStatusBinTrash(commandMega2560);
+    if (Serial2.available())
+    {
+        String commandMega2560 = Serial2.readStringUntil('\r');
+        handlerStatusBinTrash(commandMega2560);
+    }
 
     switch (pageNum)
     {
     case 1:
-        // Set status for each bin
-        setStatusMetal();
-        setStatusPlastic();
-        setStatusOther();
+        processPage1();
         break;
     case 2:
-        // Function to process different pages
-        if (sensorStatusBinMetal == 1 && sensorStatusBinPlastic == 1 && sensorStatusBinOther == 1)
-        {
-            Serial.print("Page ID :2 - FULL ALL TRASH BIN");
-            dwc.setPage(0);
-        }
-        // Check if the command is to start the process
-        if (isPutTrash == 0)
-        {
-            // Send command to start the process
-            Serial2.println(Cmd_BatDauQuyTrinh);
-            // Set the flag to indicate that the trash has been put
-            isPutTrash = 1;
-            Serial.print("Send Cmd_BatDauQuyTrinh");
-        }
-        // Check if the command is to count the trash
-        if (commandMega2560.startsWith(Cmd_CountRac))
-        {
-            handlerCountBinTrash(commandMega2560);
-            Serial.println("Page ID :2  - handlerCountBinTrash to Mega2560");
-            Serial.println(countMetalTrash);
-            Serial.println(countPlasticTrash);
-            Serial.println(countOtherTrash);
-            // Set address and send integer data for page 3
-            dwc.setPage(3);
-        }
-        if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
-        {
-            Serial.print("Page ID :2  - Get and Send Cmd_KetThucQuyTrinh to Mega2560");
-            Serial2.println(Cmd_KetThucQuyTrinh);
-            if (countMetalTrash == 0 && countPlasticTrash == 0 && countOtherTrash == 0)
-            {
-                Serial.println("Page ID :2  - NO TRASH IN BIN");
-                dwc.setPage(5);
-            }
-            else if (sensorStatusBinMetal == 1 && sensorStatusBinPlastic == 1 && sensorStatusBinOther == 1)
-            {
-                Serial.println("Page ID :2 - FULL ALL TRASH BIN");
-                dwc.setPage(5);
-            }
-            else
-            {
-                dwc.setPage(4);
-            }
-            Serial.println("Page ID :2  - Completed to to page ID");
-        }
+        processPage2();
         break;
     case 3:
-        if (commandMega2560.startsWith(Cmd_CountRac))
-        {
-            handlerCountBinTrash(commandMega2560);
-            Serial.println("Page ID :3  - handlerCountBinTrash to Mega2560");
-            Serial.println(countMetalTrash);
-            Serial.println(countPlasticTrash);
-            Serial.println(countOtherTrash);
-        }
-        if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
-        {
-            Serial.print("Page ID :3 - Timeout GET Cmd_KetThucQuyTrinh to Mega2560");
-            dwc.setPage(4);
-        }
+        processPage3();
         break;
     case 4:
-        if (isEndTrash == 0)
-        {
-            // Send command to end the process
-            Serial2.println(Cmd_KetThucQuyTrinh);
-            Serial.print("Page ID :4  - Send Cmd_KetThucQuyTrinh to Mega2560");
-            // Set the flag to indicate that the trash has been put
-            CreateDeviceTransactionBins(countPlasticTrash, countMetalTrash, countOtherTrash);
-            isEndTrash = 1;
-        }
+        processPage4();
         break;
     case 5:
-        // Handle operations for page 5
-        handlePage4or5(0x5010, 0x1510, 0, 5);
+        processPage5();
         break;
     default:
-        // Reset all variables
-        countMetalTrash = 0;
-        countPlasticTrash = 0;
-        countOtherTrash = 0;
-        isPutTrash = 0;
-        isEndTrash = 0;
+        resetVariables();
         break;
     }
+}
+
+void resetVariables()
+{
+    countMetalTrash = 0;
+    countPlasticTrash = 0;
+    countOtherTrash = 0;
+    isPutTrash = false;
+    isEndTrash = false;
+    isProcessing = false;
+}
+
+void processPage1()
+{
+    setStatusMetal();
+    setStatusPlastic();
+    setStatusOther();
+}
+
+// -------------------------------------------------------------------------------------------------------------------
+// Hàm kiểm tra và xử lý khi tất cả các thùng rác đều đầy
+void checkAllBinsFull()
+{
+    if (sensorStatusBinMetal == 1 && sensorStatusBinPlastic == 1 && sensorStatusBinOther == 1)
+    {
+        Serial.print("Page ID :2 - FULL ALL TRASH BIN");
+        dwc.setPage(0);
+    }
+}
+
+// Hàm bắt đầu quá trình xử lý rác
+void startTrashProcess()
+{
+    if (isPutTrash == false)
+    {
+        Serial2.println(Cmd_BatDauQuyTrinh);
+        isPutTrash = true;
+        Serial.print("Send Cmd_BatDauQuyTrinh");
+    }
+}
+
+// Hàm xử lý lệnh đếm rác
+void handleTrashCountingCommand()
+{
+    if (commandMega2560.startsWith(Cmd_CountRac))
+    {
+        handlerCountBinTrash(commandMega2560);
+        Serial.println("Page ID :2 - handlerCountBinTrash to Mega2560");
+        Serial.println(countMetalTrash);
+        Serial.println(countPlasticTrash);
+        Serial.println(countOtherTrash);
+        dwc.setPage(3);
+    }
+}
+
+// Hàm kết thúc quá trình xử lý
+void finishTrashProcess()
+{
+    if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
+    {
+        Serial.print("Page ID :2 - Get and Send Cmd_KetThucQuyTrinh to Mega2560");
+        Serial2.println(Cmd_KetThucQuyTrinh);
+        if (countMetalTrash == 0 && countPlasticTrash == 0 && countOtherTrash == 0)
+        {
+            Serial.println("Page ID :2 - NO TRASH IN BIN");
+            dwc.setPage(5);
+        }
+        else if (sensorStatusBinMetal == 1 && sensorStatusBinPlastic == 1 && sensorStatusBinOther == 1)
+        {
+            Serial.println("Page ID :2 - FULL ALL TRASH BIN");
+            dwc.setPage(5);
+        }
+        else
+        {
+            dwc.setPage(4);
+        }
+    }
+}
+
+void processPage2()
+{
+    if (isProcessing)
+    {
+        Serial.println("Processing in progress. Please wait...");
+        return;
+    }
+
+    isProcessing = true;
+
+    checkAllBinsFull();
+    startTrashProcess();
+    handleTrashCountingCommand();
+    finishTrashProcess();
+
+    isProcessing = false;
+}
+
+// -------------------------------------------------------------------------------------------------------------------
+
+void processPage3()
+{
+    if (commandMega2560.startsWith(Cmd_CountRac))
+    {
+        handlerCountBinTrash(commandMega2560);
+        Serial.println("Page ID :3 - handlerCountBinTrash to Mega2560");
+        Serial.println(countMetalTrash);
+        Serial.println(countPlasticTrash);
+        Serial.println(countOtherTrash);
+    }
+    if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
+    {
+        Serial.print("Page ID :3 - Timeout GET Cmd_KetThucQuyTrinh to Mega2560");
+        dwc.setPage(4);
+    }
+}
+
+unsigned long lastCmdSentTime = 0;
+bool isCmdSent = false;
+void processPage4()
+{
+    if (!isEndTrash)
+    {
+        Serial2.println(Cmd_KetThucQuyTrinh);
+        Serial.print("Page ID :4 - Send Cmd_KetThucQuyTrinh to Mega2560");
+        lastCmdSentTime = millis(); // Cập nhật thời điểm gửi lệnh
+        isCmdSent = true;
+        isEndTrash = true;
+    }
+
+    if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
+    {
+        createTransactionBins(countPlasticTrash, countMetalTrash, countOtherTrash);
+    }
+
+    // Kiểm tra timeout
+    if (isCmdSent && (millis() - lastCmdSentTime > 5000))
+    {
+        Serial.println("5 seconds passed without receiving Cmd_KetThucQuyTrinh, generating QR code.");
+        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, sensorStatusBinPlastic, sensorStatusBinMetal, sensorStatusBinOther, dwc);
+        isCmdSent = false; // Đặt lại cờ
+        isProcessing = false;
+    }
+}
+
+void processPage5()
+{
+    handlePage4or5(0x5010, 0x1510, 0, 5);
 }
 
 // Callback function for DWIN echo
@@ -377,8 +443,9 @@ void dwinEchoCallback(DWIN2 &d)
 
 #pragma endregion
 
-#pragma region API CONTROL
+// -------------------------------------------------------------------------------------------------------------------
 
+#pragma region API CONTROL
 // Hàm kết nối WiFi
 void checkConnection()
 {
@@ -499,6 +566,7 @@ void handleOnlineUpdateStatus(int percentPlastics, int percentMetal, int percent
     }
 }
 // Offline handler for bin status updates
+
 void handleOfflineUpdateStatus(int percentPlastics, int percentMetal, int percentOther)
 {
     Serial.println("Offline mode: Skipping API calls. Simulating bin status updates.");
@@ -507,41 +575,11 @@ void handleOfflineUpdateStatus(int percentPlastics, int percentMetal, int percen
 
 // Hàm tạo transaction bins
 // Unified function to create transaction bins
-void createTransactionBins(int plasticQuantity, int metalQuantity, int otherQuantity)
+void createTransactionBins()
 {
     if (isOffline)
     {
-        // Create a JSON object to hold the data
-        StaticJsonDocument<256> jsonDoc;
-
-        // Add data to the JSON object
-        jsonDoc["plasticQuantity"] = plasticQuantity;
-        jsonDoc["metalQuantity"] = metalQuantity;
-        jsonDoc["otherQuantity"] = otherQuantity;
-        jsonDoc["sensorStatusBinPlastic"] = sensorStatusBinPlastic;
-        jsonDoc["sensorStatusBinMetal"] = sensorStatusBinMetal;
-        jsonDoc["sensorStatusBinOther"] = sensorStatusBinOther;
-        jsonDoc["mode"] = "isOffline";
-
-        // Convert JSON object to string
-        String qrCodeData;
-        serializeJson(jsonDoc, qrCodeData);
-
-        // Log and send the JSON string to the display
-        Serial.println("Offline mode: Generating offline QR code.");
-        Serial.println("QR Code Data: " + qrCodeData);
-        String encryptedData;
-        encryptQRCodeData(qrCodeData, encryptedData);
-        
-        // In ra kết quả
-        Serial.println("Dữ liệu QR Code gốc:");
-        Serial.println(qrCodeData);
-        Serial.println("Dữ liệu QR Code đã mã hóa:");
-        Serial.println(encryptedData);
-
-        dwc.setAddress(0x9910, 0x1099); // Address for QR code data
-        dwc.setUiType(ASCII);
-        dwc.sendData(encryptedData);
+        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, sensorStatusBinPlastic, sensorStatusBinMetal, sensorStatusBinOther, dwc);
     }
     else
     {
@@ -565,16 +603,81 @@ void createTransactionBins(int plasticQuantity, int metalQuantity, int otherQuan
             int httpResponseCode = http.POST(jsonData);
             if (httpResponseCode > 0)
             {
-                Serial.println("Transaction created successfully!");
+                String response = http.getString();
+                TokenData tokenData;
+                StaticJsonDocument<256> doc; // Giảm kích thước nếu không cần thiết
+                if (deserializeJson(doc, response))
+                {
+                    Serial.println("Failed to parse JSON. CreateDeviceTransactionBins");
+                }
+                else
+                {
+                    bool success = doc["success"].as<bool>();
+                    String dataQR = doc["result"].as<String>();
+                    Serial.println("QRData: ");
+                    Serial.println(dataQR);
+                    if (success)
+                    {
+                        Serial.println("CreateDeviceTransactionBins thành công");
+                        // Handle operations for page 4
+                        dwc.setAddress(0x9910, 0x1099);
+                        dwc.setUiType(ASCII);
+                        // SET QR CODE
+                        dwc.sendData(dataQR);
+                        handlePage4or5(0x4010, 0x1410, 5, 15);
+                    }
+                    else
+                    {
+                        Serial.println("CreateDeviceTransactionBins thất bại");
+                        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, sensorStatusBinPlastic, sensorStatusBinMetal, sensorStatusBinOther, dwc);
+                    }
+                }
             }
             else
             {
-                Serial.println("Failed to create transaction online.");
+                Serial.print("Lỗi kết nối: ");
+                Serial.println(httpResponseCode);
+                generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, sensorStatusBinPlastic, sensorStatusBinMetal, sensorStatusBinOther, dwc);
             }
             http.end();
             isProcessing = false;
         }
     }
+}
+
+void generateAndSendQRCode(int plasticQuantity, int metalQuantity, int otherQuantity, bool sensorStatusBinPlastic, bool sensorStatusBinMetal, bool sensorStatusBinOther, DWIN2 &dwc)
+{
+    // Tạo đối tượng JSON để giữ dữ liệu
+    StaticJsonDocument<256> jsonDoc;
+    jsonDoc["plasticQuantity"] = plasticQuantity;
+    jsonDoc["metalQuantity"] = metalQuantity;
+    jsonDoc["otherQuantity"] = otherQuantity;
+    jsonDoc["sensorStatusBinPlastic"] = sensorStatusBinPlastic;
+    jsonDoc["sensorStatusBinMetal"] = sensorStatusBinMetal;
+    jsonDoc["sensorStatusBinOther"] = sensorStatusBinOther;
+    jsonDoc["mode"] = "isOffline";
+
+    // Chuyển đổi đối tượng JSON thành chuỗi
+    String qrCodeData;
+    serializeJson(jsonDoc, qrCodeData);
+
+    // In và gửi dữ liệu chuỗi JSON tới hiển thị
+    Serial.println("Offline mode: Generating offline QR code.");
+    Serial.println("QR Code Data: " + qrCodeData);
+    String encryptedData;
+    encryptQRCodeData(qrCodeData, encryptedData);
+
+    // In kết quả
+    Serial.println("Dữ liệu QR Code gốc:");
+    Serial.println(qrCodeData);
+    Serial.println("Dữ liệu QR Code đã mã hóa:");
+    Serial.println(encryptedData);
+
+    // Đặt địa chỉ và gửi dữ liệu đã mã hóa
+    dwc.setAddress(0x9910, 0x1099); // Địa chỉ cho dữ liệu mã QR
+    dwc.setUiType(ASCII);
+    dwc.sendData(encryptedData);
+    handlePage4or5(0x4010, 0x1410, 5, 15);
 }
 
 // Hàm gửi yêu cầu POST
@@ -643,4 +746,5 @@ void encryptQRCodeData(String &qrCodeData, String &encryptedData)
     // Kết quả là chuỗi Base64 đã mã hóa
     encryptedData = String(base64EncodedData);
 }
+
 #pragma endregion

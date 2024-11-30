@@ -655,7 +655,7 @@ void generateAndSendQRCode(int plasticQuantity, int metalQuantity, int otherQuan
     jsonDoc["sensorStatusBinPlastic"] = sensorStatusBinPlastic;
     jsonDoc["sensorStatusBinMetal"] = sensorStatusBinMetal;
     jsonDoc["sensorStatusBinOther"] = sensorStatusBinOther;
-    jsonDoc["mode"] = "isOffline";
+    jsonDoc["deviceId"] =  deviceID;
 
     // Chuyển đổi đối tượng JSON thành chuỗi
     String qrCodeData;

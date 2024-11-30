@@ -65,18 +65,18 @@
 
     @await Html.PartialAsync("~/Views/Layout/_Footer.cshtml")
 
-    <script src="~/view-resources/Views/_Bundles/frontend-libs.min.js" asp-append-version="true"></script>
+    @* <script src="~/view-resources/Views/_Bundles/frontend-libs.min.js" asp-append-version="true"></script> *@
 
-    <script type="text/javascript">
+ @*    <script type="text/javascript">
         abp.localization.defaultSourceName = '@LocalizationSourceName';
         abp.security.antiForgery.tokenCookieName = "Public-XSRF-TOKEN";
         abp.security.antiForgery.tokenHeaderName = "Public-X-XSRF-TOKEN";
-    </script>
+    </script> *@
 
     <!-- Dynamic scripts of ABP system (They are created on runtime and can not be bundled) -->
-    <script src="~/AbpScripts/GetScripts?_v=@AppTimes.StartupTime.Ticks" type="text/javascript"></script>
+    @* <script src="~/AbpScripts/GetScripts?_v=@AppTimes.StartupTime.Ticks" type="text/javascript"></script> *@
 
-    <script src="~/view-resources/Views/_Bundles/frontend-metronic.min.js" asp-append-version="true"></script>
+    @* <script src="~/view-resources/Views/_Bundles/frontend-metronic.min.js" asp-append-version="true"></script> *@
 
     <script type="text/javascript">
         $(function () {

@@ -357,7 +357,7 @@ namespace DTKH2024.SbinSolution.TransactionBins
             inputCreate.MetalQuantity = input.MetalQuantity;
             inputCreate.PlastisPoint = input.PlasticQuantity * device.PlastisPoint;
             inputCreate.PlastisQuantity = input.PlasticQuantity;
-            inputCreate.ErrorPoint = input.OtherQuantity * device.ErrorPoint;
+            inputCreate.ErrorPoint = 0;
             inputCreate.DeviceId = input.DeviceId;
             // Set transaction status wait
             inputCreate.TransactionStatusId = AppConsts.TransactionStatusIdWait;

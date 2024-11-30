@@ -50,16 +50,16 @@
     </main>
     <!-- Footer -->
     @await Html.PartialAsync("~/Views/Layout/_FooterSbin.cshtml")
-    <script src="~/view-resources/Views/_Bundles/frontend-libs.min.js" asp-append-version="true"></script>
+    @* <script src="~/view-resources/Views/_Bundles/frontend-libs.min.js" asp-append-version="true"></script> *@
 
     <!--JS FILE  -->
-    <script type="text/javascript">
+@*     <script type="text/javascript">
         abp.localization.defaultSourceName = '@LocalizationSourceName';
         abp.security.antiForgery.tokenCookieName = "Public-XSRF-TOKEN";
         abp.security.antiForgery.tokenHeaderName = "Public-X-XSRF-TOKEN";
-    </script>
-    <script src="~/view-resources/Views/_Bundles/frontend-metronic.min.js" asp-append-version="true"></script>
-    <script src="~/AbpScripts/GetScripts?_v=@AppTimes.StartupTime.Ticks" type="text/javascript"></script>
+    </script> *@
+    @* <script src="~/view-resources/Views/_Bundles/frontend-metronic.min.js" asp-append-version="true"></script> *@
+    @* <script src="~/AbpScripts/GetScripts?_v=@AppTimes.StartupTime.Ticks" type="text/javascript"></script> *@
     <script src="~/Sbin/js/main.js"></script>
     @await RenderSectionAsync("Scripts", false)
 

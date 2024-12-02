@@ -54,44 +54,55 @@ namespace DTKH2024.SbinSolution
             var dataQRStr = StringEncryption.Decrypt(input.TransactionCode);
 
             // Check if the decrypted transaction code is a valid JSON object
-            try
+
+            //Mode offline
+            if (ContainsHyphen(input.TransactionCode))
             {
-                var transactionData = JsonConvert.DeserializeObject<TransactionDataOffline>(dataQRStr);
-                if (transactionData == null)
+                Console.WriteLine("Chuỗi chứa ký tự '-'");
+                var dataOffline = DecodeStringToObject(dataQRStr);
+                // Check data offline
+                if (dataOffline == null)
                 {
-                    throw new JsonException(); // Throw an exception if json is null
+                    throw new UserFriendlyException("Error. The QR code is invalid.");
                 }
-                else
+                // Check device
+                var device = await _deviceRepository.GetAsync(dataOffline.DeviceId);
+                if (device == null)
                 {
-                    Console.WriteLine("Decrypted transaction code is a valid JSON object.");
-                    var device = await _deviceRepository.GetAsync(transactionData.deviceId);
-                    if (device == null)
-                    {
-                        throw new UserFriendlyException("Device Not Found !");
-                    }
-                    // Create transaction bin
-                    var inputCreate = new CreateOrEditTransactionBinDto();
-                    // Calculate point
-                    inputCreate.MetalPoint = transactionData.MetalQuantity * device.MetalPoint;
-                    inputCreate.MetalQuantity = transactionData.MetalQuantity;
-                    inputCreate.PlastisPoint = transactionData.PlasticQuantity * device.PlastisPoint;
-                    inputCreate.PlastisQuantity = transactionData.PlasticQuantity;
-                    inputCreate.ErrorPoint = 100;
-                    inputCreate.DeviceId = transactionData.deviceId;
-                    // Set transaction status wait
-                    inputCreate.TransactionStatusId = AppConsts.TransactionStatusIdWait;
-                    inputCreate.UserId = device.UserId;
-                    var transactionBinOffline = ObjectMapper.Map<TransactionBin>(inputCreate);
-                    // Create transaction code
-                    transactionBinOffline.TransactionCode = AppConsts.getCodeRandom(AppConsts.keyPerfixTransactionBins);
-                    var transactionBinID = await _transactionBinRepository.InsertAndGetIdAsync(transactionBinOffline);
-                    // Encrypt transaction code
-                    input.TransactionCode = transactionBinOffline.TransactionCode;
+                    throw new UserFriendlyException("Device Not Found !");
                 }
+                // Check transaction bin
+                var transactionCheck = await _transactionBinRepository.FirstOrDefaultAsync(tb => tb.TransactionCode == dataOffline.TransactionCode);
+                if (transactionCheck.UserId != null && transactionCheck.UserId != userCurrent.Id && transactionCheck.TransactionStatusId == AppConsts.TransactionStatusIdSuccess)
+                {
+                    throw new UserFriendlyException("Error. This QR code has already been used on another account.");
+                }
+                else if (transactionCheck.TransactionStatusId == AppConsts.TransactionStatusIdSuccess)
+                {
+                    throw new UserFriendlyException("Error. This QR code has already been used.");
+                }
+                // Create transaction bin
+                var inputCreate = new CreateOrEditTransactionBinDto();
+                // Calculate point
+                inputCreate.MetalPoint = dataOffline.MetalQuantity * device.MetalPoint;
+                inputCreate.MetalQuantity = dataOffline.MetalQuantity;
+                inputCreate.PlastisPoint = dataOffline.PlasticQuantity * device.PlastisPoint;
+                inputCreate.PlastisQuantity = dataOffline.PlasticQuantity;
+                inputCreate.ErrorPoint = 10;
+                inputCreate.DeviceId = dataOffline.DeviceId;
+                // Set transaction status wait
+                inputCreate.TransactionStatusId = AppConsts.TransactionStatusIdWait;
+                inputCreate.UserId = device.UserId;
+                var transactionBinOffline = ObjectMapper.Map<TransactionBin>(inputCreate);
+                // Create transaction code
+                transactionBinOffline.TransactionCode = AppConsts.getCodeRandom(AppConsts.keyPerfixTransactionBins);
+                var transactionBinID = await _transactionBinRepository.InsertAndGetIdAsync(transactionBinOffline);
+                // Encrypt transaction code
+                input.TransactionCode = transactionBinOffline.TransactionCode;
             }
-            catch (JsonException)
+            else // Mode online
             {
-                input.TransactionCode = dataQRStr;
+                input.TransactionCode = StringEncryption.Decrypt(input.TransactionCode);
             }
 
             // Check transaction bin
@@ -133,6 +144,37 @@ namespace DTKH2024.SbinSolution
             userCurrent.PositivePoint += point;
             await UserManager.UpdateAsync(userCurrent);
             return point;
+        }
+
+        private bool ContainsHyphen(string input)
+        {
+            return input.Contains("-");
+        }
+        // Hàm kiểm tra chuỗi có đúng định dạng không
+        private TransactionDataOffline DecodeStringToObject(string input)
+        {
+            try
+            {
+                string[] parts = input.Split('_');
+
+                var data = new TransactionDataOffline
+                {
+                    TransactionCode = parts[0],
+                    PlasticQuantity = int.Parse(parts[1]),
+                    MetalQuantity = int.Parse(parts[2]),
+                    OtherQuantity = int.Parse(parts[3]),
+                    DeviceId = int.Parse(parts[7])
+                };
+                return data;
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+
+
+
         }
     }
 }

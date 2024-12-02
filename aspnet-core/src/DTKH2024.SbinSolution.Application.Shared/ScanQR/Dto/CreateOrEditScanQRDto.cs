@@ -13,12 +13,10 @@ namespace DTKH2024.SbinSolution.ScanQR.Dto
 
     public class TransactionDataOffline
     {
+        public string TransactionCode { get; set; }
         public int PlasticQuantity { get; set; }
         public int MetalQuantity { get; set; }
         public int OtherQuantity { get; set; }
-        public string SensorStatusBinPlastic { get; set; }
-        public string SensorStatusBinMetal { get; set; }
-        public string SensorStatusBinOther { get; set; }
-        public int deviceId { get; set; }
+        public int DeviceId { get; set; }
     }
 }

@@ -3,7 +3,7 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
-#include <AES.h>
+#include <AESLib.h>
 #include <Base64.h>
 #pragma region Constants ESP32_DWIN_MEGA2056
 // Rx Tx ESP gpio connected to DWin Display
@@ -62,7 +62,7 @@ unsigned long CallAPICreateTransaction = 0; // Lưu trữ thời gian lần cu�
 unsigned long transactionStatusId = 1;
 bool isProcessing = false;        // Prevent simultaneous tasks
 bool isOffline = false;           // Current mode of operation (true: offline, false: online)
-unsigned long timeoutWifi = 3000; // 3 seconds timeout
+unsigned long timeoutWifi = 1500; // 3 seconds timeout
 // Object chứa token
 struct TokenData
 {
@@ -213,42 +213,60 @@ void handlerCountBinTrash(String commandString)
 // -------------------------------------------------------------------------------------------------------------------
 
 #pragma region Status
-const uint16_t COLOR_FULL = 0xF9C5;
-const uint16_t COLOR_AVAILABLE = 0x058E;
-const uint16_t ADDRESS_METAL_BIN = 0x9010;
-const uint16_t ADDRESS_PLASTIC_BIN = 0x9020;
-const uint16_t ADDRESS_OTHER_BIN = 0x9030;
 
-void setStatus(uint16_t address, bool isFull)
+void setStatusMetal()
 {
-    dwc.setAddress(address, address + 0x1000); // Assuming a pattern in address calculation
+    // Set address and send ASCII data for page 1
+    dwc.setAddress(0x9010, 0x1010);
     dwc.setUiType(ASCII);
-    if (isFull)
-    {
-        dwc.setColor(COLOR_FULL);
+    if (sensorStatusBinMetal)
+    { // Updated variable name
+        dwc.setColor(0xF9C5);
         dwc.sendData("Full");
     }
     else
     {
-        dwc.setColor(COLOR_AVAILABLE);
+        dwc.setColor(0x058E);
+        dwc.sendData("Available");
+    }
+}
+// Function to set status for plastic bin
+void setStatusPlastic()
+{
+    // Set address and send ASCII data for page 1
+    dwc.setAddress(0x9020, 0x1020);
+    dwc.setUiType(ASCII);
+    //  Check if the bin is full
+    if (sensorStatusBinPlastic)
+    {
+        dwc.setColor(0xF9C5);
+        dwc.sendData("Full");
+    }
+    else
+    {
+        dwc.setColor(0x058E);
+        dwc.sendData("Available");
+    }
+}
+// Function to set status for other bin
+void setStatusOther()
+{
+    // Set address and send ASCII data for page 1
+    dwc.setAddress(0x9030, 0x1030);
+    dwc.setUiType(ASCII);
+    //  Check if the bin is full
+    if (sensorStatusBinOther)
+    { // Updated variable name
+        dwc.setColor(0xF9C5);
+        dwc.sendData("Full");
+    }
+    else
+    {
+        dwc.setColor(0x058E);
         dwc.sendData("Available");
     }
 }
 
-void setStatusMetal()
-{
-    setStatus(ADDRESS_METAL_BIN, sensorStatusBinMetal);
-}
-
-void setStatusPlastic()
-{
-    setStatus(ADDRESS_PLASTIC_BIN, sensorStatusBinPlastic);
-}
-
-void setStatusOther()
-{
-    setStatus(ADDRESS_OTHER_BIN, sensorStatusBinOther);
-}
 
 #pragma endregion
 
@@ -258,11 +276,8 @@ void setStatusOther()
 // Function to process different pages
 void processPage(int pageNum)
 {
-    if (Serial2.available())
-    {
-        String commandMega2560 = Serial2.readStringUntil('\r');
-        handlerStatusBinTrash(commandMega2560);
-    }
+    String commandMega2560 = Serial2.readStringUntil('\r');
+    handlerStatusBinTrash(commandMega2560);
 
     switch (pageNum)
     {
@@ -270,13 +285,13 @@ void processPage(int pageNum)
         processPage1();
         break;
     case 2:
-        processPage2();
+        processPage2(commandMega2560);
         break;
     case 3:
-        processPage3();
+        processPage3(commandMega2560);
         break;
     case 4:
-        processPage4();
+        processPage4(commandMega2560);
         break;
     case 5:
         processPage5();
@@ -327,7 +342,7 @@ void startTrashProcess()
 }
 
 // Hàm xử lý lệnh đếm rác
-void handleTrashCountingCommand()
+void handleTrashCountingCommand(const String &commandMega2560)
 {
     if (commandMega2560.startsWith(Cmd_CountRac))
     {
@@ -341,7 +356,7 @@ void handleTrashCountingCommand()
 }
 
 // Hàm kết thúc quá trình xử lý
-void finishTrashProcess()
+void finishTrashProcess(const String &commandMega2560)
 {
     if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
     {
@@ -364,7 +379,7 @@ void finishTrashProcess()
     }
 }
 
-void processPage2()
+void processPage2(const String &commandString)
 {
     if (isProcessing)
     {
@@ -376,15 +391,15 @@ void processPage2()
 
     checkAllBinsFull();
     startTrashProcess();
-    handleTrashCountingCommand();
-    finishTrashProcess();
+    handleTrashCountingCommand(commandString);
+    finishTrashProcess(commandString);
 
     isProcessing = false;
 }
 
 // -------------------------------------------------------------------------------------------------------------------
 
-void processPage3()
+void processPage3(const String &commandMega2560)
 {
     if (commandMega2560.startsWith(Cmd_CountRac))
     {
@@ -403,7 +418,7 @@ void processPage3()
 
 unsigned long lastCmdSentTime = 0;
 bool isCmdSent = false;
-void processPage4()
+void processPage4(const String &commandMega2560)
 {
     if (!isEndTrash)
     {
@@ -416,7 +431,7 @@ void processPage4()
 
     if (commandMega2560.startsWith(Cmd_KetThucQuyTrinh))
     {
-        createTransactionBins(countPlasticTrash, countMetalTrash, countOtherTrash);
+        createTransactionBins();
     }
 
     // Kiểm tra timeout
@@ -593,9 +608,9 @@ void createTransactionBins()
             http.addHeader("Authorization", dataToken);
 
             String jsonData = "{";
-            jsonData += "\"plasticQuantity\":" + String(plasticQuantity) + ",";
-            jsonData += "\"metalQuantity\":" + String(metalQuantity) + ",";
-            jsonData += "\"otherQuantity\":" + String(otherQuantity) + ",";
+            jsonData += "\"plasticQuantity\":" + String(countPlasticTrash) + ",";
+            jsonData += "\"metalQuantity\":" + String(countMetalTrash) + ",";
+            jsonData += "\"otherQuantity\":" + String(countOtherTrash) + ",";
             jsonData += "\"deviceId\":" + String(deviceID) + ",";
             jsonData += "\"transactionStatusId\":" + String(transactionStatusId);
             jsonData += "}";
@@ -655,7 +670,7 @@ void generateAndSendQRCode(int plasticQuantity, int metalQuantity, int otherQuan
     jsonDoc["sensorStatusBinPlastic"] = sensorStatusBinPlastic;
     jsonDoc["sensorStatusBinMetal"] = sensorStatusBinMetal;
     jsonDoc["sensorStatusBinOther"] = sensorStatusBinOther;
-    jsonDoc["deviceId"] =  deviceID;
+    jsonDoc["deviceId"] = deviceID;
 
     // Chuyển đổi đối tượng JSON thành chuỗi
     String qrCodeData;
@@ -714,36 +729,39 @@ TokenData GetToken()
 }
 
 // Hàm mã hóa dữ liệu QR Code
+
 void encryptQRCodeData(String &qrCodeData, String &encryptedData)
 {
-    // Các thông số mã hóa
-    const char key[] = "SbinSolution2024_8CFB2EC534E14D5"; // Khóa 32 byte
-    const byte iv[16] = {0};                               // IV 16 byte toàn 0
+    // Khóa và IV
+    const char *keyStr = "SbinSolution2024_8CFB2EC534E14D5";
+    byte key[32];
+    memcpy(key, keyStr, 32); // Sao chép đúng 32 byte
 
-    // Chuyển dữ liệu đầu vào thành mảng byte
+    byte iv[16] = {0}; // IV 16 byte toàn 0
+
+    // Chuyển đổi chuỗi đầu vào thành byte
     int dataLength = qrCodeData.length();
-    int paddedLength = ((dataLength + 15) / 16) * 16; // Đảm bảo chiều dài là bội số của 16
+    int paddedLength = ((dataLength + 15) / 16) * 16;
     byte inputData[paddedLength];
-    memset(inputData, 0, paddedLength);                // Khởi tạo mảng bằng 0
-    memcpy(inputData, qrCodeData.c_str(), dataLength); // Sao chép dữ liệu gốc
+    memset(inputData, 0, paddedLength);                // Đệm 0 vào dữ liệu
+    memcpy(inputData, qrCodeData.c_str(), dataLength); // Sao chép chuỗi đầu vào
 
-    // Bộ đệm để lưu dữ liệu mã hóa
+    // Bộ đệm dữ liệu mã hóa
     byte encryptedDataBuffer[paddedLength];
 
-    // Cấu hình AES để mã hóa
-    AES aesEncryptor(AES::AES_MODE_256, AES::CIPHER_CBC); // Sử dụng AES-256 và CBC
-    aesEncryptor.setKey((byte *)key, sizeof(key));        // Cài đặt khóa
-    aesEncryptor.setIV(iv, sizeof(iv));                   // Cài đặt IV
+    // Mã hóa AES CBC
+    AES aes;
+    aes.do_aes_encrypt(inputData, paddedLength, encryptedDataBuffer, key, 256, iv);
 
-    // Mã hóa dữ liệu
-    aesEncryptor.encrypt(inputData, encryptedDataBuffer, paddedLength);
+    // Tính toán độ dài chuỗi mã hóa Base64
+    int base64Length = ((paddedLength + 2) / 3) * 4;
 
-    // Chuyển dữ liệu mã hóa thành Base64 để dễ lưu trữ và truyền tải
-    int base64Length = Base64.encodedLength(paddedLength);
+    // Mã hóa Base64
     char base64EncodedData[base64Length + 1];
-    Base64.encode(base64EncodedData, (char *)encryptedDataBuffer, paddedLength);
+    base64_encode(base64EncodedData, (char *)encryptedDataBuffer, paddedLength);
+    base64EncodedData[base64Length] = '\0'; // Đảm bảo kết thúc bằng null
 
-    // Kết quả là chuỗi Base64 đã mã hóa
+    // Gán dữ liệu đầu ra
     encryptedData = String(base64EncodedData);
 }
 

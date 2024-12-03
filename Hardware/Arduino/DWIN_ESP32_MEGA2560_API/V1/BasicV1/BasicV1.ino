@@ -310,6 +310,9 @@ void resetVariables()
     isPutTrash = false;
     isEndTrash = false;
     isProcessing = false;
+    dwc.setAddress(0x9910, 0x1099); // Địa chỉ cho dữ liệu mã QR
+    dwc.setUiType(ASCII);
+    dwc.sendData("");
 }
 
 void processPage1()
@@ -662,36 +665,11 @@ void createTransactionBins()
 
 void generateAndSendQRCode(int plasticQuantity, int metalQuantity, int otherQuantity, bool sensorStatusBinPlastic, bool sensorStatusBinMetal, bool sensorStatusBinOther, DWIN2 &dwc)
 {
-    // Tạo đối tượng JSON để giữ dữ liệu
-    StaticJsonDocument<256> jsonDoc;
-    jsonDoc["plasticQuantity"] = plasticQuantity;
-    jsonDoc["metalQuantity"] = metalQuantity;
-    jsonDoc["otherQuantity"] = otherQuantity;
-    jsonDoc["sensorStatusBinPlastic"] = sensorStatusBinPlastic;
-    jsonDoc["sensorStatusBinMetal"] = sensorStatusBinMetal;
-    jsonDoc["sensorStatusBinOther"] = sensorStatusBinOther;
-    jsonDoc["deviceId"] = deviceID;
-
-    // Chuyển đổi đối tượng JSON thành chuỗi
-    String qrCodeData;
-    serializeJson(jsonDoc, qrCodeData);
-
-    // In và gửi dữ liệu chuỗi JSON tới hiển thị
-    Serial.println("Offline mode: Generating offline QR code.");
-    Serial.println("QR Code Data: " + qrCodeData);
-    String encryptedData;
-    encryptQRCodeData(qrCodeData, encryptedData);
-
-    // In kết quả
-    Serial.println("Dữ liệu QR Code gốc:");
-    Serial.println(qrCodeData);
-    Serial.println("Dữ liệu QR Code đã mã hóa:");
-    Serial.println(encryptedData);
-
+    const char *keyStr = "SbinSolution2024_8CFB2EC534E14D5";
     // Đặt địa chỉ và gửi dữ liệu đã mã hóa
     dwc.setAddress(0x9910, 0x1099); // Địa chỉ cho dữ liệu mã QR
     dwc.setUiType(ASCII);
-    dwc.sendData(encryptedData);
+    dwc.sendData(keyStr);
     handlePage4or5(0x4010, 0x1410, 5, 15);
 }
 

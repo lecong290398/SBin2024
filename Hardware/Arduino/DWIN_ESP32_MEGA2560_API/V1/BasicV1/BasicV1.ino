@@ -5,6 +5,8 @@
 #include <ArduinoJson.h>
 #include <AESLib.h>
 #include <Base64.h>
+#include <esp_system.h> // Để sử dụng esp_random()
+
 #pragma region Constants ESP32_DWIN_MEGA2056
 // Rx Tx ESP gpio connected to DWin Display
 #define RX_PIN 16
@@ -267,7 +269,6 @@ void setStatusOther()
     }
 }
 
-
 #pragma endregion
 
 // -------------------------------------------------------------------------------------------------------------------
@@ -441,7 +442,7 @@ void processPage4(const String &commandMega2560)
     if (isCmdSent && (millis() - lastCmdSentTime > 5000))
     {
         Serial.println("5 seconds passed without receiving Cmd_KetThucQuyTrinh, generating QR code.");
-        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, sensorStatusBinPlastic, sensorStatusBinMetal, sensorStatusBinOther, dwc);
+        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, dwc);
         isCmdSent = false; // Đặt lại cờ
         isProcessing = false;
     }
@@ -597,7 +598,7 @@ void createTransactionBins()
 {
     if (isOffline)
     {
-        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, sensorStatusBinPlastic, sensorStatusBinMetal, sensorStatusBinOther, dwc);
+        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, dwc);
     }
     else
     {
@@ -647,7 +648,7 @@ void createTransactionBins()
                     else
                     {
                         Serial.println("CreateDeviceTransactionBins thất bại");
-                        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, sensorStatusBinPlastic, sensorStatusBinMetal, sensorStatusBinOther, dwc);
+                        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, dwc);
                     }
                 }
             }
@@ -655,7 +656,7 @@ void createTransactionBins()
             {
                 Serial.print("Lỗi kết nối: ");
                 Serial.println(httpResponseCode);
-                generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, sensorStatusBinPlastic, sensorStatusBinMetal, sensorStatusBinOther, dwc);
+                generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, dwc);
             }
             http.end();
             isProcessing = false;
@@ -663,13 +664,20 @@ void createTransactionBins()
     }
 }
 
-void generateAndSendQRCode(int plasticQuantity, int metalQuantity, int otherQuantity, bool sensorStatusBinPlastic, bool sensorStatusBinMetal, bool sensorStatusBinOther, DWIN2 &dwc)
+// Ký tự phân cách có thể cấu hình
+const String SEPARATOR = "-";
+void generateAndSendQRCode(int plasticQuantity, int metalQuantity, int otherQuantity, DWIN2 &dwc)
 {
-    const char *keyStr = "SbinSolution2024_8CFB2EC534E14D5";
+    String uniqueCode = generateUniqueCode();
+    // Kết hợp với dữ liệu TransactionDataOffline
+    uniqueCode += SEPARATOR + String(data.PlasticQuantity);
+    uniqueCode += SEPARATOR + String(data.MetalQuantity);
+    uniqueCode += SEPARATOR + String(data.OtherQuantity);
+    uniqueCode += SEPARATOR + String(data.DeviceId);
     // Đặt địa chỉ và gửi dữ liệu đã mã hóa
     dwc.setAddress(0x9910, 0x1099); // Địa chỉ cho dữ liệu mã QR
     dwc.setUiType(ASCII);
-    dwc.sendData(keyStr);
+    dwc.sendData(uniqueCode);
     handlePage4or5(0x4010, 0x1410, 5, 15);
 }
 
@@ -706,41 +714,24 @@ TokenData GetToken()
     return tokenData;
 }
 
-// Hàm mã hóa dữ liệu QR Code
-
-void encryptQRCodeData(String &qrCodeData, String &encryptedData)
+String generateUniqueCode()
 {
-    // Khóa và IV
-    const char *keyStr = "SbinSolution2024_8CFB2EC534E14D5";
-    byte key[32];
-    memcpy(key, keyStr, 32); // Sao chép đúng 32 byte
+    // Lấy địa chỉ MAC (mỗi thiết bị ESP32 có một địa chỉ duy nhất)
+    uint8_t mac[6];
+    esp_read_mac(mac, ESP_MAC_WIFI_STA); // Đọc địa chỉ MAC
+    String macAddress = "";
+    for (int i = 0; i < 6; i++)
+    {
+        macAddress += String(mac[i], HEX); // Chuyển đổi thành chuỗi hex
+        if (i < 5)
+            macAddress += ":";
+    }
 
-    byte iv[16] = {0}; // IV 16 byte toàn 0
-
-    // Chuyển đổi chuỗi đầu vào thành byte
-    int dataLength = qrCodeData.length();
-    int paddedLength = ((dataLength + 15) / 16) * 16;
-    byte inputData[paddedLength];
-    memset(inputData, 0, paddedLength);                // Đệm 0 vào dữ liệu
-    memcpy(inputData, qrCodeData.c_str(), dataLength); // Sao chép chuỗi đầu vào
-
-    // Bộ đệm dữ liệu mã hóa
-    byte encryptedDataBuffer[paddedLength];
-
-    // Mã hóa AES CBC
-    AES aes;
-    aes.do_aes_encrypt(inputData, paddedLength, encryptedDataBuffer, key, 256, iv);
-
-    // Tính toán độ dài chuỗi mã hóa Base64
-    int base64Length = ((paddedLength + 2) / 3) * 4;
-
-    // Mã hóa Base64
-    char base64EncodedData[base64Length + 1];
-    base64_encode(base64EncodedData, (char *)encryptedDataBuffer, paddedLength);
-    base64EncodedData[base64Length] = '\0'; // Đảm bảo kết thúc bằng null
-
-    // Gán dữ liệu đầu ra
-    encryptedData = String(base64EncodedData);
+    // Lấy thời gian từ millis() (tính từ khi ESP32 bật nguồn)
+    unsigned long uptime = millis();
+    uint32_t randomValue = esp_random();
+    // Kết hợp địa chỉ MAC, thời gian và số ngẫu nhiên
+    String uniqueCode = macAddress + ":" + String(uptime) + ":" + String(randomValue);
+    return uniqueCode;
 }
-
 #pragma endregion

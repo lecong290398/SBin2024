@@ -668,12 +668,16 @@ void createTransactionBins()
 const String SEPARATOR = "-";
 void generateAndSendQRCode(int plasticQuantity, int metalQuantity, int otherQuantity, DWIN2 &dwc)
 {
-    String uniqueCode = generateUniqueCode();
+    String uniqueCode = generateUniqueID();
     // Kết hợp với dữ liệu TransactionDataOffline
-    uniqueCode += SEPARATOR + String(data.PlasticQuantity);
-    uniqueCode += SEPARATOR + String(data.MetalQuantity);
-    uniqueCode += SEPARATOR + String(data.OtherQuantity);
-    uniqueCode += SEPARATOR + String(data.DeviceId);
+    uniqueCode += SEPARATOR + String(plasticQuantity);
+    uniqueCode += SEPARATOR + String(metalQuantity);
+    uniqueCode += SEPARATOR + String(otherQuantity);
+    uniqueCode += SEPARATOR + String(deviceID);
+
+    Serial.println("Tạo mã thành công");
+    Serial.println(uniqueCode);
+
     // Đặt địa chỉ và gửi dữ liệu đã mã hóa
     dwc.setAddress(0x9910, 0x1099); // Địa chỉ cho dữ liệu mã QR
     dwc.setUiType(ASCII);
@@ -714,24 +718,22 @@ TokenData GetToken()
     return tokenData;
 }
 
-String generateUniqueCode()
-{
-    // Lấy địa chỉ MAC (mỗi thiết bị ESP32 có một địa chỉ duy nhất)
-    uint8_t mac[6];
-    esp_read_mac(mac, ESP_MAC_WIFI_STA); // Đọc địa chỉ MAC
-    String macAddress = "";
-    for (int i = 0; i < 6; i++)
-    {
-        macAddress += String(mac[i], HEX); // Chuyển đổi thành chuỗi hex
-        if (i < 5)
-            macAddress += ":";
-    }
+#include <EEPROM.h>
 
-    // Lấy thời gian từ millis() (tính từ khi ESP32 bật nguồn)
+String generateUniqueID()
+{
+    // Đọc ID cố định từ EEPROM (hoặc gán thủ công)
+    uint32_t deviceID = 12345678; // ID cố định của thiết bị
+
+    // Lấy thời gian từ millis()
     unsigned long uptime = millis();
-    uint32_t randomValue = esp_random();
-    // Kết hợp địa chỉ MAC, thời gian và số ngẫu nhiên
-    String uniqueCode = macAddress + ":" + String(uptime) + ":" + String(randomValue);
-    return uniqueCode;
+
+    // Sinh số ngẫu nhiên
+    uint32_t randomValue = random(0, 0xFFFFFF);
+
+    // Tạo mã duy nhất
+    String uniqueID = String(deviceID)  + String(uptime) + String(randomValue);
+    return uniqueID;
 }
+
 #pragma endregion

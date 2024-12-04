@@ -50,16 +50,12 @@ namespace DTKH2024.SbinSolution
             {
                 throw new UserFriendlyException(L("UserNotFound"));
             }
-            // Decrypt transaction code
-            var dataQRStr = StringEncryption.Decrypt(input.TransactionCode);
-
-            // Check if the decrypted transaction code is a valid JSON object
 
             //Mode offline
             if (ContainsHyphen(input.TransactionCode))
             {
                 Console.WriteLine("Chuỗi chứa ký tự '-'");
-                var dataOffline = DecodeStringToObject(dataQRStr);
+                var dataOffline = DecodeStringToObject(input.TransactionCode);
                 // Check data offline
                 if (dataOffline == null)
                 {
@@ -73,13 +69,17 @@ namespace DTKH2024.SbinSolution
                 }
                 // Check transaction bin
                 var transactionCheck = await _transactionBinRepository.FirstOrDefaultAsync(tb => tb.TransactionCode == dataOffline.TransactionCode);
-                if (transactionCheck.UserId != null && transactionCheck.UserId != userCurrent.Id && transactionCheck.TransactionStatusId == AppConsts.TransactionStatusIdSuccess)
+
+                if (transactionCheck != null)
                 {
-                    throw new UserFriendlyException("Error. This QR code has already been used on another account.");
-                }
-                else if (transactionCheck.TransactionStatusId == AppConsts.TransactionStatusIdSuccess)
-                {
-                    throw new UserFriendlyException("Error. This QR code has already been used.");
+                    if (transactionCheck.UserId != null && transactionCheck.UserId != userCurrent.Id && transactionCheck.TransactionStatusId == AppConsts.TransactionStatusIdSuccess)
+                    {
+                        throw new UserFriendlyException("Error. This QR code has already been used on another account.");
+                    }
+                    else if (transactionCheck.TransactionStatusId == AppConsts.TransactionStatusIdSuccess)
+                    {
+                        throw new UserFriendlyException("Error. This QR code has already been used.");
+                    }
                 }
                 // Create transaction bin
                 var inputCreate = new CreateOrEditTransactionBinDto();
@@ -88,14 +88,14 @@ namespace DTKH2024.SbinSolution
                 inputCreate.MetalQuantity = dataOffline.MetalQuantity;
                 inputCreate.PlastisPoint = dataOffline.PlasticQuantity * device.PlastisPoint;
                 inputCreate.PlastisQuantity = dataOffline.PlasticQuantity;
-                inputCreate.ErrorPoint = 10;
+                inputCreate.ErrorPoint = 0;
                 inputCreate.DeviceId = dataOffline.DeviceId;
                 // Set transaction status wait
                 inputCreate.TransactionStatusId = AppConsts.TransactionStatusIdWait;
                 inputCreate.UserId = device.UserId;
                 var transactionBinOffline = ObjectMapper.Map<TransactionBin>(inputCreate);
                 // Create transaction code
-                transactionBinOffline.TransactionCode = AppConsts.getCodeRandom(AppConsts.keyPerfixTransactionBins);
+                transactionBinOffline.TransactionCode = dataOffline.TransactionCode;
                 var transactionBinID = await _transactionBinRepository.InsertAndGetIdAsync(transactionBinOffline);
                 // Encrypt transaction code
                 input.TransactionCode = transactionBinOffline.TransactionCode;
@@ -155,7 +155,7 @@ namespace DTKH2024.SbinSolution
         {
             try
             {
-                string[] parts = input.Split('_');
+                string[] parts = input.Split('-');
 
                 var data = new TransactionDataOffline
                 {
@@ -163,7 +163,7 @@ namespace DTKH2024.SbinSolution
                     PlasticQuantity = int.Parse(parts[1]),
                     MetalQuantity = int.Parse(parts[2]),
                     OtherQuantity = int.Parse(parts[3]),
-                    DeviceId = int.Parse(parts[7])
+                    DeviceId = int.Parse(parts[4])
                 };
                 return data;
             }

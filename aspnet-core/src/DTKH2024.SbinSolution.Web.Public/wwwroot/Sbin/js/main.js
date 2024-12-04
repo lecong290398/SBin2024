@@ -30,7 +30,7 @@ const app = {
             document.documentElement.style.overflow = 'auto';
             setTimeout(() => {
                 preLoadingPage.remove()
-            }, 1000)
+            }, 30)
         });
 
     },

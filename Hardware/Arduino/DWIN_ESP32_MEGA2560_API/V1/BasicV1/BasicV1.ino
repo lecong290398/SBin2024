@@ -5,6 +5,8 @@
 #include <ArduinoJson.h>
 #include <AESLib.h>
 #include <Base64.h>
+#include <esp_system.h> // Để sử dụng esp_random()
+
 #pragma region Constants ESP32_DWIN_MEGA2056
 // Rx Tx ESP gpio connected to DWin Display
 #define RX_PIN 16
@@ -267,7 +269,6 @@ void setStatusOther()
     }
 }
 
-
 #pragma endregion
 
 // -------------------------------------------------------------------------------------------------------------------
@@ -310,6 +311,9 @@ void resetVariables()
     isPutTrash = false;
     isEndTrash = false;
     isProcessing = false;
+    dwc.setAddress(0x9910, 0x1099); // Địa chỉ cho dữ liệu mã QR
+    dwc.setUiType(ASCII);
+    dwc.sendData("");
 }
 
 void processPage1()
@@ -438,7 +442,7 @@ void processPage4(const String &commandMega2560)
     if (isCmdSent && (millis() - lastCmdSentTime > 5000))
     {
         Serial.println("5 seconds passed without receiving Cmd_KetThucQuyTrinh, generating QR code.");
-        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, sensorStatusBinPlastic, sensorStatusBinMetal, sensorStatusBinOther, dwc);
+        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, dwc);
         isCmdSent = false; // Đặt lại cờ
         isProcessing = false;
     }
@@ -594,7 +598,7 @@ void createTransactionBins()
 {
     if (isOffline)
     {
-        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, sensorStatusBinPlastic, sensorStatusBinMetal, sensorStatusBinOther, dwc);
+        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, dwc);
     }
     else
     {
@@ -644,7 +648,7 @@ void createTransactionBins()
                     else
                     {
                         Serial.println("CreateDeviceTransactionBins thất bại");
-                        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, sensorStatusBinPlastic, sensorStatusBinMetal, sensorStatusBinOther, dwc);
+                        generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, dwc);
                     }
                 }
             }
@@ -652,7 +656,7 @@ void createTransactionBins()
             {
                 Serial.print("Lỗi kết nối: ");
                 Serial.println(httpResponseCode);
-                generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, sensorStatusBinPlastic, sensorStatusBinMetal, sensorStatusBinOther, dwc);
+                generateAndSendQRCode(countPlasticTrash, countMetalTrash, countOtherTrash, dwc);
             }
             http.end();
             isProcessing = false;
@@ -660,38 +664,24 @@ void createTransactionBins()
     }
 }
 
-void generateAndSendQRCode(int plasticQuantity, int metalQuantity, int otherQuantity, bool sensorStatusBinPlastic, bool sensorStatusBinMetal, bool sensorStatusBinOther, DWIN2 &dwc)
+// Ký tự phân cách có thể cấu hình
+const String SEPARATOR = "-";
+void generateAndSendQRCode(int plasticQuantity, int metalQuantity, int otherQuantity, DWIN2 &dwc)
 {
-    // Tạo đối tượng JSON để giữ dữ liệu
-    StaticJsonDocument<256> jsonDoc;
-    jsonDoc["plasticQuantity"] = plasticQuantity;
-    jsonDoc["metalQuantity"] = metalQuantity;
-    jsonDoc["otherQuantity"] = otherQuantity;
-    jsonDoc["sensorStatusBinPlastic"] = sensorStatusBinPlastic;
-    jsonDoc["sensorStatusBinMetal"] = sensorStatusBinMetal;
-    jsonDoc["sensorStatusBinOther"] = sensorStatusBinOther;
-    jsonDoc["deviceId"] = deviceID;
+    String uniqueCode = generateUniqueID();
+    // Kết hợp với dữ liệu TransactionDataOffline
+    uniqueCode += SEPARATOR + String(plasticQuantity);
+    uniqueCode += SEPARATOR + String(metalQuantity);
+    uniqueCode += SEPARATOR + String(otherQuantity);
+    uniqueCode += SEPARATOR + String(deviceID);
 
-    // Chuyển đổi đối tượng JSON thành chuỗi
-    String qrCodeData;
-    serializeJson(jsonDoc, qrCodeData);
-
-    // In và gửi dữ liệu chuỗi JSON tới hiển thị
-    Serial.println("Offline mode: Generating offline QR code.");
-    Serial.println("QR Code Data: " + qrCodeData);
-    String encryptedData;
-    encryptQRCodeData(qrCodeData, encryptedData);
-
-    // In kết quả
-    Serial.println("Dữ liệu QR Code gốc:");
-    Serial.println(qrCodeData);
-    Serial.println("Dữ liệu QR Code đã mã hóa:");
-    Serial.println(encryptedData);
+    Serial.println("Tạo mã thành công");
+    Serial.println(uniqueCode);
 
     // Đặt địa chỉ và gửi dữ liệu đã mã hóa
     dwc.setAddress(0x9910, 0x1099); // Địa chỉ cho dữ liệu mã QR
     dwc.setUiType(ASCII);
-    dwc.sendData(encryptedData);
+    dwc.sendData(uniqueCode);
     handlePage4or5(0x4010, 0x1410, 5, 15);
 }
 
@@ -728,41 +718,22 @@ TokenData GetToken()
     return tokenData;
 }
 
-// Hàm mã hóa dữ liệu QR Code
+#include <EEPROM.h>
 
-void encryptQRCodeData(String &qrCodeData, String &encryptedData)
+String generateUniqueID()
 {
-    // Khóa và IV
-    const char *keyStr = "SbinSolution2024_8CFB2EC534E14D5";
-    byte key[32];
-    memcpy(key, keyStr, 32); // Sao chép đúng 32 byte
+    // Đọc ID cố định từ EEPROM (hoặc gán thủ công)
+    uint32_t deviceID = 12345678; // ID cố định của thiết bị
 
-    byte iv[16] = {0}; // IV 16 byte toàn 0
+    // Lấy thời gian từ millis()
+    unsigned long uptime = millis();
 
-    // Chuyển đổi chuỗi đầu vào thành byte
-    int dataLength = qrCodeData.length();
-    int paddedLength = ((dataLength + 15) / 16) * 16;
-    byte inputData[paddedLength];
-    memset(inputData, 0, paddedLength);                // Đệm 0 vào dữ liệu
-    memcpy(inputData, qrCodeData.c_str(), dataLength); // Sao chép chuỗi đầu vào
+    // Sinh số ngẫu nhiên
+    uint32_t randomValue = random(0, 0xFFFFFF);
 
-    // Bộ đệm dữ liệu mã hóa
-    byte encryptedDataBuffer[paddedLength];
-
-    // Mã hóa AES CBC
-    AES aes;
-    aes.do_aes_encrypt(inputData, paddedLength, encryptedDataBuffer, key, 256, iv);
-
-    // Tính toán độ dài chuỗi mã hóa Base64
-    int base64Length = ((paddedLength + 2) / 3) * 4;
-
-    // Mã hóa Base64
-    char base64EncodedData[base64Length + 1];
-    base64_encode(base64EncodedData, (char *)encryptedDataBuffer, paddedLength);
-    base64EncodedData[base64Length] = '\0'; // Đảm bảo kết thúc bằng null
-
-    // Gán dữ liệu đầu ra
-    encryptedData = String(base64EncodedData);
+    // Tạo mã duy nhất
+    String uniqueID = String(deviceID)  + String(uptime) + String(randomValue);
+    return uniqueID;
 }
 
 #pragma endregion

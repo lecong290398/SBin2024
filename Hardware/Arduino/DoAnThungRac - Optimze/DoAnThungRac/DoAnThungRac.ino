@@ -684,7 +684,7 @@ void loop()
     KiemTraVaXuLyRacDay(); // Kiểm tra và xử lý rác đầy
 
     // Xử lý rác cụ thể
-    if (RacKimLoai() && RacNhua())
+    if (RacKimLoai())
     {
         if (!RacKimLoaiDay())
         {
